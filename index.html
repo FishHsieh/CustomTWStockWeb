@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>股市追蹤網站</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>📈 股市追蹤網站</h1>
+  <div class="meta">
+    <span id="updated-at">尚未載入資料</span>
+    <span class="hint">資料來源：FinMind / Yahoo Finance，僅供參考，不構成投資建議</span>
+  </div>
+</header>
+
+<section id="macro-panel">
+  <h2>總經趨勢面板</h2>
+  <div class="macro-grid" id="macro-grid"></div>
+  <div class="chart-block flow-block">
+    <h3>外資 / 投信 / 自營商 / 散戶(反推) 進出趨勢 (近半年，億元)</h3>
+    <canvas id="market-flow-chart"></canvas>
+  </div>
+  <div class="chart-block flow-block">
+    <h3>外資 vs 投信 台指期淨部位 (近半年，口，負值=淨空單)</h3>
+    <canvas id="futures-flow-chart"></canvas>
+  </div>
+</section>
+
+<nav id="tabs">
+  <button class="tab-btn active" data-tab="stocks">個股 (<span id="stock-count">0</span>)</button>
+  <button class="tab-btn" data-tab="etfs">ETF (<span id="etf-count">0</span>)</button>
+</nav>
+
+<div class="toolbar">
+  <input type="text" id="search-box" placeholder="搜尋代號，例如 2330">
+  <select id="sort-select">
+    <option value="code">依代號排序</option>
+    <option value="yield-desc">依殖利率高到低</option>
+    <option value="yoy-desc">依月營收YoY高到低</option>
+    <option value="pe-asc">依本益比低到高</option>
+  </select>
+</div>
+
+<main id="card-grid"></main>
+
+<div id="detail-modal" class="modal hidden">
+  <div class="modal-content">
+    <button id="modal-close">✕</button>
+    <h2 id="modal-title"></h2>
+    <div class="modal-body">
+      <div class="chart-block">
+        <h3>K線圖 (含均線)</h3>
+        <div class="ma-legend" id="ma-legend"></div>
+        <div id="candle-chart" class="candle-chart"></div>
+        <h4>三大法人買賣超 (外資/投信/自營商，近3個月，張)</h4>
+        <canvas id="institutional-chart"></canvas>
+        <p id="institutional-empty" class="empty-note hidden">此標的無三大法人買賣超資料</p>
+      </div>
+      <div class="modal-grid">
+        <div class="chart-block">
+          <h3>季EPS趨勢</h3>
+          <canvas id="eps-chart"></canvas>
+          <p id="eps-empty" class="empty-note hidden">此標的無EPS資料（ETF/尚無揭露）</p>
+        </div>
+        <div class="chart-block">
+          <h3>月營收年增率(YoY) / 月增率(MoM)</h3>
+          <canvas id="rev-chart"></canvas>
+          <p id="rev-empty" class="empty-note hidden">此標的無月營收資料（ETF/尚無揭露）</p>
+        </div>
+      </div>
+      <div class="chart-block">
+        <h3>本益比(PE)趨勢</h3>
+        <canvas id="pe-chart"></canvas>
+        <p id="pe-empty" class="empty-note hidden">此標的無本益比資料（ETF/EPS資料不足4季）</p>
+      </div>
+      <div class="chart-block">
+        <h3>散戶買賣超(反推) 趨勢 (近3個月，張)</h3>
+        <canvas id="retail-chart"></canvas>
+        <p id="retail-empty" class="empty-note hidden">此標的無三大法人買賣超資料</p>
+      </div>
+      <div class="chart-block">
+        <h3>近期配息紀錄</h3>
+        <table id="div-table">
+          <thead><tr><th>除息日</th><th>除息前收盤價</th><th>現金股利(元/股)</th><th>除息參考價</th><th>發放日</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <p id="div-empty" class="empty-note hidden">查無配息紀錄</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

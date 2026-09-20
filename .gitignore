@@ -1,0 +1,5 @@
+# 個人 API 金鑰，不要進版控
+scripts/finmind_token.txt
+
+# 抓資料時的暫存快取
+data/cache/
