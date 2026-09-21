@@ -335,6 +335,42 @@ function drawCandle(s) {
     });
     series.setData(rows.map((p) => ({ time: p.t, open: p.o, high: p.h, low: p.l, close: p.c })));
 
+    // 在 K 線下方顯示成交量，紅綠色跟隨當日漲跌。
+    const volumeSeries = candleChart.addHistogramSeries({
+      priceScaleId: "",
+      priceFormat: { type: "volume" },
+      priceLineVisible: false,
+      lastValueVisible: false,
+    });
+    candleChart.priceScale("").applyOptions({ scaleMargins: { top: 0.8, bottom: 0 } });
+    volumeSeries.setData(rows
+      .filter((p) => p.v !== null && p.v !== undefined)
+      .map((p) => ({
+        time: p.t,
+        value: p.v,
+        color: p.c >= p.o ? "#ef4444" : "#22c55e",
+      })));
+
+    // 在除息交易日的 K 棒下方標註「息」，並顯示股利金額。
+    const rowDates = new Set(rows.map((p) => p.t));
+    const dividendMarkers = (s.dividends || [])
+      .filter((d) => d.ex_date && rowDates.has(d.ex_date))
+      .map((d) => {
+        const parts = [];
+        if (d.cash_per_share) parts.push(`現金${d.cash_per_share}`);
+        if (d.stock_per_share) parts.push(`股票${d.stock_per_share}`);
+        return {
+          time: d.ex_date,
+          position: "belowBar",
+          color: "#f59e0b",
+          shape: "circle",
+          text: `息 ${parts.join(" ")}`,
+        };
+      });
+    if (dividendMarkers.length && typeof series.setMarkers === "function") {
+      series.setMarkers(dividendMarkers);
+    }
+
     const MA_LINES = [
       { key: "ma10", label: "10日", color: "#f59e0b" },
       { key: "ma20", label: "月線", color: "#a78bfa" },
@@ -588,7 +624,7 @@ async function openDetail(code, kind, name) {
     document.getElementById("div-table").classList.remove("hidden");
     recentDiv.forEach((d) => {
       const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${d.ex_date}</td><td>${fmtNum(d.prev_close)}</td><td>${fmtNum(d.cash_per_share)}</td><td>${fmtNum(d.ex_dividend_price)}</td><td>${d.pay_date || "—"}</td>`;
+      tr.innerHTML = `<td>${d.ex_date}</td><td>${fmtNum(d.prev_close)}</td><td>${fmtNum(d.cash_per_share)}</td><td>${fmtNum(d.stock_per_share)}</td><td>${fmtNum(d.ex_dividend_price)}</td><td>${d.pay_date || "—"}</td>`;
       tbody.appendChild(tr);
     });
   } else {
