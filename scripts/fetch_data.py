@@ -625,7 +625,9 @@ def build_one(code, kind, splits=None):
         record["revenue"] = fetch_revenue(code)
         record["eps"] = fetch_eps(code)
         record["pe"] = compute_pe(record["eps"], price)
-        record["retail_flow"] = fetch_retail_flow(code)
+
+    # 個股與 ETF 都有三大法人買賣超資料。
+    record["retail_flow"] = fetch_retail_flow(code)
 
     os.makedirs(STOCKS_DIR, exist_ok=True)
     with open(os.path.join(STOCKS_DIR, f"{code}.json"), "w", encoding="utf-8") as f:
