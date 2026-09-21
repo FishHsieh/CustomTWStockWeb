@@ -54,7 +54,12 @@
     <h2 id="modal-title"></h2>
     <div class="modal-body">
       <div class="chart-block">
-        <h3>K線圖 (含均線)</h3>
+        <h3>K線圖 (含均線)
+          <button type="button" id="adj-toggle" class="toggle-btn"
+                  title="把除權息、股票分割造成的價格斷層還原，讓歷史價可以直接比較">還原K線</button>
+          <span id="adj-note" class="toggle-note"></span>
+        </h3>
+        <div class="ohlc-readout" id="ohlc-readout"></div>
         <div class="ma-legend" id="ma-legend"></div>
         <div id="candle-chart" class="candle-chart"></div>
         <h4>三大法人買賣超 (外資/投信/自營商，近3個月，張)</h4>

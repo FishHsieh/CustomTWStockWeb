@@ -1,8 +1,12 @@
 {
-  "updated_at": "2026-09-21 00:22:45",
-  "status": "complete",
-  "stock_count": 95,
-  "stock_total": 95,
+  "updated_at": "2026-09-21 21:45:26",
+  "price_date_twse": "2026-09-21",
+  "price_date_tpex": "2026-09-21",
+  "price_date": "2026-09-21",
+  "institutional_date": "2026-09-21",
+  "status": "partial_quota_exceeded",
+  "stock_count": 209,
+  "stock_total": 252,
   "etf_count": 61,
-  "etf_total": 61
+  "etf_total": 88
 }

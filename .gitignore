@@ -3,3 +3,9 @@ scripts/finmind_token.txt
 
 # 抓資料時的暫存快取
 data/cache/
+
+# Python 暫存
+scripts/__pycache__/
+
+# Browser automation logs
+.playwright-mcp/

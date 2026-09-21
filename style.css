@@ -156,6 +156,25 @@ header h1 { margin: 0; font-size: 22px; }
 .chart-block h3 { font-size: 14px; color: var(--text-dim); margin: 0 0 8px; font-weight: 600; }
 .chart-block h4 { font-size: 12.5px; color: var(--text-dim); margin: 14px 0 6px; font-weight: 600; }
 .candle-chart { height: 320px; }
+/* 「還原K線」開關 */
+.toggle-btn {
+  margin-left: 10px; padding: 3px 10px; font-size: 12px; font-weight: 600;
+  color: var(--text-dim); background: #232833; border: 1px solid #39404f;
+  border-radius: 999px; cursor: pointer; vertical-align: middle;
+}
+.toggle-btn:hover { color: var(--text); border-color: #55607a; }
+.toggle-btn.active { color: #171a21; background: #e8b341; border-color: #e8b341; }
+.toggle-note { margin-left: 8px; font-size: 12px; font-weight: 400; color: var(--text-dim); vertical-align: middle; }
+/* 滑鼠移到K線上時，顯示那一天的開高低收；沒有滑到就顯示最新一天 */
+.ohlc-readout {
+  display: flex; gap: 12px; flex-wrap: wrap; align-items: baseline;
+  margin-bottom: 6px; font-size: 12px; color: var(--text-dim);
+  min-height: 18px;  /* 先佔住高度，滑進滑出時圖表不會上下跳動 */
+}
+.ohlc-readout .date { color: var(--text); font-weight: 600; }
+.ohlc-readout b { color: var(--text); font-weight: 600; }
+.ohlc-readout .up b, .ohlc-readout b.up { color: #ef4444; }
+.ohlc-readout .down b, .ohlc-readout b.down { color: #22c55e; }
 .ma-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; font-size: 12px; color: var(--text-dim); }
 .ma-legend span { display: inline-flex; align-items: center; gap: 5px; }
 .ma-legend span b { color: var(--text); font-weight: 600; }

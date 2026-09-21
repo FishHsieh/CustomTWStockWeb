@@ -226,32 +226,114 @@ let peChart = null;
 let retailChart = null;
 let institutionalChart = null;
 
-async function openDetail(code, kind, name) {
-  const modal = document.getElementById("detail-modal");
-  modal.classList.remove("hidden");
-  document.getElementById("modal-title").textContent = `${code}　${name}`;
+// ---- 還原K線 ------------------------------------------------------------
+// 除權息和股票分割會讓股價出現「斷層」(例如 0050 在 2025-06-18 從 188 變成 47)，
+// 那不是真的跌，只是分割。打開「還原K線」就會把斷層前的歷史價按比例縮放，
+// 讓整條線可以直接比較。採前復權：最新一天維持真實市價，只調整歷史。
+let ADJUSTED = false;
+try { ADJUSTED = localStorage.getItem("kline-adjusted") === "1"; } catch (e) {}
+let CURRENT_STOCK = null;
 
-  const s = await loadStock(code);
+const MA_WINDOWS = { ma10: 10, ma20: 20, ma60: 60, ma240: 240 };
 
-  // K線
+// 每根K棒要乘的比例 = 它「之後」所有調整事件 factor 的連乘積
+function cumAdjFactors(price, events) {
+  const f = new Array(price.length).fill(1);
+  let cum = 1;
+  let ei = events.length - 1;
+  for (let i = price.length - 1; i >= 0; i--) {
+    while (ei >= 0 && events[ei].date > price[i].t) { cum *= events[ei].factor; ei--; }
+    f[i] = cum;
+  }
+  return f;
+}
+
+// 移動平均，算法和 scripts/fetch_data.py 一致：不滿一個週期的前幾根留 null
+function movingAverage(closes, window) {
+  const out = new Array(closes.length).fill(null);
+  let sum = 0;
+  for (let i = 0; i < closes.length; i++) {
+    sum += closes[i];
+    if (i >= window) sum -= closes[i - window];
+    if (i + 1 >= window) out[i] = sum / window;
+  }
+  return out;
+}
+
+// 畫圖要用的資料：沒開還原(或這檔本來就沒有除權息/分割)就直接用抓下來的原始資料
+function chartRows(s) {
+  const price = s.price || [];
+  const events = s.adjustments || [];
+  if (!ADJUSTED || !events.length || !price.length) return price;
+  const f = cumAdjFactors(price, events);
+  const scale = (v, i) => (v === null || v === undefined ? null : v * f[i]);
+  const rows = price.map((p, i) => ({
+    t: p.t, v: p.v,
+    o: scale(p.o, i), h: scale(p.h, i), l: scale(p.l, i), c: scale(p.c, i),
+  }));
+  // 均線要用還原後的收盤價重算，否則均線會和K棒對不起來
+  const closes = rows.map((r) => r.c);
+  Object.keys(MA_WINDOWS).forEach((key) => {
+    const ma = movingAverage(closes, MA_WINDOWS[key]);
+    rows.forEach((r, i) => { r[key] = ma[i]; });
+  });
+  return rows;
+}
+
+function setAdjusted(on) {
+  ADJUSTED = on;
+  try { localStorage.setItem("kline-adjusted", on ? "1" : "0"); } catch (e) {}
+  const btn = document.getElementById("adj-toggle");
+  if (btn) btn.classList.toggle("active", on);
+  if (CURRENT_STOCK) drawCandle(CURRENT_STOCK);
+}
+
+function drawCandle(s) {
+  if (candleChart) { candleChart.remove(); candleChart = null; }
+  const rows = chartRows(s);   // 原始或還原後的K棒，後面的畫法完全一樣
+
+  // 按鈕狀態 + 旁邊的說明：這檔到底有沒有東西可以還原，講清楚比較不會誤會
+  const btn = document.getElementById("adj-toggle");
+  const note = document.getElementById("adj-note");
+  const events = s.adjustments || [];
+  if (btn) btn.classList.toggle("active", ADJUSTED);
+  if (note) {
+    if (!events.length) {
+      note.textContent = "（此標的近期無除權息/分割，還原前後相同）";
+    } else if (ADJUSTED) {
+      const kinds = [...new Set(events.map((e) => e.kind))].join("、");
+      note.textContent = `已還原 ${events.length} 次${kinds}（最新價維持實際市價）`;
+    } else {
+      note.textContent = "顯示原始股價（未還原除權息/分割）";
+    }
+  }
   const candleEl = document.getElementById("candle-chart");
   candleEl.innerHTML = "";
   const legendEl = document.getElementById("ma-legend");
   legendEl.innerHTML = "";
-  if (window.LightweightCharts && s.price && s.price.length) {
+  const readoutEl = document.getElementById("ohlc-readout");
+  readoutEl.innerHTML = "";
+  if (window.LightweightCharts && rows.length) {
     candleChart = LightweightCharts.createChart(candleEl, {
       width: candleEl.clientWidth,
       height: 320,
       layout: { background: { color: "#171a21" }, textColor: "#e8eaed" },
       grid: { vertLines: { color: "#2a2f3a" }, horzLines: { color: "#2a2f3a" } },
       timeScale: { timeVisible: false },
+      crosshair: {
+        // 垂直線跟著滑鼠走；水平線關掉、改用下面的 priceLine 自己畫，
+        // 這樣橫向移動時縱軸一定「對到那天的收盤價」，而不是飄在滑鼠的高度。
+        mode: LightweightCharts.CrosshairMode.Normal,
+        vertLine: { color: "#8b93a7", width: 1, style: 3, labelBackgroundColor: "#3a4152" },
+        horzLine: { visible: false, labelVisible: false },
+      },
     });
     const series = candleChart.addCandlestickSeries({
       upColor: "#ef4444", downColor: "#22c55e",
       borderUpColor: "#ef4444", borderDownColor: "#22c55e",
       wickUpColor: "#ef4444", wickDownColor: "#22c55e",
     });
-    series.setData(s.price.map((p) => ({ time: p.t, open: p.o, high: p.h, low: p.l, close: p.c })));
+    series.setData(rows.map((p) => ({ time: p.t, open: p.o, high: p.h, low: p.l, close: p.c })));
 
     const MA_LINES = [
       { key: "ma10", label: "10日", color: "#f59e0b" },
@@ -259,8 +341,9 @@ async function openDetail(code, kind, name) {
       { key: "ma60", label: "季線", color: "#38bdf8" },
       { key: "ma240", label: "年線", color: "#f472b6" },
     ];
+    const maLegends = [];  // 記住每條均線的 series 和它的 <b>，滑到哪天就換成那天的值
     MA_LINES.forEach((ma) => {
-      const data = s.price
+      const data = rows
         .filter((p) => p[ma.key] !== null && p[ma.key] !== undefined)
         .map((p) => ({ time: p.t, value: p[ma.key] }));
       if (!data.length) return;
@@ -270,11 +353,94 @@ async function openDetail(code, kind, name) {
       });
       lineSeries.setData(data);
       const lastVal = data[data.length - 1].value;
-      legendEl.innerHTML += `<span><i style="background:${ma.color}"></i>${ma.label} <b>${lastVal.toFixed(2)}</b></span>`;
+      const span = document.createElement("span");
+      span.innerHTML = `<i style="background:${ma.color}"></i>${ma.label} <b>${lastVal.toFixed(2)}</b>`;
+      legendEl.appendChild(span);
+      maLegends.push({ series: lineSeries, valueEl: span.querySelector("b"), lastVal });
+    });
+
+    // 水平線：預設停在最新收盤價，滑鼠橫向移動時跟著換成「當天的收盤價」，
+    // 右邊價格軸上也會同時出現那個價格的標籤。
+    const lastBar = rows[rows.length - 1];
+    const closeLine = series.createPriceLine({
+      price: lastBar.c,
+      color: "#e8b341",
+      lineWidth: 1,
+      lineStyle: LightweightCharts.LineStyle.Dashed,
+      axisLabelVisible: true,
+      title: "",
+    });
+
+    // lightweight-charts 回傳的 time 有可能是 "2026-09-21" 字串，也可能是
+    // { year, month, day } 物件，兩種都轉成 YYYY-MM-DD 再查，比較保險。
+    const timeKey = (t) =>
+      t && typeof t === "object"
+        ? `${t.year}-${String(t.month).padStart(2, "0")}-${String(t.day).padStart(2, "0")}`
+        : String(t);
+    const idxByTime = new Map(rows.map((p, i) => [p.t, i]));
+
+    const renderReadout = (idx) => {
+      const row = idx === null || idx === undefined ? null : rows[idx];
+      if (!row) { readoutEl.innerHTML = ""; return; }
+      const prev = idx > 0 ? rows[idx - 1] : null;
+      const diff = prev ? row.c - prev.c : null;
+      const pct = prev && prev.c ? (diff / prev.c) * 100 : null;
+      const cls = diff === null ? "" : diff > 0 ? "up" : diff < 0 ? "down" : "";
+      const n = (v) => (v === null || v === undefined ? "—" : v.toFixed(2));
+      let html =
+        `<span class="date">${row.t}</span>` +
+        `<span>開 <b>${n(row.o)}</b></span>` +
+        `<span>高 <b>${n(row.h)}</b></span>` +
+        `<span>低 <b>${n(row.l)}</b></span>` +
+        `<span>收 <b class="${cls}">${n(row.c)}</b></span>`;
+      if (diff !== null) {
+        const sign = diff > 0 ? "+" : "";
+        html += `<span>漲跌 <b class="${cls}">${sign}${diff.toFixed(2)} (${sign}${pct.toFixed(2)}%)</b></span>`;
+      }
+      // 成交量維持「當天實際成交張數」，不隨還原縮放：那是真的成交了幾張，
+      // 不像價格那樣需要換算成同一個基準。還原模式下標註一下避免誤會。
+      if (row.v) {
+        const volTip = ADJUSTED ? ' title="成交量是當天實際張數，不隨還原調整"' : "";
+        html += `<span${volTip}>量 <b>${Math.round(row.v / 1000).toLocaleString()}</b> 張${ADJUSTED ? "*" : ""}</span>`;
+      }
+      readoutEl.innerHTML = html;
+    };
+
+    renderReadout(rows.length - 1);
+
+    candleChart.subscribeCrosshairMove((param) => {
+      const bar = param.seriesData && param.seriesData.get(series);
+      if (!bar) {
+        // 滑出圖表 -> 回到最新一天
+        closeLine.applyOptions({ price: lastBar.c });
+        renderReadout(rows.length - 1);
+        maLegends.forEach((m) => { m.valueEl.textContent = m.lastVal.toFixed(2); });
+        return;
+      }
+      closeLine.applyOptions({ price: bar.close });
+      const idx = idxByTime.get(timeKey(param.time));
+      // 萬一日期對不起來就先不顯示讀數；價格線已經用十字線的收盤價設好了，價格軸仍然是對的
+      renderReadout(idx === undefined ? null : idx);
+      maLegends.forEach((m) => {
+        const pt = param.seriesData.get(m.series);
+        m.valueEl.textContent = pt && pt.value !== undefined ? pt.value.toFixed(2) : "—";
+      });
     });
 
     candleChart.timeScale().fitContent();
   }
+}
+
+async function openDetail(code, kind, name) {
+  const modal = document.getElementById("detail-modal");
+  modal.classList.remove("hidden");
+  document.getElementById("modal-title").textContent = `${code}　${name}`;
+
+  const s = await loadStock(code);
+
+  // K線（含「還原K線」開關；開關切換時就重畫一次）
+  CURRENT_STOCK = s;
+  drawCandle(s);
 
   // 三大法人(外資/投信/自營商)買賣超 (K線下方)
   const instCanvas = document.getElementById("institutional-chart");
@@ -445,12 +611,30 @@ async function init() {
   document.getElementById("etf-count").textContent = TICKERS.etfs.length;
   if (!META) {
     document.getElementById("updated-at").textContent = "尚未執行「更新資料.bat」，目前沒有資料";
-  } else if (META.status === "partial_quota_exceeded") {
-    document.getElementById("updated-at").textContent =
-      `資料更新時間：${META.updated_at}（免費資料額度用完，只抓到 ${META.stock_count}/${META.stock_total} 個股、${META.etf_count}/${META.etf_total} ETF，約1小時後重跑「更新資料.bat」補齊）`;
   } else {
-    document.getElementById("updated-at").textContent = `資料更新時間：${META.updated_at}`;
+    // 「什麼時候跑的」和「資料到哪一天」是兩回事：三大法人要當天下午4點後才公布，
+    // 太早跑就只會抓到前一個交易日。兩個都顯示出來，才不會以為看到的是最新的。
+    let txt = `資料更新時間：${META.updated_at}`;
+    const dates = [];
+    // 上櫃(櫃買個股、債券ETF)收盤價比上市晚公布，兩邊不同天時要分開講，
+    // 不然標一個「今天」會讓一堆其實還停在昨天的上櫃卡片看起來像最新的。
+    const twse = META.price_date_twse, tpex = META.price_date_tpex;
+    if (twse && tpex && twse !== tpex) {
+      dates.push(`收盤價 上市 ${twse}／上櫃 ${tpex}`);
+    } else if (META.price_date) {
+      dates.push(`收盤價 ${META.price_date}`);
+    }
+    if (META.institutional_date) dates.push(`三大法人 ${META.institutional_date}`);
+    if (dates.length) txt += `（資料日期：${dates.join("、")}）`;
+    if (META.status === "partial_quota_exceeded") {
+      txt += `（免費資料額度用完，只抓到 ${META.stock_count}/${META.stock_total} 個股、${META.etf_count}/${META.etf_total} ETF，約1小時後重跑「更新資料.bat」補齊）`;
+    }
+    document.getElementById("updated-at").textContent = txt;
   }
+
+  const adjBtn = document.getElementById("adj-toggle");
+  adjBtn.classList.toggle("active", ADJUSTED);
+  adjBtn.addEventListener("click", () => setAdjusted(!ADJUSTED));
 
   renderMacroPanel();
   renderMarketFlowChart();
