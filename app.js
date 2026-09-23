@@ -174,6 +174,11 @@ function renderIndexCharts() {
       renderIndexReadout(idx === undefined ? rows.length - 1 : idx);
     });
     chart.timeScale().fitContent();
+    const lastDate = new Date(`${rows[rows.length - 1].t}T00:00:00Z`);
+    const firstVisibleDate = new Date(lastDate);
+    firstVisibleDate.setUTCMonth(firstVisibleDate.getUTCMonth() - 6);
+    const firstVisibleRow = rows.find((row) => new Date(`${row.t}T00:00:00Z`) >= firstVisibleDate) || rows[0];
+    chart.timeScale().setVisibleRange({ from: firstVisibleRow.t, to: rows[rows.length - 1].t });
     indexCharts[key] = chart;
   });
 }

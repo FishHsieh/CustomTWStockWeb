@@ -766,6 +766,38 @@ def yahoo_chart(symbol, cache_key, rng="1y"):
         return []
 
 
+def fetch_twse_taiex_recent(base_rows):
+    """用證交所盤中資料補 Yahoo 尚未提供的最近幾個交易日。"""
+    rows_by_date = {row["t"]: row for row in base_rows}
+    today = datetime.today()
+    for offset in range(10):
+        date = (today - timedelta(days=offset)).strftime("%Y%m%d")
+        date_text = date[:4] + "-" + date[4:6] + "-" + date[6:]
+        data = http_get_json(
+            "https://www.twse.com.tw/rwd/zh/TAIEX/MI_5MINS_INDEX",
+            {"response": "json", "date": date},
+            cache_key=f"macro_taiex_twse_{date}",
+            max_age_hours=24,
+        ) or {}
+        points = []
+        for item in data.get("data") or []:
+            try:
+                points.append(float(str(item[1]).replace(",", "")))
+            except (IndexError, TypeError, ValueError):
+                continue
+        if not points:
+            continue
+        rows_by_date[date_text] = {
+            "t": date_text,
+            "o": round(points[0], 4),
+            "h": round(max(points), 4),
+            "l": round(min(points), 4),
+            "c": round(points[-1], 4),
+            "v": 0,
+        }
+    return sorted(rows_by_date.values(), key=lambda row: row["t"])
+
+
 def fetch_market_flow():
     """全市場三大法人「外資/投信/自營商」個別買賣超、三大法人合計、與反推「散戶買賣超」，單位:億元。"""
     rows = finmind("TaiwanStockTotalInstitutionalInvestors", None, FIN_START, "market_institutional",
@@ -883,7 +915,7 @@ def build_macro():
         "gold": yahoo_chart("GC=F", "macro_gold"),
         "oil_wti": yahoo_chart("CL=F", "macro_oil"),
         "us10y_yield": yahoo_chart("^TNX", "macro_us10y"),
-        "taiex": yahoo_chart("^TWII", "macro_taiex"),
+        "taiex": fetch_twse_taiex_recent(yahoo_chart("^TWII", "macro_taiex")),
 
         "otc": fetch_tpex_index(),
         "usdtwd": yahoo_chart("TWD=X", "macro_usdtwd"),
