@@ -56,6 +56,14 @@ function renderSparkline(canvas, series) {
   const up = values[values.length - 1] >= values[0];
   ctx.strokeStyle = up ? "#ef4444" : "#22c55e";
   ctx.lineWidth = 3;
+  if (values.length === 1) {
+    // 部分海外指數來源暫時只回傳最新一筆，仍顯示目前值，不讓折線因 0/0 變成 NaN 而消失。
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, 4, 0, Math.PI * 2);
+    ctx.fillStyle = ctx.strokeStyle;
+    ctx.fill();
+    return;
+  }
   ctx.beginPath();
   values.forEach((v, i) => {
     const x = (i / (values.length - 1)) * w;
