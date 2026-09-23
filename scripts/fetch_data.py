@@ -71,6 +71,9 @@ TTL_JITTER_RATIO = 0.5
 REQUEST_DELAY = 0.4  # 秒，避免打太快被 FinMind 擋
 MAX_RETRIES = 4
 STATE_FILE = os.path.join(CACHE_DIR, "_fetch_state.json")
+ETF_HOLDINGS_FILE = os.path.join(DATA_DIR, "etf_holdings.json")
+ETF_HOLDINGS_URL = "https://www.sinotrade.com.tw/richclub/api/graphql"
+ETF_HOLDINGS_FRESH_DAYS = 5
 
 # 每天各種資料公布的時間不一樣（以下是台北時間的大致情況）：
 #   上市(twse)收盤價     14:00 前後就抓得到
@@ -247,6 +250,106 @@ def http_get_json(url, params, cache_key=None, auth_token=None, min_date=None, f
             return stale
     return None
 
+
+def post_json(url, payload):
+    """以 JSON POST 呼叫公開資料端點。"""
+    body = json.dumps(payload).encode("utf-8")
+    headers = {"User-Agent": "Mozilla/5.0", "Content-Type": "application/json"}
+    last_err = None
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            req = urllib.request.Request(url, data=body, headers=headers, method="POST")
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as e:
+            last_err = e
+            if attempt < MAX_RETRIES:
+                time.sleep(min(30, 2 ** attempt))
+    log(f"  !! ETF 成分股 API 失敗：{last_err}")
+    return None
+
+
+def load_etf_holdings_db():
+    try:
+        with open(ETF_HOLDINGS_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        if isinstance(data, dict) and isinstance(data.get("items"), dict):
+            return data
+    except (OSError, ValueError, TypeError):
+        pass
+    return {"source": ETF_HOLDINGS_URL, "items": {}}
+
+
+def save_etf_holdings_db(data):
+    os.makedirs(DATA_DIR, exist_ok=True)
+    with open(ETF_HOLDINGS_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+
+def fetch_etf_holdings(codes):
+    """更新 ETF 前十大持股；每檔資料距上次抓取未滿 5 天則沿用舊資料。"""
+    db = load_etf_holdings_db()
+    db.setdefault("source", ETF_HOLDINGS_URL)
+    db.setdefault("items", {})
+    now = datetime.now()
+    refreshed = 0
+    skipped = 0
+    failed = 0
+    query = """query($code: String!) {
+      getETFHoldings(code: $code) {
+        code
+        date
+        list { id nm r }
+      }
+    }"""
+    for code in codes:
+        old = db["items"].get(code)
+        fetched_at = None
+        if old:
+            try:
+                fetched_at = datetime.fromisoformat(old.get("fetched_at", ""))
+            except (TypeError, ValueError):
+                fetched_at = None
+        if fetched_at and now - fetched_at < timedelta(days=ETF_HOLDINGS_FRESH_DAYS):
+            skipped += 1
+            continue
+
+        result = post_json(ETF_HOLDINGS_URL, {"query": query, "variables": {"code": code}})
+        payload = (result or {}).get("data", {}).get("getETFHoldings")
+        rows = (payload or {}).get("list") or []
+        holdings = []
+        for row in rows:
+            try:
+                weight = float(row.get("r"))
+            except (TypeError, ValueError):
+                continue
+            if weight <= 0 or not row.get("id"):
+                continue
+            holdings.append({
+                "code": str(row["id"]),
+                "name": row.get("nm") or str(row["id"]),
+                "weight": weight,
+            })
+        holdings.sort(key=lambda item: item["weight"], reverse=True)
+        if not payload or not holdings:
+            failed += 1
+            log(f"  !! ETF {code} 沒有取得有效成分股，保留舊資料")
+            continue
+        db["items"][code] = {
+            "code": code,
+            "source_date": payload.get("date"),
+            "fetched_at": now.isoformat(timespec="seconds"),
+            "holdings": [
+                {"rank": rank, **item} for rank, item in enumerate(holdings[:10], start=1)
+            ],
+        }
+        refreshed += 1
+        time.sleep(REQUEST_DELAY)
+
+    db["updated_at"] = now.strftime("%Y-%m-%d %H:%M:%S")
+    save_etf_holdings_db(db)
+    log(f"ETF 成分股：更新 {refreshed} 檔、沿用 {skipped} 檔、失敗 {failed} 檔")
+    return db
 
 def finmind(dataset, data_id, start_date, cache_key, min_date=None, force=False,
             max_age_hours=None):
@@ -644,12 +747,19 @@ def yahoo_chart(symbol, cache_key, rng="1y"):
     try:
         result = data["chart"]["result"][0]
         ts = result["timestamp"]
-        closes = result["indicators"]["quote"][0]["close"]
+        quote = result["indicators"]["quote"][0]
+        closes = quote["close"]
         out = []
-        for t, c in zip(ts, closes):
+        for i, (t, c) in enumerate(zip(ts, closes)):
             if c is None:
                 continue
-            out.append({"t": datetime.utcfromtimestamp(t).strftime("%Y-%m-%d"), "c": round(c, 4)})
+            row = {"t": datetime.utcfromtimestamp(t).strftime("%Y-%m-%d"), "c": round(c, 4)}
+            for key in ("open", "high", "low"):
+                if quote[key][i] is not None:
+                    row[key[0]] = round(quote[key][i], 4)
+            if quote["volume"][i] is not None:
+                row["v"] = quote["volume"][i]
+            out.append(row)
         return out
     except Exception as e:
         log(f"  !! yahoo {symbol} 解析失敗: {e}")
@@ -708,6 +818,64 @@ def fetch_futures_flow():
     return foreign_out, trust_out
 
 
+def fetch_tpex_index():
+    """抓取最近 15 個月的 TPEx 櫃買指數 OHLC，並合併近期市場成交量。"""
+    today = datetime.today()
+    price_rows = []
+    for offset in range(15):
+        year = today.year
+        month = today.month - offset
+        while month <= 0:
+            year -= 1
+            month += 12
+        roc_month = f"{year - 1911:03d}/{month:02d}"
+        data = http_get_json(
+            "https://www.tpex.org.tw/www/zh-tw/indexInfo/inx",
+            {"date": roc_month},
+            cache_key=f"macro_otc_{year:04d}{month:02d}",
+            max_age_hours=24,
+        ) or {}
+        tables = data.get("tables") or []
+        if tables:
+            price_rows.extend(tables[0].get("data") or [])
+
+    volume_data = http_get_json(
+        "https://www.tpex.org.tw/openapi/v1/tpex_daily_trading_index",
+        {}, cache_key="macro_otc_volume", force=True,
+    ) or []
+    volumes = {}
+    for row in volume_data:
+        raw_date = str(row.get("Date") or "")
+        if len(raw_date) == 7 and raw_date.isdigit():
+            date = f"{int(raw_date[:3]) + 1911:04d}-{raw_date[3:5]}-{raw_date[5:]}"
+            volumes[date] = float(row.get("TradeVolume") or 0)
+
+    out = []
+    seen = set()
+    for row in price_rows:
+        if len(row) < 5:
+            continue
+        raw_date = str(row[0]).replace("/", "")
+        if len(raw_date) != 8 or not raw_date.isdigit():
+            continue
+        date = f"{raw_date[:4]}-{raw_date[4:6]}-{raw_date[6:]}"
+        if date in seen:
+            continue
+        try:
+            out.append({
+                "t": date,
+                "o": float(row[1]),
+                "h": float(row[2]),
+                "l": float(row[3]),
+                "c": float(row[4]),
+                "v": volumes.get(date, 0),
+            })
+            seen.add(date)
+        except (TypeError, ValueError):
+            continue
+    return sorted(out, key=lambda row: row["t"])
+
+
 def build_macro():
     foreign_net, trust_net, dealer_net, institutional_net, retail_net = fetch_market_flow()
     foreign_futures_net, trust_futures_net = fetch_futures_flow()
@@ -716,6 +884,8 @@ def build_macro():
         "oil_wti": yahoo_chart("CL=F", "macro_oil"),
         "us10y_yield": yahoo_chart("^TNX", "macro_us10y"),
         "taiex": yahoo_chart("^TWII", "macro_taiex"),
+
+        "otc": fetch_tpex_index(),
         "usdtwd": yahoo_chart("TWD=X", "macro_usdtwd"),
         "foreign_net": foreign_net,
         "trust_net": trust_net,
@@ -830,6 +1000,9 @@ def main():
     except QuotaExceeded:
         splits = {}
         log("  額度用完，這輪還原K線先只考慮除權息。")
+
+    log("更新 ETF 前十大成分股（5 天內沿用快取）...")
+    fetch_etf_holdings(etfs)
 
     results = {"stocks": [], "etfs": []}
     try:

@@ -182,6 +182,19 @@ header h1 { margin: 0; font-size: 22px; }
 .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .modal-grid canvas { max-height: 220px; }
 #pe-chart, #retail-chart, #institutional-chart { max-height: 130px; }
+.index-chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.index-block { min-width: 0; }
+.index-chart { min-height: 370px; }
+.index-chart-canvas { width: 100%; }
+.index-legend { display: flex; gap: 12px; flex-wrap: wrap; margin: 0 0 6px; font-size: 12px; color: var(--text-dim); }
+.index-legend span { display: inline-flex; align-items: center; gap: 4px; }
+.index-legend i { width: 12px; height: 3px; border-radius: 2px; display: inline-block; }
+.index-readout { display: flex; gap: 12px; flex-wrap: wrap; align-items: baseline; min-height: 20px; margin-bottom: 4px; font-size: 12px; color: var(--text-dim); }
+.index-readout .date { color: var(--text); font-weight: 600; }
+.index-readout b { color: #f4f7fb; font-weight: 700; }
+.index-readout b.up { color: #ff5a5f; }
+.index-readout b.down { color: #36e58b; }
+.index-readout b.flat { color: #f4f7fb; }
 .flow-block { margin-top: 14px; }
 #market-flow-chart, #futures-flow-chart { max-height: 150px; }
 .empty-note { color: var(--text-dim); font-size: 13px; }
@@ -191,7 +204,13 @@ table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); }
 th { color: var(--text-dim); font-weight: 600; }
 
+@media (max-width: 840px) {
+  .index-chart-grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 640px) {
   .modal-grid { grid-template-columns: 1fr; }
   header { flex-direction: column; align-items: flex-start; }
 }
+
+.table-note { margin-left: 8px; font-size: 12px; color: var(--text-dim); font-weight: 400; }

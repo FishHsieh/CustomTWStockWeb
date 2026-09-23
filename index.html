@@ -21,6 +21,16 @@
 <section id="macro-panel">
   <h2>總經趨勢面板</h2>
   <div class="macro-grid" id="macro-grid"></div>
+  <div class="index-chart-grid">
+    <div class="chart-block index-block">
+      <h3>大盤指數 K 線</h3>
+      <div id="taiex-index-chart" class="index-chart"></div>
+    </div>
+    <div class="chart-block index-block">
+      <h3>櫃買指數 K 線</h3>
+      <div id="otc-index-chart" class="index-chart"></div>
+    </div>
+  </div>
   <div class="chart-block flow-block">
     <h3>外資 / 投信 / 自營商 / 散戶(反推) 進出趨勢 (近半年，億元)</h3>
     <canvas id="market-flow-chart"></canvas>
@@ -33,14 +43,19 @@
 
 <nav id="tabs">
   <button class="tab-btn active" data-tab="stocks">個股 (<span id="stock-count">0</span>)</button>
+  <button class="tab-btn" data-tab="banks">銀行 (<span id="bank-count">0</span>)</button>
   <button class="tab-btn" data-tab="etfs">ETF (<span id="etf-count">0</span>)</button>
+
+  <button class="tab-btn" data-tab="bonds">債券 (<span id="bond-count">0</span>)</button>
 </nav>
 
 <div class="toolbar">
   <input type="text" id="search-box" placeholder="搜尋代號，例如 2330">
   <select id="sort-select">
     <option value="code">依代號排序</option>
-    <option value="yield-desc">依殖利率高到低</option>
+     <option value="volume-desc">依當日成交量排序</option>
+    <option value="amount-desc">依當日成交金額排序</option>
+   <option value="yield-desc">依殖利率高到低</option>
     <option value="yoy-desc">依月營收YoY高到低</option>
     <option value="pe-asc">依本益比低到高</option>
   </select>
@@ -95,7 +110,14 @@
           <tbody></tbody>
         </table>
         <p id="div-empty" class="empty-note hidden">查無配息紀錄</p>
-      </div>
+      <div id="etf-holdings-block" class="chart-block hidden">
+        <h3>ETF 前十大成分股 <span id="etf-holdings-updated" class="table-note"></span></h3>
+        <table id="etf-holdings-table">
+          <thead><tr><th>排名</th><th>代號</th><th>名稱</th><th>占比</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <p id="etf-holdings-empty" class="empty-note">目前沒有成分股資料</p>
+      </div>      </div>
     </div>
   </div>
 </div>

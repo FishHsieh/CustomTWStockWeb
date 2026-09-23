@@ -1,0 +1,5428 @@
+{
+  "source": "https://www.sinotrade.com.tw/richclub/api/graphql",
+  "items": {
+    "00919": {
+      "code": "00919",
+      "source_date": "2026-09-22T05:30:45.000Z",
+      "fetched_at": "2026-09-23T00:32:58",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2881",
+          "name": "富邦金",
+          "weight": 15.39
+        },
+        {
+          "rank": 2,
+          "code": "2882",
+          "name": "國泰金",
+          "weight": 12.6
+        },
+        {
+          "rank": 3,
+          "code": "2382",
+          "name": "廣達",
+          "weight": 10.73
+        },
+        {
+          "rank": 4,
+          "code": "2891",
+          "name": "中信金",
+          "weight": 10.47
+        },
+        {
+          "rank": 5,
+          "code": "2887",
+          "name": "台新新光金",
+          "weight": 8.82
+        },
+        {
+          "rank": 6,
+          "code": "2357",
+          "name": "華碩",
+          "weight": 5.99
+        },
+        {
+          "rank": 7,
+          "code": "2883",
+          "name": "凱基金",
+          "weight": 5.56
+        },
+        {
+          "rank": 8,
+          "code": "2603",
+          "name": "長榮",
+          "weight": 4.0
+        },
+        {
+          "rank": 9,
+          "code": "3034",
+          "name": "聯詠",
+          "weight": 3.35
+        },
+        {
+          "rank": 10,
+          "code": "2379",
+          "name": "瑞昱",
+          "weight": 2.89
+        }
+      ]
+    },
+    "00403A": {
+      "code": "00403A",
+      "source_date": "2026-09-22T05:30:35.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 14.74
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 7.3
+        },
+        {
+          "rank": 3,
+          "code": "3017",
+          "name": "奇鋐",
+          "weight": 6.16
+        },
+        {
+          "rank": 4,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 6.12
+        },
+        {
+          "rank": 5,
+          "code": "3037",
+          "name": "欣興",
+          "weight": 6.04
+        },
+        {
+          "rank": 6,
+          "code": "2383",
+          "name": "台光電",
+          "weight": 4.96
+        },
+        {
+          "rank": 7,
+          "code": "3653",
+          "name": "健策",
+          "weight": 4.14
+        },
+        {
+          "rank": 8,
+          "code": "6223",
+          "name": "旺矽",
+          "weight": 3.75
+        },
+        {
+          "rank": 9,
+          "code": "2308",
+          "name": "台達電",
+          "weight": 3.51
+        },
+        {
+          "rank": 10,
+          "code": "3443",
+          "name": "創意",
+          "weight": 3.45
+        }
+      ]
+    },
+    "0050": {
+      "code": "0050",
+      "source_date": "2026-09-22T05:31:00.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 55.96
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 7.1
+        },
+        {
+          "rank": 3,
+          "code": "2308",
+          "name": "台達電",
+          "weight": 3.41
+        },
+        {
+          "rank": 4,
+          "code": "2317",
+          "name": "鴻海",
+          "weight": 2.88
+        },
+        {
+          "rank": 5,
+          "code": "3711",
+          "name": "日月光投控",
+          "weight": 2.14
+        },
+        {
+          "rank": 6,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 1.74
+        },
+        {
+          "rank": 7,
+          "code": "3037",
+          "name": "欣興",
+          "weight": 1.38
+        },
+        {
+          "rank": 8,
+          "code": "2383",
+          "name": "台光電",
+          "weight": 1.32
+        },
+        {
+          "rank": 9,
+          "code": "2881",
+          "name": "富邦金",
+          "weight": 1.2
+        },
+        {
+          "rank": 10,
+          "code": "2891",
+          "name": "中信金",
+          "weight": 1.15
+        }
+      ]
+    },
+    "0052": {
+      "code": "0052",
+      "source_date": "2026-09-22T05:30:27.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 62.86
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 7.99
+        },
+        {
+          "rank": 3,
+          "code": "2317",
+          "name": "鴻海",
+          "weight": 3.24
+        },
+        {
+          "rank": 4,
+          "code": "3711",
+          "name": "日月光投控",
+          "weight": 2.41
+        },
+        {
+          "rank": 5,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 1.96
+        },
+        {
+          "rank": 6,
+          "code": "3037",
+          "name": "欣興",
+          "weight": 1.55
+        },
+        {
+          "rank": 7,
+          "code": "2383",
+          "name": "台光電",
+          "weight": 1.48
+        },
+        {
+          "rank": 8,
+          "code": "3017",
+          "name": "奇鋐",
+          "weight": 1.14
+        },
+        {
+          "rank": 9,
+          "code": "2382",
+          "name": "廣達",
+          "weight": 0.95
+        },
+        {
+          "rank": 10,
+          "code": "2327",
+          "name": "國巨*",
+          "weight": 0.94
+        }
+      ]
+    },
+    "0056": {
+      "code": "0056",
+      "source_date": "2026-09-22T05:31:00.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "1303",
+          "name": "南亞",
+          "weight": 7.58
+        },
+        {
+          "rank": 2,
+          "code": "2408",
+          "name": "南亞科",
+          "weight": 4.18
+        },
+        {
+          "rank": 3,
+          "code": "2357",
+          "name": "華碩",
+          "weight": 4.15
+        },
+        {
+          "rank": 4,
+          "code": "2890",
+          "name": "永豐金",
+          "weight": 4.13
+        },
+        {
+          "rank": 5,
+          "code": "2880",
+          "name": "華南金",
+          "weight": 4.05
+        },
+        {
+          "rank": 6,
+          "code": "2891",
+          "name": "中信金",
+          "weight": 3.79
+        },
+        {
+          "rank": 7,
+          "code": "2344",
+          "name": "華邦電",
+          "weight": 3.65
+        },
+        {
+          "rank": 8,
+          "code": "2382",
+          "name": "廣達",
+          "weight": 3.61
+        },
+        {
+          "rank": 9,
+          "code": "3231",
+          "name": "緯創",
+          "weight": 3.51
+        },
+        {
+          "rank": 10,
+          "code": "2886",
+          "name": "兆豐金",
+          "weight": 3.41
+        }
+      ]
+    },
+    "00631L": {
+      "code": "00631L",
+      "source_date": "2026-09-22T05:31:00.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "202610TX",
+          "name": "臺股期貨",
+          "weight": 155.22
+        },
+        {
+          "rank": 2,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 41.62
+        },
+        {
+          "rank": 3,
+          "code": "202610NYF",
+          "name": "台灣50ETF股票期貨",
+          "weight": 3.26
+        }
+      ]
+    },
+    "00635U": {
+      "code": "00635U",
+      "source_date": "2026-09-22T08:59:45.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "202612GC",
+          "name": "CMX黃金100盎司期貨",
+          "weight": 99.3
+        }
+      ]
+    },
+    "00642U": {
+      "code": "00642U",
+      "source_date": "2026-09-22T08:59:15.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "202611CL",
+          "name": "輕原油",
+          "weight": 100.26
+        }
+      ]
+    },
+    "00645": {
+      "code": "00645",
+      "source_date": "2026-09-22T08:41:54.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "202612JTIZ6F",
+          "name": "東證指數期貨",
+          "weight": 12.16
+        },
+        {
+          "rank": 2,
+          "code": "8306 JP",
+          "name": "Mitsubishi UFJ Financial Group Inc",
+          "weight": 3.57
+        },
+        {
+          "rank": 3,
+          "code": "7203 JP",
+          "name": "Toyota Motor Corp",
+          "weight": 2.36
+        },
+        {
+          "rank": 4,
+          "code": "8316 JP",
+          "name": "Sumitomo Mitsui Financial Group Inc",
+          "weight": 2.33
+        },
+        {
+          "rank": 5,
+          "code": "6501 JP",
+          "name": "Hitachi Ltd",
+          "weight": 2.23
+        },
+        {
+          "rank": 6,
+          "code": "6098 JP",
+          "name": "Recruit Holdings Co Ltd",
+          "weight": 1.97
+        },
+        {
+          "rank": 7,
+          "code": "6758 JP",
+          "name": "Sony Corp",
+          "weight": 1.96
+        },
+        {
+          "rank": 8,
+          "code": "9984 JP",
+          "name": "SoftBank Group Corp",
+          "weight": 1.92
+        },
+        {
+          "rank": 9,
+          "code": "8411 JP",
+          "name": "Mizuho Financial Group Inc",
+          "weight": 1.85
+        },
+        {
+          "rank": 10,
+          "code": "8035 JP",
+          "name": "Tokyo Electron Ltd",
+          "weight": 1.78
+        }
+      ]
+    },
+    "00646": {
+      "code": "00646",
+      "source_date": "2026-09-22T08:00:15.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "NVDA UQ",
+          "name": "NVIDIA CORP",
+          "weight": 8.06
+        },
+        {
+          "rank": 2,
+          "code": "AAPL UQ",
+          "name": "APPLE INC",
+          "weight": 7.25
+        },
+        {
+          "rank": 3,
+          "code": "MSFT UQ",
+          "name": "MICROSOFT CORP",
+          "weight": 5.46
+        },
+        {
+          "rank": 4,
+          "code": "AMZN UQ",
+          "name": "AMAZON.COM INC",
+          "weight": 3.72
+        },
+        {
+          "rank": 5,
+          "code": "GOOGL UQ",
+          "name": "ALPHABET INC-CL A",
+          "weight": 3.05
+        },
+        {
+          "rank": 6,
+          "code": "AVGO UQ",
+          "name": "BROADCOM INC",
+          "weight": 2.53
+        },
+        {
+          "rank": 7,
+          "code": "GOOG UQ",
+          "name": "ALPHABET INC-CL C",
+          "weight": 2.44
+        },
+        {
+          "rank": 8,
+          "code": "META UQ",
+          "name": "META PLATFORMS INC-CLASS A",
+          "weight": 2.4
+        },
+        {
+          "rank": 9,
+          "code": "202612ES",
+          "name": "小S&P500指數期貨",
+          "weight": 1.88
+        },
+        {
+          "rank": 10,
+          "code": "MU UQ",
+          "name": "MICRON TECHNOLOGY INC",
+          "weight": 1.73
+        }
+      ]
+    },
+    "00657": {
+      "code": "00657",
+      "source_date": "2026-09-22T05:30:47.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "6857.JP",
+          "name": "ADVANTEST CORP.",
+          "weight": 11.12
+        },
+        {
+          "rank": 2,
+          "code": "9983.JP",
+          "name": "FAST RETAILING CO. LTD.",
+          "weight": 7.83
+        },
+        {
+          "rank": 3,
+          "code": "8035.JP",
+          "name": "TOKYO ELECTRON LTD.",
+          "weight": 7.63
+        },
+        {
+          "rank": 4,
+          "code": "9984.JP",
+          "name": "SOFTBANK GROUP CORP.",
+          "weight": 7.3
+        },
+        {
+          "rank": 5,
+          "code": "202612SSI",
+          "name": "NIKKEI 225",
+          "weight": 6.5
+        },
+        {
+          "rank": 6,
+          "code": "6098.JP",
+          "name": "RECRUIT HOLDINGS CO. LTD.",
+          "weight": 2.49
+        },
+        {
+          "rank": 7,
+          "code": "6762.JP",
+          "name": "TDK CORP.",
+          "weight": 2.07
+        },
+        {
+          "rank": 8,
+          "code": "4062.JP",
+          "name": "IBIDEN CO. LTD.",
+          "weight": 1.87
+        },
+        {
+          "rank": 9,
+          "code": "9433.JP",
+          "name": "KDDI CORP.",
+          "weight": 1.77
+        },
+        {
+          "rank": 10,
+          "code": "285A.JP",
+          "name": "KIOXIA HOLDINGS CORP.",
+          "weight": 1.74
+        }
+      ]
+    },
+    "00661": {
+      "code": "00661",
+      "source_date": "2026-09-22T08:49:45.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "6857 JT",
+          "name": "ADVANTEST CORP",
+          "weight": 11.06
+        },
+        {
+          "rank": 2,
+          "code": "9983 JT",
+          "name": "FAST RETAILING CO LTD",
+          "weight": 7.81
+        },
+        {
+          "rank": 3,
+          "code": "8035 JT",
+          "name": "TOKYO ELECTRON LTD",
+          "weight": 7.62
+        },
+        {
+          "rank": 4,
+          "code": "9984 JT",
+          "name": "SOFTBANK GROUP CORP",
+          "weight": 7.26
+        },
+        {
+          "rank": 5,
+          "code": "202612NK",
+          "name": "日經225指數期貨(SGX)",
+          "weight": 6.54
+        },
+        {
+          "rank": 6,
+          "code": "6098 JT",
+          "name": "RECRUIT HOLDINGS CO LTD",
+          "weight": 2.49
+        },
+        {
+          "rank": 7,
+          "code": "6762 JT",
+          "name": "TDK CORP",
+          "weight": 2.04
+        },
+        {
+          "rank": 8,
+          "code": "4062 JT",
+          "name": "IBIDEN CO LTD",
+          "weight": 1.86
+        },
+        {
+          "rank": 9,
+          "code": "285A JT",
+          "name": "KIOXIA HOLDINGS CORP",
+          "weight": 1.81
+        },
+        {
+          "rank": 10,
+          "code": "9433 JT",
+          "name": "KDDI CORP",
+          "weight": 1.76
+        }
+      ]
+    },
+    "00662": {
+      "code": "00662",
+      "source_date": "2026-09-22T08:46:54.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "NVDA US",
+          "name": "NVIDIA CORP",
+          "weight": 8.19
+        },
+        {
+          "rank": 2,
+          "code": "AAPL US",
+          "name": "APPLE INC",
+          "weight": 7.4
+        },
+        {
+          "rank": 3,
+          "code": "MSFT US",
+          "name": "MICROSOFT CORP",
+          "weight": 5.57
+        },
+        {
+          "rank": 4,
+          "code": "MU US",
+          "name": "MICRON TECHNOLOGY INC",
+          "weight": 4.87
+        },
+        {
+          "rank": 5,
+          "code": "AMZN US",
+          "name": "AMAZON.COM INC",
+          "weight": 4.17
+        },
+        {
+          "rank": 6,
+          "code": "AMD US",
+          "name": "ADVANCED MICRO DEVICES",
+          "weight": 4.15
+        },
+        {
+          "rank": 7,
+          "code": "META US",
+          "name": "META PLATFORMS INC",
+          "weight": 3.3
+        },
+        {
+          "rank": 8,
+          "code": "GOOGL US",
+          "name": "Alphabet Inc-CL A",
+          "weight": 3.11
+        },
+        {
+          "rank": 9,
+          "code": "TSLA US",
+          "name": "TESLA INC",
+          "weight": 2.95
+        },
+        {
+          "rank": 10,
+          "code": "GOOG US",
+          "name": "Alphabet Inc-CL C",
+          "weight": 2.9
+        }
+      ]
+    },
+    "00679B": {
+      "code": "00679B",
+      "source_date": "2026-09-22T08:59:45.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "912810UK2",
+          "name": "US TREASURY N/B 4.75 05/15/2055",
+          "weight": 5.41
+        },
+        {
+          "rank": 2,
+          "code": "912810UA4",
+          "name": "US TREASURY N/B 4.625 05/15/2054",
+          "weight": 5.31
+        },
+        {
+          "rank": 3,
+          "code": "912810TV0",
+          "name": "US TREASURY N/B 4.75 11/15/2053",
+          "weight": 5.24
+        },
+        {
+          "rank": 4,
+          "code": "912810UG1",
+          "name": "US TREASURY N/B 4.625 02/15/2055",
+          "weight": 5.16
+        },
+        {
+          "rank": 5,
+          "code": "912810UE6",
+          "name": "US TREASURY N/B 4.5 11/15/2054",
+          "weight": 4.88
+        },
+        {
+          "rank": 6,
+          "code": "912810TX6",
+          "name": "US TREASURY N/B 4.25 02/15/2054",
+          "weight": 4.84
+        },
+        {
+          "rank": 7,
+          "code": "912810UM8",
+          "name": "US TREASURY N/B 4.75 08/15/2055",
+          "weight": 4.69
+        },
+        {
+          "rank": 8,
+          "code": "912810UC0",
+          "name": "US TREASURY N/B 4.25 08/15/2054",
+          "weight": 4.37
+        },
+        {
+          "rank": 9,
+          "code": "912810TT5",
+          "name": "US TREASURY N/B 4.125 08/15/2053",
+          "weight": 3.76
+        },
+        {
+          "rank": 10,
+          "code": "912810TR9",
+          "name": "US TREASURY N/B 3.625 05/15/2053",
+          "weight": 2.92
+        }
+      ]
+    },
+    "00685L": {
+      "code": "00685L",
+      "source_date": "2026-09-22T06:45:30.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "202610TX",
+          "name": "台指期",
+          "weight": 199.74
+        }
+      ]
+    },
+    "00687B": {
+      "code": "00687B",
+      "source_date": "2026-09-22T08:59:51.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "BBG0221YLR40",
+          "name": "US TREASURY N/B 5.0-2056/05/15",
+          "weight": 4.79
+        },
+        {
+          "rank": 2,
+          "code": "BBG01TQR9HT9",
+          "name": "US TREASURY N/B 4.75-2055/05/15",
+          "weight": 4.62
+        },
+        {
+          "rank": 3,
+          "code": "BBG01Y9RFK40",
+          "name": "US TREASURY N/B 4.625-2055/11/15",
+          "weight": 4.54
+        },
+        {
+          "rank": 4,
+          "code": "BBG01MPC8XR6",
+          "name": "US TREASURY N/B 4.625-2054/05/15",
+          "weight": 4.54
+        },
+        {
+          "rank": 5,
+          "code": "BBG01ZZ4GDS8",
+          "name": "US TREASURY N/B 4.75-2056/02/15",
+          "weight": 4.51
+        },
+        {
+          "rank": 6,
+          "code": "BBG01WCQ4BT7",
+          "name": "US TREASURY N/B 4.75-2055/08/15",
+          "weight": 4.5
+        },
+        {
+          "rank": 7,
+          "code": "BBG01QKHSL31",
+          "name": "US TREASURY N/B 4.5-2054/11/15",
+          "weight": 4.45
+        },
+        {
+          "rank": 8,
+          "code": "BBG01JZY4HS2",
+          "name": "US TREASURY N/B 4.75-2053/11/15",
+          "weight": 4.44
+        },
+        {
+          "rank": 9,
+          "code": "BBG01S53LGS6",
+          "name": "US TREASURY N/B 4.625-2055/02/15",
+          "weight": 4.43
+        },
+        {
+          "rank": 10,
+          "code": "BBG01P1YBJY6",
+          "name": "US TREASURY N/B 4.25-2054/08/15",
+          "weight": 4.19
+        }
+      ]
+    },
+    "00688L": {
+      "code": "00688L",
+      "source_date": "2026-09-22T08:59:22.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "202612UB",
+          "name": "美國超長期政府債券",
+          "weight": 200.41
+        }
+      ]
+    },
+    "00701": {
+      "code": "00701",
+      "source_date": "2026-09-22T05:31:02.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 13.36
+        },
+        {
+          "rank": 2,
+          "code": "2881",
+          "name": "富邦金",
+          "weight": 11.14
+        },
+        {
+          "rank": 3,
+          "code": "2891",
+          "name": "中信金",
+          "weight": 8.8
+        },
+        {
+          "rank": 4,
+          "code": "2882",
+          "name": "國泰金",
+          "weight": 7.75
+        },
+        {
+          "rank": 5,
+          "code": "2885",
+          "name": "元大金",
+          "weight": 6.65
+        },
+        {
+          "rank": 6,
+          "code": "2412",
+          "name": "中華電",
+          "weight": 5.23
+        },
+        {
+          "rank": 7,
+          "code": "2884",
+          "name": "玉山金",
+          "weight": 5.22
+        },
+        {
+          "rank": 8,
+          "code": "2883",
+          "name": "凱基金",
+          "weight": 4.67
+        },
+        {
+          "rank": 9,
+          "code": "2890",
+          "name": "永豐金",
+          "weight": 4.65
+        },
+        {
+          "rank": 10,
+          "code": "2886",
+          "name": "兆豐金",
+          "weight": 4.23
+        }
+      ]
+    },
+    "00706L": {
+      "code": "00706L",
+      "source_date": "2026-09-22T08:59:45.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "202506JY",
+          "name": "日圓",
+          "weight": 201.26
+        }
+      ]
+    },
+    "00712": {
+      "code": "00712",
+      "source_date": "2026-09-22T08:59:40.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "NLY US",
+          "name": "安納利資本管理公司",
+          "weight": 27.38
+        },
+        {
+          "rank": 2,
+          "code": "AGNC US",
+          "name": "AGNC投資公司",
+          "weight": 19.77
+        },
+        {
+          "rank": 3,
+          "code": "RITM US",
+          "name": "Rithm資本公司",
+          "weight": 9.06
+        },
+        {
+          "rank": 4,
+          "code": "STWD US",
+          "name": "史塔屋資產信託",
+          "weight": 8.95
+        },
+        {
+          "rank": 5,
+          "code": "BXMT US",
+          "name": "百仕通抵押信託公司",
+          "weight": 4.69
+        },
+        {
+          "rank": 6,
+          "code": "DA_NTD",
+          "name": "AFTER DEDUCTING SECURITIES PURCHASES AMOUNT",
+          "weight": 4.61
+        },
+        {
+          "rank": 7,
+          "code": "DX US",
+          "name": "德尼克斯資本公司",
+          "weight": 4.37
+        },
+        {
+          "rank": 8,
+          "code": "ARR US",
+          "name": "亞幕住宅不動產投資信託公司",
+          "weight": 2.88
+        },
+        {
+          "rank": 9,
+          "code": "LADR US",
+          "name": "階梯資本公司",
+          "weight": 2.37
+        },
+        {
+          "rank": 10,
+          "code": "EFC US",
+          "name": "艾靈頓金融公司",
+          "weight": 2.12
+        }
+      ]
+    },
+    "00713": {
+      "code": "00713",
+      "source_date": "2026-09-22T05:31:00.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "3045",
+          "name": "台灣大",
+          "weight": 9.72
+        },
+        {
+          "rank": 2,
+          "code": "1216",
+          "name": "統一",
+          "weight": 8.22
+        },
+        {
+          "rank": 3,
+          "code": "2892",
+          "name": "第一金",
+          "weight": 6.97
+        },
+        {
+          "rank": 4,
+          "code": "2912",
+          "name": "統一超",
+          "weight": 6.22
+        },
+        {
+          "rank": 5,
+          "code": "4904",
+          "name": "遠傳",
+          "weight": 5.03
+        },
+        {
+          "rank": 6,
+          "code": "2884",
+          "name": "玉山金",
+          "weight": 4.91
+        },
+        {
+          "rank": 7,
+          "code": "2880",
+          "name": "華南金",
+          "weight": 4.51
+        },
+        {
+          "rank": 8,
+          "code": "1402",
+          "name": "遠東新",
+          "weight": 3.5
+        },
+        {
+          "rank": 9,
+          "code": "5876",
+          "name": "上海商銀",
+          "weight": 3.33
+        },
+        {
+          "rank": 10,
+          "code": "2382",
+          "name": "廣達",
+          "weight": 2.18
+        }
+      ]
+    },
+    "00715L": {
+      "code": "00715L",
+      "source_date": "2026-09-22T09:01:15.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "202612B",
+          "name": "布蘭特",
+          "weight": 206.6
+        }
+      ]
+    },
+    "00719B": {
+      "code": "00719B",
+      "source_date": "2026-09-22T08:59:45.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "91282CMF5",
+          "name": "US TREASURY N/B 4.25 01/15/2028",
+          "weight": 3.3
+        },
+        {
+          "rank": 2,
+          "code": "91282CNH0",
+          "name": "US TREASURY N/B 3.875 06/15/2028",
+          "weight": 3.28
+        },
+        {
+          "rank": 3,
+          "code": "91282CMS7",
+          "name": "US TREASURY N/B 3.875 03/15/2028",
+          "weight": 3.25
+        },
+        {
+          "rank": 4,
+          "code": "912810FB9",
+          "name": "US TREASURY N/B 6.125 11/15/2027",
+          "weight": 3.07
+        },
+        {
+          "rank": 5,
+          "code": "912810FF0",
+          "name": "US TREASURY N/B 5.25 11/15/2028",
+          "weight": 3.04
+        },
+        {
+          "rank": 6,
+          "code": "91282CMN8",
+          "name": "US TREASURY N/B 4.25 02/15/2028",
+          "weight": 2.96
+        },
+        {
+          "rank": 7,
+          "code": "91282CND9",
+          "name": "US TREASURY N/B 3.75 05/15/2028",
+          "weight": 2.95
+        },
+        {
+          "rank": 8,
+          "code": "91282CHK0",
+          "name": "US TREASURY N/B 4 06/30/2028",
+          "weight": 2.95
+        },
+        {
+          "rank": 9,
+          "code": "91282CKP5",
+          "name": "US TREASURY N/B 4.625 04/30/2029",
+          "weight": 2.67
+        },
+        {
+          "rank": 10,
+          "code": "91282CKT7",
+          "name": "US TREASURY N/B 4.5 05/31/2029",
+          "weight": 2.65
+        }
+      ]
+    },
+    "00720B": {
+      "code": "00720B",
+      "source_date": "2026-09-22T08:00:15.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "BQ8960495",
+          "name": "AT&T INC 3.5 09/15/2053",
+          "weight": 1.09
+        },
+        {
+          "rank": 2,
+          "code": "BQ8960586",
+          "name": "AT&T INC 3.8 12/01/2057",
+          "weight": 0.99
+        },
+        {
+          "rank": 3,
+          "code": "BR2003639",
+          "name": "AT&T INC 3.55 09/15/2055",
+          "weight": 0.99
+        },
+        {
+          "rank": 4,
+          "code": "YT3909538",
+          "name": "BOEING CO/THE 7.008 05/01/2064",
+          "weight": 0.99
+        },
+        {
+          "rank": 5,
+          "code": "YT3909405",
+          "name": "BOEING CO/THE 6.858 05/01/2054",
+          "weight": 0.97
+        },
+        {
+          "rank": 6,
+          "code": "ZL1040761",
+          "name": "AMGEN INC 5.65 03/02/2053",
+          "weight": 0.92
+        },
+        {
+          "rank": 7,
+          "code": "BQ8960446",
+          "name": "AT&T INC 3.65 09/15/2059",
+          "weight": 0.92
+        },
+        {
+          "rank": 8,
+          "code": "BJ2238878",
+          "name": "BOEING CO 5.93 05/01/2060",
+          "weight": 0.92
+        },
+        {
+          "rank": 9,
+          "code": "BJ2238811",
+          "name": "BOEING CO/THE 5.805 05/01/2050",
+          "weight": 0.82
+        },
+        {
+          "rank": 10,
+          "code": "AR6336036",
+          "name": "CVS HEALTH CORP 5.05 03/25/2048",
+          "weight": 0.82
+        }
+      ]
+    },
+    "00725B": {
+      "code": "00725B",
+      "source_date": "2026-09-22T08:59:51.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "BBG01F3YX1P1",
+          "name": "INTEL CORP 5.9-2063/02/10",
+          "weight": 2.13
+        },
+        {
+          "rank": 2,
+          "code": "BBG01K1Z1691",
+          "name": "RTX CORP 6.4-2054/03/15",
+          "weight": 1.97
+        },
+        {
+          "rank": 3,
+          "code": "BBG01V8RCBS4",
+          "name": "AT&T INC 6.05-2056/08/15",
+          "weight": 1.94
+        },
+        {
+          "rank": 4,
+          "code": "BBG01BFF1128",
+          "name": "ORACLE CORP 6.9-2052/11/09",
+          "weight": 1.89
+        },
+        {
+          "rank": 5,
+          "code": "BBG01HVFD5Y0",
+          "name": "ONEOK INC 6.625-2053/09/01",
+          "weight": 1.83
+        },
+        {
+          "rank": 6,
+          "code": "BBG01J96XMY2",
+          "name": "T-MOBILE USA INC 6.0-2054/06/15",
+          "weight": 1.6
+        },
+        {
+          "rank": 7,
+          "code": "BBG01K1YXY43",
+          "name": "ENBRIDGE INC 6.7-2053/11/15",
+          "weight": 1.55
+        },
+        {
+          "rank": 8,
+          "code": "BBG00F5TT274",
+          "name": "CHARTER COMM OPT LLC/CAP 6.484-2045/10/23",
+          "weight": 1.52
+        },
+        {
+          "rank": 9,
+          "code": "BBG01HQ3H0K5",
+          "name": "BAT CAPITAL CORP 7.081-2053/08/02",
+          "weight": 1.51
+        },
+        {
+          "rank": 10,
+          "code": "BBG01F3YX1K6",
+          "name": "INTEL CORP 5.7-2053/02/10",
+          "weight": 1.45
+        }
+      ]
+    },
+    "00733": {
+      "code": "00733",
+      "source_date": "2026-09-22T05:30:27.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2618",
+          "name": "長榮航",
+          "weight": 12.42
+        },
+        {
+          "rank": 2,
+          "code": "8996",
+          "name": "高力",
+          "weight": 9.24
+        },
+        {
+          "rank": 3,
+          "code": "6213",
+          "name": "聯茂",
+          "weight": 7.79
+        },
+        {
+          "rank": 4,
+          "code": "2492",
+          "name": "華新科",
+          "weight": 7.49
+        },
+        {
+          "rank": 5,
+          "code": "3026",
+          "name": "禾伸堂",
+          "weight": 7.41
+        },
+        {
+          "rank": 6,
+          "code": "6139",
+          "name": "亞翔",
+          "weight": 7.3
+        },
+        {
+          "rank": 7,
+          "code": "5434",
+          "name": "崇越",
+          "weight": 6.12
+        },
+        {
+          "rank": 8,
+          "code": "2610",
+          "name": "華航",
+          "weight": 4.87
+        },
+        {
+          "rank": 9,
+          "code": "6409",
+          "name": "旭隼",
+          "weight": 4.05
+        },
+        {
+          "rank": 10,
+          "code": "8021",
+          "name": "尖點",
+          "weight": 3.97
+        }
+      ]
+    },
+    "00735": {
+      "code": "00735",
+      "source_date": "2026-09-22T08:59:52.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 20.8
+        },
+        {
+          "rank": 2,
+          "code": "005930.KS",
+          "name": "Samsung Electron Rg",
+          "weight": 16.49
+        },
+        {
+          "rank": 3,
+          "code": "000660.KS",
+          "name": "SK Hynix Inc",
+          "weight": 14.06
+        },
+        {
+          "rank": 4,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 4.66
+        },
+        {
+          "rank": 5,
+          "code": "3711",
+          "name": "日月光投控",
+          "weight": 2.82
+        },
+        {
+          "rank": 6,
+          "code": "2317",
+          "name": "鴻海",
+          "weight": 2.32
+        },
+        {
+          "rank": 7,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 2.24
+        },
+        {
+          "rank": 8,
+          "code": "009150.KS",
+          "name": "Samsung Electro-Mech Co",
+          "weight": 2.06
+        },
+        {
+          "rank": 9,
+          "code": "2308",
+          "name": "台達電",
+          "weight": 2.04
+        },
+        {
+          "rank": 10,
+          "code": "3037",
+          "name": "欣興",
+          "weight": 1.86
+        }
+      ]
+    },
+    "00738U": {
+      "code": "00738U",
+      "source_date": "2026-09-22T08:59:45.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "202612SI",
+          "name": "白銀期貨",
+          "weight": 99.91
+        }
+      ]
+    },
+    "00757": {
+      "code": "00757",
+      "source_date": "2026-09-22T08:00:19.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "MU US",
+          "name": "MICRON TECHNOLOGY INC",
+          "weight": 10.15
+        },
+        {
+          "rank": 2,
+          "code": "META US",
+          "name": "META PLATFORMS INC(Meta平台公司)",
+          "weight": 9.91
+        },
+        {
+          "rank": 3,
+          "code": "AVGO US",
+          "name": "BROADCOM LTD",
+          "weight": 9.62
+        },
+        {
+          "rank": 4,
+          "code": "NVDA US",
+          "name": "NVIDIA CORP(輝達公司)",
+          "weight": 9.57
+        },
+        {
+          "rank": 5,
+          "code": "PLTR US",
+          "name": "PALANTIR TECHNOLOGIES INC-A",
+          "weight": 9.46
+        },
+        {
+          "rank": 6,
+          "code": "AMZN US",
+          "name": "AMAZON.COM INC(亞馬遜公司)",
+          "weight": 9.46
+        },
+        {
+          "rank": 7,
+          "code": "GOOGL US",
+          "name": "ALPHABET INC-CL A(Alphabet公司)",
+          "weight": 9.32
+        },
+        {
+          "rank": 8,
+          "code": "MSFT US",
+          "name": "MICROSOFT CORP(微軟公司)",
+          "weight": 9.21
+        },
+        {
+          "rank": 9,
+          "code": "AAPL US",
+          "name": "APPLE INC(蘋果公司)",
+          "weight": 9.18
+        },
+        {
+          "rank": 10,
+          "code": "NFLX US",
+          "name": "NETFLIX INC(網飛公司)",
+          "weight": 8.65
+        }
+      ]
+    },
+    "00763U": {
+      "code": "00763U",
+      "source_date": "2026-09-22T09:00:30.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "202612HG",
+          "name": "高級銅",
+          "weight": 100.66
+        }
+      ]
+    },
+    "00764B": {
+      "code": "00764B",
+      "source_date": "2026-09-22T08:00:15.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "US912810TV08",
+          "name": "T 4 3/4 11/15/53",
+          "weight": 15.77
+        },
+        {
+          "rank": 2,
+          "code": "US912810UA42",
+          "name": "T 4 5/8 05/15/54",
+          "weight": 14.01
+        },
+        {
+          "rank": 3,
+          "code": "US912810TX63",
+          "name": "T 4 1/4 02/15/54",
+          "weight": 9.79
+        },
+        {
+          "rank": 4,
+          "code": "US912810UC08",
+          "name": "T 4 1/4 08/15/54",
+          "weight": 9.25
+        },
+        {
+          "rank": 5,
+          "code": "US912810UK24",
+          "name": "T 4 3/4 05/15/55",
+          "weight": 7.78
+        },
+        {
+          "rank": 6,
+          "code": "US912810UM89",
+          "name": "T 4 3/4 08/15/55",
+          "weight": 7.48
+        },
+        {
+          "rank": 7,
+          "code": "US912810UR76",
+          "name": "T 4 3/4 02/15/56",
+          "weight": 7.42
+        },
+        {
+          "rank": 8,
+          "code": "US912810UG12",
+          "name": "T 4 5/8 02/15/55",
+          "weight": 7.17
+        },
+        {
+          "rank": 9,
+          "code": "US912810UP11",
+          "name": "T 4 5/8 11/15/55",
+          "weight": 7.16
+        },
+        {
+          "rank": 10,
+          "code": "US912810UE63",
+          "name": "T 4 1/2 11/15/54",
+          "weight": 6.99
+        }
+      ]
+    },
+    "00795B": {
+      "code": "00795B",
+      "source_date": "2026-09-22T09:00:00.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "US912810UG12",
+          "name": "T 4.625 02/15/55",
+          "weight": 6.06
+        },
+        {
+          "rank": 2,
+          "code": "US912810UE63",
+          "name": "T 4.5 11/15/54",
+          "weight": 6.01
+        },
+        {
+          "rank": 3,
+          "code": "US912810TV08",
+          "name": "T 4.75 11/15/53",
+          "weight": 6.0
+        },
+        {
+          "rank": 4,
+          "code": "US912810UK24",
+          "name": "T 4.75 05/15/55",
+          "weight": 5.97
+        },
+        {
+          "rank": 5,
+          "code": "US912810UA42",
+          "name": "T 4.625 05/15/54",
+          "weight": 5.96
+        },
+        {
+          "rank": 6,
+          "code": "US912810TX63",
+          "name": "T 4.25 02/15/54",
+          "weight": 5.9
+        },
+        {
+          "rank": 7,
+          "code": "US912810UR76",
+          "name": "T 4.75 02/15/56",
+          "weight": 5.89
+        },
+        {
+          "rank": 8,
+          "code": "US912810UC08",
+          "name": "T 4.25 08/15/54",
+          "weight": 5.87
+        },
+        {
+          "rank": 9,
+          "code": "US912810UM89",
+          "name": "T 4.75 08/15/55",
+          "weight": 5.86
+        },
+        {
+          "rank": 10,
+          "code": "US912810UP11",
+          "name": "T 4.625 11/15/55",
+          "weight": 5.74
+        }
+      ]
+    },
+    "00830": {
+      "code": "00830",
+      "source_date": "2026-09-22T07:41:05.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "NVDA.US",
+          "name": "NVIDIA CORPORATION",
+          "weight": 11.53
+        },
+        {
+          "rank": 2,
+          "code": "AVGO.US",
+          "name": "BROADCOM INC",
+          "weight": 9.11
+        },
+        {
+          "rank": 3,
+          "code": "MU.US",
+          "name": "Micron Technology Inc",
+          "weight": 8.14
+        },
+        {
+          "rank": 4,
+          "code": "AMD.US",
+          "name": "ADV MICRO DEVICES",
+          "weight": 4.87
+        },
+        {
+          "rank": 5,
+          "code": "INTC.US",
+          "name": "Intel Corp",
+          "weight": 4.59
+        },
+        {
+          "rank": 6,
+          "code": "MRVL.US",
+          "name": "MARVELL TECH GROUP",
+          "weight": 4.55
+        },
+        {
+          "rank": 7,
+          "code": "TSM.US",
+          "name": "TAIWAN SEMICOND ADS",
+          "weight": 4.02
+        },
+        {
+          "rank": 8,
+          "code": "ADI.US",
+          "name": "ANALOG DEVICES INC",
+          "weight": 3.94
+        },
+        {
+          "rank": 9,
+          "code": "KLAC.US",
+          "name": "K L A-TENCOR CORP",
+          "weight": 3.9
+        },
+        {
+          "rank": 10,
+          "code": "TXN.US",
+          "name": "TEXAS INSTRUMENTS INC",
+          "weight": 3.87
+        }
+      ]
+    },
+    "00876": {
+      "code": "00876",
+      "source_date": "2026-09-22T08:59:45.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "202612NQ",
+          "name": "小那斯達克指數期貨",
+          "weight": 8.38
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 6.69
+        },
+        {
+          "rank": 3,
+          "code": "ASML NA",
+          "name": "ASML HOLDING NV",
+          "weight": 5.79
+        },
+        {
+          "rank": 4,
+          "code": "AMAT UQ",
+          "name": "APPLIED MATERIALS INC",
+          "weight": 5.68
+        },
+        {
+          "rank": 5,
+          "code": "LRCX UQ",
+          "name": "LAM RESEARCH CORP",
+          "weight": 5.43
+        },
+        {
+          "rank": 6,
+          "code": "AVGO UQ",
+          "name": "BROADCOM INC",
+          "weight": 4.43
+        },
+        {
+          "rank": 7,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 4.34
+        },
+        {
+          "rank": 8,
+          "code": "MRVL UQ",
+          "name": "MARVELL TECHNOLOGY INC",
+          "weight": 4.27
+        },
+        {
+          "rank": 9,
+          "code": "8035 JT",
+          "name": "TOKYO ELECTRON LTD",
+          "weight": 4.16
+        },
+        {
+          "rank": 10,
+          "code": "APH UN",
+          "name": "AMPHENOL CORP-CL A",
+          "weight": 3.77
+        }
+      ]
+    },
+    "00877": {
+      "code": "00877",
+      "source_date": "2026-09-22T07:55:14.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "300502 CH",
+          "name": "成都新易盛通信技術股份有限公",
+          "weight": 9.61
+        },
+        {
+          "rank": 2,
+          "code": "300308 CH",
+          "name": "中際旭創股份有限公司",
+          "weight": 8.86
+        },
+        {
+          "rank": 3,
+          "code": "002475 CH",
+          "name": "立訊精密工業股份有限公司",
+          "weight": 6.63
+        },
+        {
+          "rank": 4,
+          "code": "603986 CH",
+          "name": "兆易創新科技集團股份有限公司",
+          "weight": 6.25
+        },
+        {
+          "rank": 5,
+          "code": "601138 CH",
+          "name": "富士康工業互聯網股份有限公司",
+          "weight": 6.03
+        },
+        {
+          "rank": 6,
+          "code": "002384 CH",
+          "name": "蘇州東山精密製造股份有限公司",
+          "weight": 5.97
+        },
+        {
+          "rank": 7,
+          "code": "600183 CH",
+          "name": "廣東生益科技股份有限公司",
+          "weight": 5.09
+        },
+        {
+          "rank": 8,
+          "code": "688498 CH",
+          "name": "陝西源傑半導體科技股份有限公",
+          "weight": 4.38
+        },
+        {
+          "rank": 9,
+          "code": "300394 CH",
+          "name": "蘇州天孚光通信股份有限公司",
+          "weight": 4.36
+        },
+        {
+          "rank": 10,
+          "code": "002463 CH",
+          "name": "滬士電子股份有限公司",
+          "weight": 4.05
+        }
+      ]
+    },
+    "00878": {
+      "code": "00878",
+      "source_date": "2026-09-22T08:48:37.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2891",
+          "name": "中信金",
+          "weight": 9.7
+        },
+        {
+          "rank": 2,
+          "code": "2382",
+          "name": "廣達",
+          "weight": 9.27
+        },
+        {
+          "rank": 3,
+          "code": "2882",
+          "name": "國泰金",
+          "weight": 6.41
+        },
+        {
+          "rank": 4,
+          "code": "2357",
+          "name": "華碩",
+          "weight": 5.68
+        },
+        {
+          "rank": 5,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 4.6
+        },
+        {
+          "rank": 6,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 4.03
+        },
+        {
+          "rank": 7,
+          "code": "2603",
+          "name": "長榮",
+          "weight": 4.0
+        },
+        {
+          "rank": 8,
+          "code": "2887",
+          "name": "台新新光金",
+          "weight": 3.92
+        },
+        {
+          "rank": 9,
+          "code": "2379",
+          "name": "瑞昱",
+          "weight": 3.18
+        },
+        {
+          "rank": 10,
+          "code": "2880",
+          "name": "華南金",
+          "weight": 3.16
+        }
+      ]
+    },
+    "00881": {
+      "code": "00881",
+      "source_date": "2026-09-22T07:07:20.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 37.89
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 11.96
+        },
+        {
+          "rank": 3,
+          "code": "2308",
+          "name": "台達電",
+          "weight": 6.06
+        },
+        {
+          "rank": 4,
+          "code": "2317",
+          "name": "鴻海",
+          "weight": 4.66
+        },
+        {
+          "rank": 5,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 3.64
+        },
+        {
+          "rank": 6,
+          "code": "3037",
+          "name": "欣興",
+          "weight": 3.24
+        },
+        {
+          "rank": 7,
+          "code": "2059",
+          "name": "川湖",
+          "weight": 2.75
+        },
+        {
+          "rank": 8,
+          "code": "2383",
+          "name": "台光電",
+          "weight": 2.4
+        },
+        {
+          "rank": 9,
+          "code": "3017",
+          "name": "奇鋐",
+          "weight": 2.19
+        },
+        {
+          "rank": 10,
+          "code": "3008",
+          "name": "大立光",
+          "weight": 2.14
+        }
+      ]
+    },
+    "00882": {
+      "code": "00882",
+      "source_date": "2026-09-22T08:08:16.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "1919 HK",
+          "name": "中遠海控",
+          "weight": 4.62
+        },
+        {
+          "rank": 2,
+          "code": "148 HK",
+          "name": "建滔集團",
+          "weight": 3.25
+        },
+        {
+          "rank": 3,
+          "code": "2328 HK",
+          "name": "中國財險",
+          "weight": 3.03
+        },
+        {
+          "rank": 4,
+          "code": "3311 HK",
+          "name": "中國建築國際集團有限公司",
+          "weight": 2.79
+        },
+        {
+          "rank": 5,
+          "code": "267 HK",
+          "name": "中國中信股份有限公司",
+          "weight": 2.77
+        },
+        {
+          "rank": 6,
+          "code": "3360 HK",
+          "name": "遠東宏信",
+          "weight": 2.76
+        },
+        {
+          "rank": 7,
+          "code": "270 HK",
+          "name": "粵海投資",
+          "weight": 2.63
+        },
+        {
+          "rank": 8,
+          "code": "1199 HK",
+          "name": "中遠海運港口有限公司",
+          "weight": 2.44
+        },
+        {
+          "rank": 9,
+          "code": "998 HK",
+          "name": "中信銀行",
+          "weight": 2.42
+        },
+        {
+          "rank": 10,
+          "code": "1336 HK",
+          "name": "新華保險",
+          "weight": 2.38
+        }
+      ]
+    },
+    "00885": {
+      "code": "00885",
+      "source_date": "2026-09-22T09:00:32.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "VIC VN",
+          "name": "VINGROUP JSC",
+          "weight": 10.17
+        },
+        {
+          "rank": 2,
+          "code": "VHM VN",
+          "name": "VINHOMES JSC",
+          "weight": 9.78
+        },
+        {
+          "rank": 3,
+          "code": "HPG VN",
+          "name": "HOA PHAT GROUP JSC",
+          "weight": 7.72
+        },
+        {
+          "rank": 4,
+          "code": "VPB VN",
+          "name": "VIETNAM PROSPERITY JSC BANK",
+          "weight": 5.88
+        },
+        {
+          "rank": 5,
+          "code": "FPT VN",
+          "name": "FPT CORP",
+          "weight": 5.39
+        },
+        {
+          "rank": 6,
+          "code": "MCH VN",
+          "name": "MASAN CONSUMER CORP",
+          "weight": 4.96
+        },
+        {
+          "rank": 7,
+          "code": "MSN VN",
+          "name": "MASAN GROUP CORP",
+          "weight": 4.59
+        },
+        {
+          "rank": 8,
+          "code": "VCB VN",
+          "name": "BANK FOR FOREIGN TRADE OF VIETNAM",
+          "weight": 4.43
+        },
+        {
+          "rank": 9,
+          "code": "SSI VN",
+          "name": "SSI SECURITIES CORP",
+          "weight": 4.04
+        },
+        {
+          "rank": 10,
+          "code": "VNM VN",
+          "name": "VIETNAM DAIRY PRODUCTS JSC",
+          "weight": 3.84
+        }
+      ]
+    },
+    "00887": {
+      "code": "00887",
+      "source_date": "2026-09-22T08:26:02.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "300750 CS(HK)",
+          "name": "寧德時代",
+          "weight": 7.74
+        },
+        {
+          "rank": 2,
+          "code": "688256 CG(HK)",
+          "name": "中科寒武紀科技股份有限公司",
+          "weight": 7.14
+        },
+        {
+          "rank": 3,
+          "code": "002371 CS(HK)",
+          "name": "北方華創",
+          "weight": 5.97
+        },
+        {
+          "rank": 4,
+          "code": "688012 CG(HK)",
+          "name": "中微公司",
+          "weight": 5.38
+        },
+        {
+          "rank": 5,
+          "code": "603986 CG(HK)",
+          "name": "兆易創新",
+          "weight": 5.31
+        },
+        {
+          "rank": 6,
+          "code": "688008 CG(HK)",
+          "name": "瀾起科技",
+          "weight": 4.89
+        },
+        {
+          "rank": 7,
+          "code": "688041 CG(HK)",
+          "name": "海光信息技術股份有限公司",
+          "weight": 4.65
+        },
+        {
+          "rank": 8,
+          "code": "000725 CS(HK)",
+          "name": "京東方A",
+          "weight": 4.48
+        },
+        {
+          "rank": 9,
+          "code": "600183 CG(HK)",
+          "name": "生益科技",
+          "weight": 4.28
+        },
+        {
+          "rank": 10,
+          "code": "600276 CG(HK)",
+          "name": "恆瑞醫藥",
+          "weight": 4.17
+        }
+      ]
+    },
+    "00891": {
+      "code": "00891",
+      "source_date": "2026-09-22T05:31:15.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台灣積體電路製造",
+          "weight": 38.87
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科技",
+          "weight": 13.6
+        },
+        {
+          "rank": 3,
+          "code": "3711",
+          "name": "日月光投資控股",
+          "weight": 4.14
+        },
+        {
+          "rank": 4,
+          "code": "5274",
+          "name": "信驊科技",
+          "weight": 4.03
+        },
+        {
+          "rank": 5,
+          "code": "3443",
+          "name": "創意電子",
+          "weight": 3.83
+        },
+        {
+          "rank": 6,
+          "code": "2303",
+          "name": "聯華電子",
+          "weight": 3.31
+        },
+        {
+          "rank": 7,
+          "code": "3653",
+          "name": "健策精密工業",
+          "weight": 3.06
+        },
+        {
+          "rank": 8,
+          "code": "2344",
+          "name": "華邦電子",
+          "weight": 2.99
+        },
+        {
+          "rank": 9,
+          "code": "6223",
+          "name": "旺矽科技",
+          "weight": 2.3
+        },
+        {
+          "rank": 10,
+          "code": "2449",
+          "name": "京元電子",
+          "weight": 2.13
+        }
+      ]
+    },
+    "00892": {
+      "code": "00892",
+      "source_date": "2026-09-22T05:30:27.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 23.73
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 12.64
+        },
+        {
+          "rank": 3,
+          "code": "5274",
+          "name": "信驊",
+          "weight": 7.81
+        },
+        {
+          "rank": 4,
+          "code": "3711",
+          "name": "日月光投控",
+          "weight": 7.37
+        },
+        {
+          "rank": 5,
+          "code": "2379",
+          "name": "瑞昱",
+          "weight": 6.68
+        },
+        {
+          "rank": 6,
+          "code": "7769",
+          "name": "鴻勁",
+          "weight": 6.46
+        },
+        {
+          "rank": 7,
+          "code": "3034",
+          "name": "聯詠",
+          "weight": 6.31
+        },
+        {
+          "rank": 8,
+          "code": "6223",
+          "name": "旺矽",
+          "weight": 4.88
+        },
+        {
+          "rank": 9,
+          "code": "3529",
+          "name": "力旺",
+          "weight": 3.6
+        },
+        {
+          "rank": 10,
+          "code": "6515",
+          "name": "穎崴",
+          "weight": 2.61
+        }
+      ]
+    },
+    "00894": {
+      "code": "00894",
+      "source_date": "2026-09-22T05:37:45.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台灣積體電路製造",
+          "weight": 26.61
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科技",
+          "weight": 12.7
+        },
+        {
+          "rank": 3,
+          "code": "2308",
+          "name": "台達電子工業",
+          "weight": 5.61
+        },
+        {
+          "rank": 4,
+          "code": "3711",
+          "name": "日月光投資控股",
+          "weight": 5.24
+        },
+        {
+          "rank": 5,
+          "code": "2383",
+          "name": "台光電子材料",
+          "weight": 4.08
+        },
+        {
+          "rank": 6,
+          "code": "3017",
+          "name": "奇鋐科技",
+          "weight": 3.58
+        },
+        {
+          "rank": 7,
+          "code": "2360",
+          "name": "致茂電子",
+          "weight": 3.31
+        },
+        {
+          "rank": 8,
+          "code": "3443",
+          "name": "創意電子",
+          "weight": 3.18
+        },
+        {
+          "rank": 9,
+          "code": "2345",
+          "name": "智邦科技",
+          "weight": 2.8
+        },
+        {
+          "rank": 10,
+          "code": "5274",
+          "name": "信驊科技",
+          "weight": 2.74
+        }
+      ]
+    },
+    "00895": {
+      "code": "00895",
+      "source_date": "2026-09-22T09:04:53.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "NVDA US",
+          "name": "NVIDIA CORP",
+          "weight": 19.14
+        },
+        {
+          "rank": 2,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 18.56
+        },
+        {
+          "rank": 3,
+          "code": "AMD US",
+          "name": "ADVANCED MICRO DEVICES",
+          "weight": 10.89
+        },
+        {
+          "rank": 4,
+          "code": "TSLA US",
+          "name": "TESLA INC",
+          "weight": 10.52
+        },
+        {
+          "rank": 5,
+          "code": "TXN US",
+          "name": "TEXAS INSTRUMENTS INC",
+          "weight": 3.4
+        },
+        {
+          "rank": 6,
+          "code": "ETN US",
+          "name": "EATON CORP PLC",
+          "weight": 3.03
+        },
+        {
+          "rank": 7,
+          "code": "6501 JP",
+          "name": "Hitachi Ltd",
+          "weight": 2.78
+        },
+        {
+          "rank": 8,
+          "code": "UBER US",
+          "name": "UBER TECHNOLOGIES INC",
+          "weight": 2.22
+        },
+        {
+          "rank": 9,
+          "code": "6981 JP",
+          "name": "Murata Manufacturing Co Ltd",
+          "weight": 2.09
+        },
+        {
+          "rank": 10,
+          "code": "GM US",
+          "name": "GENERAL MOTORS CO",
+          "weight": 2.01
+        }
+      ]
+    },
+    "00896": {
+      "code": "00896",
+      "source_date": "2026-09-22T05:31:15.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台灣積體電路製造",
+          "weight": 11.36
+        },
+        {
+          "rank": 2,
+          "code": "2317",
+          "name": "鴻海精密工業",
+          "weight": 7.32
+        },
+        {
+          "rank": 3,
+          "code": "2308",
+          "name": "台達電子工業",
+          "weight": 6.82
+        },
+        {
+          "rank": 4,
+          "code": "1303",
+          "name": "南亞塑膠工業",
+          "weight": 6.34
+        },
+        {
+          "rank": 5,
+          "code": "C_NTD",
+          "name": "CASH",
+          "weight": 6.33
+        },
+        {
+          "rank": 6,
+          "code": "2454",
+          "name": "聯發科技",
+          "weight": 5.43
+        },
+        {
+          "rank": 7,
+          "code": "2301",
+          "name": "光寶科技",
+          "weight": 3.92
+        },
+        {
+          "rank": 8,
+          "code": "3231",
+          "name": "緯創資通",
+          "weight": 3.47
+        },
+        {
+          "rank": 9,
+          "code": "2412",
+          "name": "中華電信",
+          "weight": 2.96
+        },
+        {
+          "rank": 10,
+          "code": "6223",
+          "name": "旺矽科技",
+          "weight": 2.73
+        }
+      ]
+    },
+    "00900": {
+      "code": "00900",
+      "source_date": "2026-09-22T05:24:52.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2887",
+          "name": "台新新光金",
+          "weight": 6.05
+        },
+        {
+          "rank": 2,
+          "code": "2880",
+          "name": "華南金",
+          "weight": 5.74
+        },
+        {
+          "rank": 3,
+          "code": "2892",
+          "name": "第一金",
+          "weight": 5.66
+        },
+        {
+          "rank": 4,
+          "code": "2890",
+          "name": "永豐金",
+          "weight": 5.39
+        },
+        {
+          "rank": 5,
+          "code": "2885",
+          "name": "元大金",
+          "weight": 5.19
+        },
+        {
+          "rank": 6,
+          "code": "2886",
+          "name": "兆豐金",
+          "weight": 5.09
+        },
+        {
+          "rank": 7,
+          "code": "2542",
+          "name": "興富發",
+          "weight": 4.99
+        },
+        {
+          "rank": 8,
+          "code": "1216",
+          "name": "統一",
+          "weight": 4.65
+        },
+        {
+          "rank": 9,
+          "code": "2801",
+          "name": "彰銀",
+          "weight": 4.58
+        },
+        {
+          "rank": 10,
+          "code": "3008",
+          "name": "大立光",
+          "weight": 4.56
+        }
+      ]
+    },
+    "00901": {
+      "code": "00901",
+      "source_date": "2026-09-22T05:30:23.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 30.16
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 11.57
+        },
+        {
+          "rank": 3,
+          "code": "2308",
+          "name": "台達電",
+          "weight": 7.21
+        },
+        {
+          "rank": 4,
+          "code": "2317",
+          "name": "鴻海",
+          "weight": 5.56
+        },
+        {
+          "rank": 5,
+          "code": "3711",
+          "name": "日月光投控",
+          "weight": 4.12
+        },
+        {
+          "rank": 6,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 3.57
+        },
+        {
+          "rank": 7,
+          "code": "2383",
+          "name": "台光電",
+          "weight": 3.02
+        },
+        {
+          "rank": 8,
+          "code": "3037",
+          "name": "欣興",
+          "weight": 2.83
+        },
+        {
+          "rank": 9,
+          "code": "3017",
+          "name": "奇鋐",
+          "weight": 2.15
+        },
+        {
+          "rank": 10,
+          "code": "2327",
+          "name": "國巨*",
+          "weight": 2.07
+        }
+      ]
+    },
+    "00909": {
+      "code": "00909",
+      "source_date": "2026-09-22T08:41:37.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "BMNR.US",
+          "name": "BitMine Immersion Technologi",
+          "weight": 7.3
+        },
+        {
+          "rank": 2,
+          "code": "MSTR.US",
+          "name": "STRATEGY INC",
+          "weight": 7.21
+        },
+        {
+          "rank": 3,
+          "code": "CRCL.US",
+          "name": "CIRCLE INTERNET GROUP INC",
+          "weight": 6.34
+        },
+        {
+          "rank": 4,
+          "code": "IREN.US",
+          "name": "IRIS ENERGY LTD",
+          "weight": 5.63
+        },
+        {
+          "rank": 5,
+          "code": "RIOT.US",
+          "name": "RIOT BLOCKCHAIN INC",
+          "weight": 5.31
+        },
+        {
+          "rank": 6,
+          "code": "COIN.US",
+          "name": "COINBASE GLOBAL INC -CLASS A",
+          "weight": 5.13
+        },
+        {
+          "rank": 7,
+          "code": "AMD.US",
+          "name": "ADV MICRO DEVICES",
+          "weight": 4.98
+        },
+        {
+          "rank": 8,
+          "code": "HOOD.US",
+          "name": "ROBINHOOD MARKETS INC - A",
+          "weight": 4.94
+        },
+        {
+          "rank": 9,
+          "code": "MARA.US",
+          "name": "MARATHON DIGITAL HOLDINGS INC",
+          "weight": 4.71
+        },
+        {
+          "rank": 10,
+          "code": "GLXY.US",
+          "name": "GALAXY DIGITAL INC",
+          "weight": 4.64
+        }
+      ]
+    },
+    "00910": {
+      "code": "00910",
+      "source_date": "2026-09-22T08:59:46.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2455",
+          "name": "全新",
+          "weight": 3.81
+        },
+        {
+          "rank": 2,
+          "code": "TSAT CT",
+          "name": "Telesat Corp",
+          "weight": 3.75
+        },
+        {
+          "rank": 3,
+          "code": "SATL UR",
+          "name": "Satellogic Inc",
+          "weight": 3.62
+        },
+        {
+          "rank": 4,
+          "code": "SPCE US",
+          "name": "Virgin Galactic Hold",
+          "weight": 3.59
+        },
+        {
+          "rank": 5,
+          "code": "VSAT US",
+          "name": "Viasat Inc",
+          "weight": 3.59
+        },
+        {
+          "rank": 6,
+          "code": "VOYG US",
+          "name": "旅行者科技公司",
+          "weight": 3.54
+        },
+        {
+          "rank": 7,
+          "code": "ECHO US",
+          "name": "艾科思達公司",
+          "weight": 3.49
+        },
+        {
+          "rank": 8,
+          "code": "MDA CT",
+          "name": "MDA Space Ltd",
+          "weight": 3.48
+        },
+        {
+          "rank": 9,
+          "code": "RKLB US",
+          "name": "Rocket Lab USA Inc",
+          "weight": 3.46
+        },
+        {
+          "rank": 10,
+          "code": "RDW US",
+          "name": "Redwire Corp",
+          "weight": 3.43
+        }
+      ]
+    },
+    "00911": {
+      "code": "00911",
+      "source_date": "2026-09-22T06:57:46.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "INTC_US",
+          "name": "英特爾",
+          "weight": 9.75
+        },
+        {
+          "rank": 2,
+          "code": "AMD_US",
+          "name": "超微",
+          "weight": 9.37
+        },
+        {
+          "rank": 3,
+          "code": "MU_US",
+          "name": "美光科技",
+          "weight": 7.83
+        },
+        {
+          "rank": 4,
+          "code": "NVDA_US",
+          "name": "輝達",
+          "weight": 7.41
+        },
+        {
+          "rank": 5,
+          "code": "AVGO_US",
+          "name": "博通",
+          "weight": 7.04
+        },
+        {
+          "rank": 6,
+          "code": "MRVL_US",
+          "name": "邁威爾科技",
+          "weight": 4.38
+        },
+        {
+          "rank": 7,
+          "code": "QCOM_US",
+          "name": "高通",
+          "weight": 4.1
+        },
+        {
+          "rank": 8,
+          "code": "ADI_US",
+          "name": "亞德諾",
+          "weight": 3.81
+        },
+        {
+          "rank": 9,
+          "code": "KLAC_US",
+          "name": "科磊",
+          "weight": 3.77
+        },
+        {
+          "rank": 10,
+          "code": "TXN_US",
+          "name": "德州儀器",
+          "weight": 3.73
+        }
+      ]
+    },
+    "00915": {
+      "code": "00915",
+      "source_date": "2026-09-22T05:30:41.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 8.56
+        },
+        {
+          "rank": 2,
+          "code": "2891",
+          "name": "中信金",
+          "weight": 7.37
+        },
+        {
+          "rank": 3,
+          "code": "2887",
+          "name": "台新新光金",
+          "weight": 7.36
+        },
+        {
+          "rank": 4,
+          "code": "2317",
+          "name": "鴻海",
+          "weight": 6.96
+        },
+        {
+          "rank": 5,
+          "code": "2618",
+          "name": "長榮航",
+          "weight": 6.61
+        },
+        {
+          "rank": 6,
+          "code": "2382",
+          "name": "廣達",
+          "weight": 6.59
+        },
+        {
+          "rank": 7,
+          "code": "2886",
+          "name": "兆豐金",
+          "weight": 6.55
+        },
+        {
+          "rank": 8,
+          "code": "3034",
+          "name": "聯詠",
+          "weight": 5.41
+        },
+        {
+          "rank": 9,
+          "code": "3702",
+          "name": "大聯大",
+          "weight": 4.33
+        },
+        {
+          "rank": 10,
+          "code": "2892",
+          "name": "第一金",
+          "weight": 4.27
+        }
+      ]
+    },
+    "00917": {
+      "code": "00917",
+      "source_date": "2026-09-22T08:58:00.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "JPM US",
+          "name": "摩根大通銀行",
+          "weight": 10.29
+        },
+        {
+          "rank": 2,
+          "code": "MS US",
+          "name": "摩根士丹利",
+          "weight": 8.87
+        },
+        {
+          "rank": 3,
+          "code": "BAC US",
+          "name": "美國銀行",
+          "weight": 5.96
+        },
+        {
+          "rank": 4,
+          "code": "BLK US",
+          "name": "貝萊德公司",
+          "weight": 5.62
+        },
+        {
+          "rank": 5,
+          "code": "HSBA LN",
+          "name": "匯豐控股",
+          "weight": 5.1
+        },
+        {
+          "rank": 6,
+          "code": "SPGI US",
+          "name": "標準普爾全球公司",
+          "weight": 4.29
+        },
+        {
+          "rank": 7,
+          "code": "GS US",
+          "name": "高盛集團",
+          "weight": 4.07
+        },
+        {
+          "rank": 8,
+          "code": "WFC US",
+          "name": "富國銀行",
+          "weight": 3.84
+        },
+        {
+          "rank": 9,
+          "code": "CME US",
+          "name": "芝加哥商品交易所集團",
+          "weight": 3.54
+        },
+        {
+          "rank": 10,
+          "code": "C US",
+          "name": "花旗集團",
+          "weight": 3.35
+        }
+      ]
+    },
+    "00918": {
+      "code": "00918",
+      "source_date": "2026-09-22T05:30:33.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2887",
+          "name": "台新新光金",
+          "weight": 8.03
+        },
+        {
+          "rank": 2,
+          "code": "2357",
+          "name": "華碩",
+          "weight": 7.59
+        },
+        {
+          "rank": 3,
+          "code": "2603",
+          "name": "長榮",
+          "weight": 6.41
+        },
+        {
+          "rank": 4,
+          "code": "6669",
+          "name": "緯穎",
+          "weight": 6.25
+        },
+        {
+          "rank": 5,
+          "code": "2884",
+          "name": "玉山金",
+          "weight": 6.15
+        },
+        {
+          "rank": 6,
+          "code": "2891",
+          "name": "中信金",
+          "weight": 5.86
+        },
+        {
+          "rank": 7,
+          "code": "2886",
+          "name": "兆豐金",
+          "weight": 4.93
+        },
+        {
+          "rank": 8,
+          "code": "3231",
+          "name": "緯創",
+          "weight": 4.83
+        },
+        {
+          "rank": 9,
+          "code": "2890",
+          "name": "永豐金",
+          "weight": 4.77
+        },
+        {
+          "rank": 10,
+          "code": "2382",
+          "name": "廣達",
+          "weight": 4.7
+        }
+      ]
+    },
+    "00922": {
+      "code": "00922",
+      "source_date": "2026-09-22T08:47:52.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 38.55
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 7.94
+        },
+        {
+          "rank": 3,
+          "code": "2308",
+          "name": "台達電",
+          "weight": 4.27
+        },
+        {
+          "rank": 4,
+          "code": "2317",
+          "name": "鴻海",
+          "weight": 3.33
+        },
+        {
+          "rank": 5,
+          "code": "3711",
+          "name": "日月光投控",
+          "weight": 3.0
+        },
+        {
+          "rank": 6,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 2.46
+        },
+        {
+          "rank": 7,
+          "code": "2383",
+          "name": "台光電",
+          "weight": 1.96
+        },
+        {
+          "rank": 8,
+          "code": "2881",
+          "name": "富邦金",
+          "weight": 1.75
+        },
+        {
+          "rank": 9,
+          "code": "3017",
+          "name": "奇鋐",
+          "weight": 1.68
+        },
+        {
+          "rank": 10,
+          "code": "2327",
+          "name": "國巨",
+          "weight": 1.57
+        }
+      ]
+    },
+    "00923": {
+      "code": "00923",
+      "source_date": "2026-09-22T05:30:45.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 41.06
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 10.06
+        },
+        {
+          "rank": 3,
+          "code": "2308",
+          "name": "台達電",
+          "weight": 5.29
+        },
+        {
+          "rank": 4,
+          "code": "2317",
+          "name": "鴻海",
+          "weight": 4.0
+        },
+        {
+          "rank": 5,
+          "code": "3711",
+          "name": "日月光投控",
+          "weight": 3.05
+        },
+        {
+          "rank": 6,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 2.5
+        },
+        {
+          "rank": 7,
+          "code": "2383",
+          "name": "台光電",
+          "weight": 2.17
+        },
+        {
+          "rank": 8,
+          "code": "3037",
+          "name": "欣興",
+          "weight": 2.0
+        },
+        {
+          "rank": 9,
+          "code": "3017",
+          "name": "奇鋐",
+          "weight": 1.58
+        },
+        {
+          "rank": 10,
+          "code": "2881",
+          "name": "富邦金",
+          "weight": 1.47
+        }
+      ]
+    },
+    "00924": {
+      "code": "00924",
+      "source_date": "2026-09-22T08:59:40.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "NVDA US",
+          "name": "輝達公司",
+          "weight": 14.04
+        },
+        {
+          "rank": 2,
+          "code": "MSFT US",
+          "name": "微軟公司",
+          "weight": 9.5
+        },
+        {
+          "rank": 3,
+          "code": "AAPL US",
+          "name": "蘋果公司",
+          "weight": 6.31
+        },
+        {
+          "rank": 4,
+          "code": "GOOGL US",
+          "name": "Alphabet公司",
+          "weight": 5.31
+        },
+        {
+          "rank": 5,
+          "code": "GOOG US",
+          "name": "Alphabet公司",
+          "weight": 4.95
+        },
+        {
+          "rank": 6,
+          "code": "AVGO US",
+          "name": "博通公司",
+          "weight": 4.4
+        },
+        {
+          "rank": 7,
+          "code": "META US",
+          "name": "Meta平台公司",
+          "weight": 4.17
+        },
+        {
+          "rank": 8,
+          "code": "AMZN US",
+          "name": "亞馬遜公司",
+          "weight": 3.77
+        },
+        {
+          "rank": 9,
+          "code": "MU US",
+          "name": "美光科技公司",
+          "weight": 3.01
+        },
+        {
+          "rank": 10,
+          "code": "LLY US",
+          "name": "禮來公司",
+          "weight": 2.8
+        }
+      ]
+    },
+    "00933B": {
+      "code": "00933B",
+      "source_date": "2026-09-22T08:59:36.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "BBG0000H5309",
+          "name": "GOLDMAN SACHS GROUP INC 6.75-2037/10/01",
+          "weight": 3.64
+        },
+        {
+          "rank": 2,
+          "code": "BBG01QZDZ8P1",
+          "name": "JPMORGAN CHASE & CO 5.534-2045/11/29",
+          "weight": 3.31
+        },
+        {
+          "rank": 3,
+          "code": "BBG0000PH2L7",
+          "name": "JPMORGAN CHASE & CO 6.4-2038/05/15",
+          "weight": 2.9
+        },
+        {
+          "rank": 4,
+          "code": "BBG0000P8F65",
+          "name": "BANK OF AMERICA CORP 7.75-2038/05/14",
+          "weight": 2.79
+        },
+        {
+          "rank": 5,
+          "code": "BBG0036X1KT7",
+          "name": "MORGAN STANLEY 6.375-2042/07/24",
+          "weight": 2.74
+        },
+        {
+          "rank": 6,
+          "code": "BBG01RXFF0D8",
+          "name": "GOLDMAN SACHS GROUP INC 5.734-2056/01/28",
+          "weight": 2.74
+        },
+        {
+          "rank": 7,
+          "code": "BBG01QRZB0K9",
+          "name": "GOLDMAN SACHS GROUP INC 5.561-2045/11/19",
+          "weight": 2.65
+        },
+        {
+          "rank": 8,
+          "code": "BBG01QXLBGX4",
+          "name": "MORGAN STANLEY 5.516-2055/11/19",
+          "weight": 2.45
+        },
+        {
+          "rank": 9,
+          "code": "BBG00SRHVLH2",
+          "name": "WELLS FARGO & COMPANY 5.013-2051/04/04",
+          "weight": 2.35
+        },
+        {
+          "rank": 10,
+          "code": "BBG00007TPW1",
+          "name": "BANK OF AMERICA CORP 6.11-2037/01/29",
+          "weight": 2.31
+        }
+      ]
+    },
+    "00935": {
+      "code": "00935",
+      "source_date": "2026-09-22T05:30:36.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台灣積體電路製造",
+          "weight": 23.19
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科技",
+          "weight": 18.32
+        },
+        {
+          "rank": 3,
+          "code": "2308",
+          "name": "台達電子工業",
+          "weight": 9.37
+        },
+        {
+          "rank": 4,
+          "code": "3711",
+          "name": "日月光投資控股",
+          "weight": 5.35
+        },
+        {
+          "rank": 5,
+          "code": "2303",
+          "name": "聯華電子",
+          "weight": 4.39
+        },
+        {
+          "rank": 6,
+          "code": "3037",
+          "name": "欣興電子",
+          "weight": 3.47
+        },
+        {
+          "rank": 7,
+          "code": "3017",
+          "name": "奇鋐科技",
+          "weight": 2.64
+        },
+        {
+          "rank": 8,
+          "code": "2327",
+          "name": "國巨",
+          "weight": 2.55
+        },
+        {
+          "rank": 9,
+          "code": "2345",
+          "name": "智邦科技",
+          "weight": 2.24
+        },
+        {
+          "rank": 10,
+          "code": "2360",
+          "name": "致茂電子",
+          "weight": 2.21
+        }
+      ]
+    },
+    "00937B": {
+      "code": "00937B",
+      "source_date": "2026-09-22T08:00:15.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "XS2638076187",
+          "name": "ISPIM 7.778 06/20/54",
+          "weight": 2.67
+        },
+        {
+          "rank": 2,
+          "code": "US682680BN20",
+          "name": "OKE 6 5/8 09/01/53",
+          "weight": 2.15
+        },
+        {
+          "rank": 3,
+          "code": "US83368TBY38",
+          "name": "SOCGEN 7.132 01/19/55",
+          "weight": 1.96
+        },
+        {
+          "rank": 4,
+          "code": "US29250NBZ78",
+          "name": "ENBCN 6.7 11/15/53",
+          "weight": 1.81
+        },
+        {
+          "rank": 5,
+          "code": "USU2100VAC73",
+          "name": "CPGX 6.544 11/15/53",
+          "weight": 1.78
+        },
+        {
+          "rank": 6,
+          "code": "US83368TBT43",
+          "name": "SOCGEN 7.367 01/10/53",
+          "weight": 1.75
+        },
+        {
+          "rank": 7,
+          "code": "US68389XCK90",
+          "name": "ORCL 6.9 11/09/52",
+          "weight": 1.71
+        },
+        {
+          "rank": 8,
+          "code": "USN30707AU21",
+          "name": "ENELIM 7 3/4 10/14/52",
+          "weight": 1.58
+        },
+        {
+          "rank": 9,
+          "code": "US501044DX60",
+          "name": "KR 5.65 09/15/64",
+          "weight": 1.5
+        },
+        {
+          "rank": 10,
+          "code": "US04686JAL52",
+          "name": "ATH 6 5/8 05/19/55",
+          "weight": 1.48
+        }
+      ]
+    },
+    "00944": {
+      "code": "00944",
+      "source_date": "2026-09-22T05:30:36.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2303",
+          "name": "聯華電子",
+          "weight": 4.44
+        },
+        {
+          "rank": 2,
+          "code": "2327",
+          "name": "國巨",
+          "weight": 4.18
+        },
+        {
+          "rank": 3,
+          "code": "2454",
+          "name": "聯發科技",
+          "weight": 3.97
+        },
+        {
+          "rank": 4,
+          "code": "2887",
+          "name": "台新新光金融控股",
+          "weight": 3.24
+        },
+        {
+          "rank": 5,
+          "code": "2881",
+          "name": "富邦金融控股",
+          "weight": 3.16
+        },
+        {
+          "rank": 6,
+          "code": "2882",
+          "name": "國泰金融控股",
+          "weight": 3.05
+        },
+        {
+          "rank": 7,
+          "code": "5483",
+          "name": "中美矽晶製品",
+          "weight": 3.04
+        },
+        {
+          "rank": 8,
+          "code": "2885",
+          "name": "元大金融控股",
+          "weight": 2.88
+        },
+        {
+          "rank": 9,
+          "code": "2892",
+          "name": "第一金融控股",
+          "weight": 2.71
+        },
+        {
+          "rank": 10,
+          "code": "2379",
+          "name": "瑞昱半導體",
+          "weight": 2.7
+        }
+      ]
+    },
+    "00945B": {
+      "code": "00945B",
+      "source_date": "2026-09-22T08:00:40.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "YW4862168",
+          "name": "RRD91/208/01/29",
+          "weight": 2.42
+        },
+        {
+          "rank": 2,
+          "code": "YQ3624729",
+          "name": "PBFENE97/803/15/30",
+          "weight": 2.28
+        },
+        {
+          "rank": 3,
+          "code": "YW4890474",
+          "name": "SUMMPL85/810/31/29",
+          "weight": 2.27
+        },
+        {
+          "rank": 4,
+          "code": "ZN1464959",
+          "name": "NLSN9.2904/15/29",
+          "weight": 2.19
+        },
+        {
+          "rank": 5,
+          "code": "ZH5572651",
+          "name": "VENLNG91/202/01/29",
+          "weight": 2.15
+        },
+        {
+          "rank": 6,
+          "code": "ZB4679641",
+          "name": "ROCSOF911/28/28",
+          "weight": 2.1
+        },
+        {
+          "rank": 7,
+          "code": "ZD4610303",
+          "name": "RITM804/01/29",
+          "weight": 2.1
+        },
+        {
+          "rank": 8,
+          "code": "ZI8719844",
+          "name": "BGS809/15/28",
+          "weight": 1.95
+        },
+        {
+          "rank": 9,
+          "code": "ZI2460676",
+          "name": "TENINC811/17/28",
+          "weight": 1.85
+        },
+        {
+          "rank": 10,
+          "code": "ZM8985180",
+          "name": "AAWW81/202/15/30",
+          "weight": 1.82
+        }
+      ]
+    },
+    "00947": {
+      "code": "00947",
+      "source_date": "2026-09-22T08:47:30.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "3443",
+          "name": "創意",
+          "weight": 11.28
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 10.51
+        },
+        {
+          "rank": 3,
+          "code": "2408",
+          "name": "南亞科",
+          "weight": 9.91
+        },
+        {
+          "rank": 4,
+          "code": "2344",
+          "name": "華邦電",
+          "weight": 8.75
+        },
+        {
+          "rank": 5,
+          "code": "2308",
+          "name": "台達電",
+          "weight": 8.31
+        },
+        {
+          "rank": 6,
+          "code": "8299",
+          "name": "群聯",
+          "weight": 6.53
+        },
+        {
+          "rank": 7,
+          "code": "5274",
+          "name": "信驊",
+          "weight": 6.31
+        },
+        {
+          "rank": 8,
+          "code": "3661",
+          "name": "世芯-KY",
+          "weight": 5.0
+        },
+        {
+          "rank": 9,
+          "code": "2337",
+          "name": "旺宏",
+          "weight": 3.71
+        },
+        {
+          "rank": 10,
+          "code": "2379",
+          "name": "瑞昱",
+          "weight": 3.66
+        }
+      ]
+    },
+    "00949": {
+      "code": "00949",
+      "source_date": "2026-09-22T08:58:40.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "7203 JP",
+          "name": "豐田汽車公司",
+          "weight": 12.34
+        },
+        {
+          "rank": 2,
+          "code": "6098 JP",
+          "name": "瑞可利控股有限公司",
+          "weight": 7.92
+        },
+        {
+          "rank": 3,
+          "code": "6501 JP",
+          "name": "日立製作所有限公司",
+          "weight": 7.92
+        },
+        {
+          "rank": 4,
+          "code": "6758 JP",
+          "name": "索尼",
+          "weight": 7.15
+        },
+        {
+          "rank": 5,
+          "code": "8058 JP",
+          "name": "三菱商事股份有限公司",
+          "weight": 5.03
+        },
+        {
+          "rank": 6,
+          "code": "6981 JP",
+          "name": "村田製作所有限公司",
+          "weight": 4.8
+        },
+        {
+          "rank": 7,
+          "code": "9983 JP",
+          "name": "迅銷有限公司",
+          "weight": 4.08
+        },
+        {
+          "rank": 8,
+          "code": "7011 JP",
+          "name": "三菱重工業",
+          "weight": 4.07
+        },
+        {
+          "rank": 9,
+          "code": "8031 JP",
+          "name": "三井物產股份有限公司",
+          "weight": 4.06
+        },
+        {
+          "rank": 10,
+          "code": "202612NK",
+          "name": "日經225近月期貨(SGX)",
+          "weight": 3.6
+        }
+      ]
+    },
+    "00952": {
+      "code": "00952",
+      "source_date": "2026-09-22T05:30:41.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 6.81
+        },
+        {
+          "rank": 2,
+          "code": "2301",
+          "name": "光寶科",
+          "weight": 5.62
+        },
+        {
+          "rank": 3,
+          "code": "2376",
+          "name": "技嘉",
+          "weight": 4.39
+        },
+        {
+          "rank": 4,
+          "code": "2356",
+          "name": "英業達",
+          "weight": 4.38
+        },
+        {
+          "rank": 5,
+          "code": "3231",
+          "name": "緯創",
+          "weight": 4.36
+        },
+        {
+          "rank": 6,
+          "code": "6669",
+          "name": "緯穎",
+          "weight": 4.31
+        },
+        {
+          "rank": 7,
+          "code": "5347",
+          "name": "世界",
+          "weight": 3.91
+        },
+        {
+          "rank": 8,
+          "code": "2317",
+          "name": "鴻海",
+          "weight": 3.79
+        },
+        {
+          "rank": 9,
+          "code": "2382",
+          "name": "廣達",
+          "weight": 3.64
+        },
+        {
+          "rank": 10,
+          "code": "4938",
+          "name": "和碩",
+          "weight": 3.59
+        }
+      ]
+    },
+    "00953B": {
+      "code": "00953B",
+      "source_date": "2026-09-22T08:00:15.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "USU0379NAA73",
+          "name": "APLD 9 1/4 12/15/30",
+          "weight": 1.02
+        },
+        {
+          "rank": 2,
+          "code": "US15089QAN43",
+          "name": "CE 7.33 07/15/29",
+          "weight": 0.99
+        },
+        {
+          "rank": 3,
+          "code": "USC10602BM88",
+          "name": "BBDBCN 8 3/4 11/15/30",
+          "weight": 0.98
+        },
+        {
+          "rank": 4,
+          "code": "USQ60976AD18",
+          "name": "MINAU 9 1/4 10/01/28",
+          "weight": 0.94
+        },
+        {
+          "rank": 5,
+          "code": "USU74922AA01",
+          "name": "AAWW 8 1/2 02/15/30",
+          "weight": 0.86
+        },
+        {
+          "rank": 6,
+          "code": "US225310AQ40",
+          "name": "CACC 9 1/4 12/15/28",
+          "weight": 0.85
+        },
+        {
+          "rank": 7,
+          "code": "USU75355AM67",
+          "name": "HOUS 9 3/4 04/15/30",
+          "weight": 0.83
+        },
+        {
+          "rank": 8,
+          "code": "US24906PAB58",
+          "name": "XRAY 8 3/8 09/12/55",
+          "weight": 0.82
+        },
+        {
+          "rank": 9,
+          "code": "US281020AX52",
+          "name": "EIX 8 1/8 06/15/53",
+          "weight": 0.81
+        },
+        {
+          "rank": 10,
+          "code": "US36162JAG13",
+          "name": "GEO 8 5/8 04/15/29",
+          "weight": 0.8
+        }
+      ]
+    },
+    "00955": {
+      "code": "00955",
+      "source_date": "2026-09-22T08:59:46.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "8001 JP",
+          "name": "伊藤忠商事",
+          "weight": 15.12
+        },
+        {
+          "rank": 2,
+          "code": "8058 JP",
+          "name": "三菱商事",
+          "weight": 12.41
+        },
+        {
+          "rank": 3,
+          "code": "8031 JP",
+          "name": "三井物產",
+          "weight": 12.4
+        },
+        {
+          "rank": 4,
+          "code": "8002 JP",
+          "name": "丸紅股份有限公司",
+          "weight": 11.36
+        },
+        {
+          "rank": 5,
+          "code": "8053 JP",
+          "name": "住友商事",
+          "weight": 11.35
+        },
+        {
+          "rank": 6,
+          "code": "8015 JP",
+          "name": "豐田通商公司",
+          "weight": 10.96
+        },
+        {
+          "rank": 7,
+          "code": "2801 JP",
+          "name": "龜甲萬公司",
+          "weight": 2.65
+        },
+        {
+          "rank": 8,
+          "code": "2768 JP",
+          "name": "雙日控股",
+          "weight": 2.53
+        },
+        {
+          "rank": 9,
+          "code": "9962 JP",
+          "name": "三住集團公司",
+          "weight": 2.2
+        },
+        {
+          "rank": 10,
+          "code": "C_NTD",
+          "name": "CASH",
+          "weight": 2.14
+        }
+      ]
+    },
+    "00961": {
+      "code": "00961",
+      "source_date": "2026-09-22T05:30:33.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2357",
+          "name": "華碩",
+          "weight": 10.66
+        },
+        {
+          "rank": 2,
+          "code": "2542",
+          "name": "興富發",
+          "weight": 8.94
+        },
+        {
+          "rank": 3,
+          "code": "2884",
+          "name": "玉山金",
+          "weight": 7.0
+        },
+        {
+          "rank": 4,
+          "code": "2382",
+          "name": "廣達",
+          "weight": 6.92
+        },
+        {
+          "rank": 5,
+          "code": "3231",
+          "name": "緯創",
+          "weight": 6.17
+        },
+        {
+          "rank": 6,
+          "code": "5876",
+          "name": "上海商銀",
+          "weight": 6.13
+        },
+        {
+          "rank": 7,
+          "code": "2886",
+          "name": "兆豐金",
+          "weight": 5.94
+        },
+        {
+          "rank": 8,
+          "code": "2347",
+          "name": "聯強",
+          "weight": 5.88
+        },
+        {
+          "rank": 9,
+          "code": "3293",
+          "name": "鈊象",
+          "weight": 5.39
+        },
+        {
+          "rank": 10,
+          "code": "2633",
+          "name": "台灣高鐵",
+          "weight": 4.81
+        }
+      ]
+    },
+    "00965": {
+      "code": "00965",
+      "source_date": "2026-09-22T08:59:45.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "6701 JT",
+          "name": "NEC CORP",
+          "weight": 6.08
+        },
+        {
+          "rank": 2,
+          "code": "PLTR UQ",
+          "name": "PALANTIR TECHNOLOGIES INC-A",
+          "weight": 5.99
+        },
+        {
+          "rank": 3,
+          "code": "NVDA UQ",
+          "name": "NVIDIA CORP",
+          "weight": 5.52
+        },
+        {
+          "rank": 4,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 5.32
+        },
+        {
+          "rank": 5,
+          "code": "7011 JT",
+          "name": "MITSUBISHI HEAVY INDUSTRIES",
+          "weight": 5.29
+        },
+        {
+          "rank": 6,
+          "code": "012450 KP",
+          "name": "HANWHA AEROSPACE CO LTD",
+          "weight": 5.11
+        },
+        {
+          "rank": 7,
+          "code": "GE UN",
+          "name": "GENERAL ELECTRIC",
+          "weight": 5.01
+        },
+        {
+          "rank": 8,
+          "code": "PANW UQ",
+          "name": "PALO ALTO NETWORKS INC",
+          "weight": 4.57
+        },
+        {
+          "rank": 9,
+          "code": "6503 JT",
+          "name": "MITSUBISHI ELECTRIC CORP",
+          "weight": 4.05
+        },
+        {
+          "rank": 10,
+          "code": "RTX UN",
+          "name": "RTX CORP",
+          "weight": 3.94
+        }
+      ]
+    },
+    "00971": {
+      "code": "00971",
+      "source_date": "2026-09-22T08:00:36.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "MSFT US",
+          "name": "微軟公司",
+          "weight": 9.82
+        },
+        {
+          "rank": 2,
+          "code": "AAPL US",
+          "name": "蘋果公司",
+          "weight": 8.56
+        },
+        {
+          "rank": 3,
+          "code": "NVDA US",
+          "name": "輝達公司",
+          "weight": 8.3
+        },
+        {
+          "rank": 4,
+          "code": "AMZN US",
+          "name": "亞馬遜公司",
+          "weight": 7.92
+        },
+        {
+          "rank": 5,
+          "code": "GOOGL US",
+          "name": "Alphabet公司",
+          "weight": 7.26
+        },
+        {
+          "rank": 6,
+          "code": "META US",
+          "name": "Meta平台公司",
+          "weight": 4.81
+        },
+        {
+          "rank": 7,
+          "code": "202612NQ",
+          "name": "電子小型那斯達克100指數",
+          "weight": 3.96
+        },
+        {
+          "rank": 8,
+          "code": "AMD US",
+          "name": "超微半導體公司",
+          "weight": 3.87
+        },
+        {
+          "rank": 9,
+          "code": "LLY US",
+          "name": "禮來公司",
+          "weight": 3.55
+        },
+        {
+          "rank": 10,
+          "code": "AMGN US",
+          "name": "安進公司",
+          "weight": 3.51
+        }
+      ]
+    },
+    "009800": {
+      "code": "009800",
+      "source_date": "2026-09-22T08:00:15.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "NVDA US",
+          "name": "輝達",
+          "weight": 8.2
+        },
+        {
+          "rank": 2,
+          "code": "AAPL US",
+          "name": "蘋果公司",
+          "weight": 7.41
+        },
+        {
+          "rank": 3,
+          "code": "MSFT US",
+          "name": "微軟",
+          "weight": 5.58
+        },
+        {
+          "rank": 4,
+          "code": "MU US",
+          "name": "美光科技公司",
+          "weight": 4.88
+        },
+        {
+          "rank": 5,
+          "code": "AMZN US",
+          "name": "亞馬遜公司",
+          "weight": 4.18
+        },
+        {
+          "rank": 6,
+          "code": "AMD US",
+          "name": "超微半導體公司",
+          "weight": 4.16
+        },
+        {
+          "rank": 7,
+          "code": "META US",
+          "name": "Meta平台公司",
+          "weight": 3.3
+        },
+        {
+          "rank": 8,
+          "code": "GOOGL US",
+          "name": "Alphabet公司 Class A",
+          "weight": 3.12
+        },
+        {
+          "rank": 9,
+          "code": "TSLA US",
+          "name": "特斯拉公司",
+          "weight": 2.95
+        },
+        {
+          "rank": 10,
+          "code": "GOOG US",
+          "name": "Alphabet公司 Class C",
+          "weight": 2.9
+        }
+      ]
+    },
+    "009805": {
+      "code": "009805",
+      "source_date": "2026-09-22T07:55:16.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "ETN US",
+          "name": "伊頓公開有限公司",
+          "weight": 11.68
+        },
+        {
+          "rank": 2,
+          "code": "GEV US",
+          "name": "奇異維諾瓦公司",
+          "weight": 10.5
+        },
+        {
+          "rank": 3,
+          "code": "PWR US",
+          "name": "廣達服務公司",
+          "weight": 7.88
+        },
+        {
+          "rank": 4,
+          "code": "VRT US",
+          "name": "維諦技術控股公司",
+          "weight": 7.83
+        },
+        {
+          "rank": 5,
+          "code": "NEE US",
+          "name": "Nextera Energy Inc",
+          "weight": 5.37
+        },
+        {
+          "rank": 6,
+          "code": "BE UN",
+          "name": "Bloom Energy Corp",
+          "weight": 4.62
+        },
+        {
+          "rank": 7,
+          "code": "DUK US",
+          "name": "杜克能源公司",
+          "weight": 4.18
+        },
+        {
+          "rank": 8,
+          "code": "SO US",
+          "name": "南方公司",
+          "weight": 3.32
+        },
+        {
+          "rank": 9,
+          "code": "NVT US",
+          "name": "nVent Electric PLC",
+          "weight": 3.24
+        },
+        {
+          "rank": 10,
+          "code": "HUBB US",
+          "name": "安柏",
+          "weight": 3.06
+        }
+      ]
+    },
+    "00980A": {
+      "code": "00980A",
+      "source_date": "2026-09-22T05:35:21.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台灣積體電路製造",
+          "weight": 9.23
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科技",
+          "weight": 6.42
+        },
+        {
+          "rank": 3,
+          "code": "2059",
+          "name": "川湖科技",
+          "weight": 4.23
+        },
+        {
+          "rank": 4,
+          "code": "2308",
+          "name": "台達電子工業",
+          "weight": 3.82
+        },
+        {
+          "rank": 5,
+          "code": "3037",
+          "name": "欣興電子",
+          "weight": 3.3
+        },
+        {
+          "rank": 6,
+          "code": "2383",
+          "name": "台光電子材料",
+          "weight": 3.29
+        },
+        {
+          "rank": 7,
+          "code": "202610TX",
+          "name": "台灣證交所加權股價指數",
+          "weight": 2.98
+        },
+        {
+          "rank": 8,
+          "code": "1303",
+          "name": "南亞塑膠工業",
+          "weight": 2.79
+        },
+        {
+          "rank": 9,
+          "code": "2408",
+          "name": "南亞科技",
+          "weight": 2.71
+        },
+        {
+          "rank": 10,
+          "code": "3443",
+          "name": "創意電子",
+          "weight": 2.46
+        }
+      ]
+    },
+    "009811": {
+      "code": "009811",
+      "source_date": "2026-09-22T07:06:53.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "NVDA US",
+          "name": "NVIDIA CORP(輝達公司)",
+          "weight": 11.72
+        },
+        {
+          "rank": 2,
+          "code": "AAPL US",
+          "name": "APPLE INC(蘋果公司)",
+          "weight": 10.99
+        },
+        {
+          "rank": 3,
+          "code": "MSFT US",
+          "name": "MICROSOFT CORP(微軟公司)",
+          "weight": 8.16
+        },
+        {
+          "rank": 4,
+          "code": "AMZN US",
+          "name": "AMAZON.COM INC(亞馬遜公司)",
+          "weight": 5.64
+        },
+        {
+          "rank": 5,
+          "code": "GOOGL US",
+          "name": "ALPHABET INC-CL A(Alphabet公司)",
+          "weight": 4.62
+        },
+        {
+          "rank": 6,
+          "code": "GOOG US",
+          "name": "ALPHABET INC-CL C",
+          "weight": 4.0
+        },
+        {
+          "rank": 7,
+          "code": "AVGO US",
+          "name": "BROADCOM LTD",
+          "weight": 3.76
+        },
+        {
+          "rank": 8,
+          "code": "META US",
+          "name": "META PLATFORMS INC(Meta平台公司)",
+          "weight": 3.63
+        },
+        {
+          "rank": 9,
+          "code": "202612NQ",
+          "name": "小型那斯達克指數",
+          "weight": 3.05
+        },
+        {
+          "rank": 10,
+          "code": "TSLA US",
+          "name": "TESLA INC(特斯拉公司)",
+          "weight": 2.71
+        }
+      ]
+    },
+    "009813": {
+      "code": "009813",
+      "source_date": "2026-09-22T09:00:00.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "NVDA",
+          "name": "NVIDIA",
+          "weight": 12.82
+        },
+        {
+          "rank": 2,
+          "code": "AAPL",
+          "name": "APPLE",
+          "weight": 11.52
+        },
+        {
+          "rank": 3,
+          "code": "MSFT",
+          "name": "MICROSOFT",
+          "weight": 8.68
+        },
+        {
+          "rank": 4,
+          "code": "AMZN",
+          "name": "AMAZON.COM INC",
+          "weight": 5.91
+        },
+        {
+          "rank": 5,
+          "code": "GOOGL",
+          "name": "ALPHABET CLASS A",
+          "weight": 4.85
+        },
+        {
+          "rank": 6,
+          "code": "AVGO",
+          "name": "BROADCOM INC",
+          "weight": 4.02
+        },
+        {
+          "rank": 7,
+          "code": "GOOG",
+          "name": "ALPHABET CLASS C",
+          "weight": 3.88
+        },
+        {
+          "rank": 8,
+          "code": "META",
+          "name": "META PLATFORMS CLASS A",
+          "weight": 3.81
+        },
+        {
+          "rank": 9,
+          "code": "MU",
+          "name": "MICRON TECHNOLOGY",
+          "weight": 2.75
+        },
+        {
+          "rank": 10,
+          "code": "TSLA",
+          "name": "TESLA INC",
+          "weight": 2.46
+        }
+      ]
+    },
+    "009814": {
+      "code": "009814",
+      "source_date": "2026-09-22T07:48:16.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "NVDA US",
+          "name": "NVIDIA CORP",
+          "weight": 8.19
+        },
+        {
+          "rank": 2,
+          "code": "AAPL US",
+          "name": "APPLE INC",
+          "weight": 7.36
+        },
+        {
+          "rank": 3,
+          "code": "MSFT US",
+          "name": "MICROSOFT CORP",
+          "weight": 5.54
+        },
+        {
+          "rank": 4,
+          "code": "AMZN US",
+          "name": "AMAZON.COM INC",
+          "weight": 3.77
+        },
+        {
+          "rank": 5,
+          "code": "GOOGL US",
+          "name": "Alphabet Inc-CL A",
+          "weight": 3.1
+        },
+        {
+          "rank": 6,
+          "code": "AVGO US",
+          "name": "BROADCOM INC",
+          "weight": 2.57
+        },
+        {
+          "rank": 7,
+          "code": "GOOG US",
+          "name": "Alphabet Inc-CL C",
+          "weight": 2.48
+        },
+        {
+          "rank": 8,
+          "code": "META US",
+          "name": "META PLATFORMS INC",
+          "weight": 2.43
+        },
+        {
+          "rank": 9,
+          "code": "202612ESZ6F",
+          "name": "E-迷你S&P500指數期貨",
+          "weight": 2.12
+        },
+        {
+          "rank": 10,
+          "code": "MU US",
+          "name": "MICRON TECHNOLOGY INC",
+          "weight": 1.75
+        }
+      ]
+    },
+    "009815": {
+      "code": "009815",
+      "source_date": "2026-09-22T07:59:53.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "NVDA US",
+          "name": "輝達公司",
+          "weight": 15.14
+        },
+        {
+          "rank": 2,
+          "code": "AAPL US",
+          "name": "蘋果公司",
+          "weight": 13.96
+        },
+        {
+          "rank": 3,
+          "code": "GOOGL US",
+          "name": "Alphabet公司",
+          "weight": 10.7
+        },
+        {
+          "rank": 4,
+          "code": "MSFT US",
+          "name": "微軟公司",
+          "weight": 10.65
+        },
+        {
+          "rank": 5,
+          "code": "AMZN US",
+          "name": "亞馬遜公司",
+          "weight": 7.3
+        },
+        {
+          "rank": 6,
+          "code": "TSM US",
+          "name": "台灣積體電路製造股份有限公司",
+          "weight": 5.79
+        },
+        {
+          "rank": 7,
+          "code": "META US",
+          "name": "Meta平台公司",
+          "weight": 5.05
+        },
+        {
+          "rank": 8,
+          "code": "AVGO US",
+          "name": "博通公司",
+          "weight": 4.61
+        },
+        {
+          "rank": 9,
+          "code": "TSLA US",
+          "name": "特斯拉公司",
+          "weight": 4.12
+        },
+        {
+          "rank": 10,
+          "code": "MU US",
+          "name": "美光科技公司",
+          "weight": 3.2
+        }
+      ]
+    },
+    "009816": {
+      "code": "009816",
+      "source_date": "2026-09-22T05:30:41.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 40.02
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 6.84
+        },
+        {
+          "rank": 3,
+          "code": "2308",
+          "name": "台達電",
+          "weight": 3.51
+        },
+        {
+          "rank": 4,
+          "code": "2887",
+          "name": "台新新光金",
+          "weight": 3.01
+        },
+        {
+          "rank": 5,
+          "code": "2317",
+          "name": "鴻海",
+          "weight": 2.74
+        },
+        {
+          "rank": 6,
+          "code": "2885",
+          "name": "元大金",
+          "weight": 2.66
+        },
+        {
+          "rank": 7,
+          "code": "2884",
+          "name": "玉山金",
+          "weight": 2.1
+        },
+        {
+          "rank": 8,
+          "code": "2412",
+          "name": "中華電",
+          "weight": 2.09
+        },
+        {
+          "rank": 9,
+          "code": "3711",
+          "name": "日月光投控",
+          "weight": 2.01
+        },
+        {
+          "rank": 10,
+          "code": "2883",
+          "name": "凱基金",
+          "weight": 1.91
+        }
+      ]
+    },
+    "00981A": {
+      "code": "00981A",
+      "source_date": "2026-09-22T05:44:53.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 10.05
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 9.25
+        },
+        {
+          "rank": 3,
+          "code": "2383",
+          "name": "台光電",
+          "weight": 7.95
+        },
+        {
+          "rank": 4,
+          "code": "3037",
+          "name": "欣興",
+          "weight": 7.83
+        },
+        {
+          "rank": 5,
+          "code": "3017",
+          "name": "奇鋐",
+          "weight": 6.95
+        },
+        {
+          "rank": 6,
+          "code": "3653",
+          "name": "健策",
+          "weight": 5.04
+        },
+        {
+          "rank": 7,
+          "code": "2327",
+          "name": "國巨*",
+          "weight": 4.94
+        },
+        {
+          "rank": 8,
+          "code": "2303",
+          "name": "聯電",
+          "weight": 4.91
+        },
+        {
+          "rank": 9,
+          "code": "2308",
+          "name": "台達電",
+          "weight": 4.86
+        },
+        {
+          "rank": 10,
+          "code": "6223",
+          "name": "旺矽",
+          "weight": 4.68
+        }
+      ]
+    },
+    "00981B": {
+      "code": "00981B",
+      "source_date": "2026-09-22T08:59:46.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "US451102CK14",
+          "name": "IEP 10 11/15/29",
+          "weight": 2.67
+        },
+        {
+          "rank": 2,
+          "code": "US001874AA41",
+          "name": "YAHOOO 11 05/15/31",
+          "weight": 2.66
+        },
+        {
+          "rank": 3,
+          "code": "US21873SAB43",
+          "name": "CRWV 9 1/4 06/01/30",
+          "weight": 2.65
+        },
+        {
+          "rank": 4,
+          "code": "US05508WAC91",
+          "name": "BGS 8 09/15/28",
+          "weight": 2.5
+        },
+        {
+          "rank": 5,
+          "code": "US257867BJ97",
+          "name": "RRD 9 1/2 08/01/29",
+          "weight": 2.37
+        },
+        {
+          "rank": 6,
+          "code": "US640695AA01",
+          "name": "NLSN 9.29 04/15/29",
+          "weight": 2.34
+        },
+        {
+          "rank": 7,
+          "code": "US90367UAD37",
+          "name": "USACUT 9 3/4 05/15/29",
+          "weight": 2.34
+        },
+        {
+          "rank": 8,
+          "code": "US25461LAB80",
+          "name": "DTV 8 7/8 02/01/30",
+          "weight": 2.31
+        },
+        {
+          "rank": 9,
+          "code": "US74165HAC25",
+          "name": "PRIHEA 9 3/8 09/01/29",
+          "weight": 2.24
+        },
+        {
+          "rank": 10,
+          "code": "US78573NAM48",
+          "name": "SABHLD 11 1/8 07/15/30",
+          "weight": 2.02
+        }
+      ]
+    },
+    "00982A": {
+      "code": "00982A",
+      "source_date": "2026-09-22T05:30:45.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 8.66
+        },
+        {
+          "rank": 2,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 7.48
+        },
+        {
+          "rank": 3,
+          "code": "3105",
+          "name": "穩懋",
+          "weight": 5.61
+        },
+        {
+          "rank": 4,
+          "code": "6139",
+          "name": "亞翔",
+          "weight": 5.22
+        },
+        {
+          "rank": 5,
+          "code": "2059",
+          "name": "川湖",
+          "weight": 4.47
+        },
+        {
+          "rank": 6,
+          "code": "6669",
+          "name": "緯穎",
+          "weight": 4.22
+        },
+        {
+          "rank": 7,
+          "code": "2360",
+          "name": "致茂",
+          "weight": 3.93
+        },
+        {
+          "rank": 8,
+          "code": "6531",
+          "name": "愛普*",
+          "weight": 3.74
+        },
+        {
+          "rank": 9,
+          "code": "3491",
+          "name": "昇達科",
+          "weight": 3.43
+        },
+        {
+          "rank": 10,
+          "code": "3008",
+          "name": "大立光",
+          "weight": 3.17
+        }
+      ]
+    },
+    "00983A": {
+      "code": "00983A",
+      "source_date": "2026-09-22T08:00:15.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "TSLA US",
+          "name": "特斯拉公司",
+          "weight": 8.96
+        },
+        {
+          "rank": 2,
+          "code": "TEM US",
+          "name": "Tempus AI Inc",
+          "weight": 6.42
+        },
+        {
+          "rank": 3,
+          "code": "C_USD",
+          "name": "CASH",
+          "weight": 6.25
+        },
+        {
+          "rank": 4,
+          "code": "SPCX US",
+          "name": "太空探索科技公司",
+          "weight": 6.04
+        },
+        {
+          "rank": 5,
+          "code": "CRCL US",
+          "name": "Circle Internet Group Inc",
+          "weight": 5.16
+        },
+        {
+          "rank": 6,
+          "code": "TWST US",
+          "name": "Twist Bioscience Corp",
+          "weight": 4.98
+        },
+        {
+          "rank": 7,
+          "code": "HOOD US",
+          "name": "羅賓漢市場公司",
+          "weight": 4.91
+        },
+        {
+          "rank": 8,
+          "code": "COIN US",
+          "name": "比特幣基地全球公司",
+          "weight": 4.66
+        },
+        {
+          "rank": 9,
+          "code": "TXG US",
+          "name": "10X Genomics Inc",
+          "weight": 4.6
+        },
+        {
+          "rank": 10,
+          "code": "CRSP US",
+          "name": "CRISPR治療公司",
+          "weight": 3.99
+        }
+      ]
+    },
+    "00984A": {
+      "code": "00984A",
+      "source_date": "2026-09-22T05:30:38.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2603",
+          "name": "長榮海運",
+          "weight": 3.75
+        },
+        {
+          "rank": 2,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 3.57
+        },
+        {
+          "rank": 3,
+          "code": "3045",
+          "name": "台灣大",
+          "weight": 2.77
+        },
+        {
+          "rank": 4,
+          "code": "2379",
+          "name": "瑞昱",
+          "weight": 2.72
+        },
+        {
+          "rank": 5,
+          "code": "2059",
+          "name": "川湖",
+          "weight": 2.6
+        },
+        {
+          "rank": 6,
+          "code": "1303",
+          "name": "南亞",
+          "weight": 2.58
+        },
+        {
+          "rank": 7,
+          "code": "5876",
+          "name": "上海商銀",
+          "weight": 2.49
+        },
+        {
+          "rank": 8,
+          "code": "2408",
+          "name": "南亞科",
+          "weight": 2.31
+        },
+        {
+          "rank": 9,
+          "code": "2618",
+          "name": "長榮航",
+          "weight": 2.29
+        },
+        {
+          "rank": 10,
+          "code": "5871",
+          "name": "中租-KY",
+          "weight": 2.14
+        }
+      ]
+    },
+    "00988A": {
+      "code": "00988A",
+      "source_date": "2026-09-22T08:54:52.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "LITE US",
+          "name": "LUMENTUM HOLDINGS INC",
+          "weight": 6.15
+        },
+        {
+          "rank": 2,
+          "code": "3037",
+          "name": "欣興",
+          "weight": 4.68
+        },
+        {
+          "rank": 3,
+          "code": "2383",
+          "name": "台光電",
+          "weight": 4.33
+        },
+        {
+          "rank": 4,
+          "code": "009150 KS",
+          "name": "Samsung Electro-Mechanics co(009150 ks)",
+          "weight": 4.28
+        },
+        {
+          "rank": 5,
+          "code": "6981 JP",
+          "name": "MURATA MANUFACTURING CO LTD",
+          "weight": 3.68
+        },
+        {
+          "rank": 6,
+          "code": "BE US",
+          "name": "BLOOM ENERGY CORP- A",
+          "weight": 3.65
+        },
+        {
+          "rank": 7,
+          "code": "MU US",
+          "name": "MICRON TECHNOLOGY INC",
+          "weight": 3.57
+        },
+        {
+          "rank": 8,
+          "code": "AMD US",
+          "name": "ADVANCED MICRO DEVICES.amd us(超微半導體公司)",
+          "weight": 3.11
+        },
+        {
+          "rank": 9,
+          "code": "PANW US",
+          "name": "PALO ALTO NETWORKS INC",
+          "weight": 3.09
+        },
+        {
+          "rank": 10,
+          "code": "CRCL US",
+          "name": "CIRCLE INTERNET GROUP INC",
+          "weight": 3.07
+        }
+      ]
+    },
+    "00989A": {
+      "code": "00989A",
+      "source_date": "2026-09-22T09:00:00.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "NVDA",
+          "name": "NVIDIA CORP",
+          "weight": 4.6
+        },
+        {
+          "rank": 2,
+          "code": "AVGO",
+          "name": "BROADCOM INC",
+          "weight": 3.65
+        },
+        {
+          "rank": 3,
+          "code": "META",
+          "name": "META PLATFORMS INC-CLASS A",
+          "weight": 3.58
+        },
+        {
+          "rank": 4,
+          "code": "CRWD",
+          "name": "CROWDSTRIKE HOLDINGS INC - A",
+          "weight": 3.43
+        },
+        {
+          "rank": 5,
+          "code": "PANW",
+          "name": "PALO ALTO NETWORKS INC",
+          "weight": 3.35
+        },
+        {
+          "rank": 6,
+          "code": "INTC",
+          "name": "INTEL CORP",
+          "weight": 3.34
+        },
+        {
+          "rank": 7,
+          "code": "AMD",
+          "name": "ADVANCED MICRO DEVICES",
+          "weight": 3.15
+        },
+        {
+          "rank": 8,
+          "code": "CRM",
+          "name": "SALESFORCE INC",
+          "weight": 3.12
+        },
+        {
+          "rank": 9,
+          "code": "SNOW",
+          "name": "SNOWFLAKE INC-CLASS A",
+          "weight": 2.94
+        },
+        {
+          "rank": 10,
+          "code": "TTWO",
+          "name": "TAKE-TWO INTERACTIVE SOFTWRE",
+          "weight": 2.9
+        }
+      ]
+    },
+    "00990A": {
+      "code": "00990A",
+      "source_date": "2026-09-22T08:59:45.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "LITE US",
+          "name": "LUMENTUM HOLDINGS INC",
+          "weight": 7.08
+        },
+        {
+          "rank": 2,
+          "code": "BE US",
+          "name": "BLOOM ENERGY CORP- A",
+          "weight": 4.82
+        },
+        {
+          "rank": 3,
+          "code": "AMD US",
+          "name": "ADVANCED MICRO DEVICES",
+          "weight": 4.75
+        },
+        {
+          "rank": 4,
+          "code": "META US",
+          "name": "META PLATFORMS INC-CLASS A",
+          "weight": 3.89
+        },
+        {
+          "rank": 5,
+          "code": "INTC US",
+          "name": "INTEL CORP",
+          "weight": 3.82
+        },
+        {
+          "rank": 6,
+          "code": "SMTC US",
+          "name": "SEMTECH CORP",
+          "weight": 3.64
+        },
+        {
+          "rank": 7,
+          "code": "MU US",
+          "name": "MICRON TECHNOLOGY INC",
+          "weight": 3.63
+        },
+        {
+          "rank": 8,
+          "code": "2454",
+          "name": "聯發科",
+          "weight": 3.25
+        },
+        {
+          "rank": 9,
+          "code": "DELL US",
+          "name": "DELL TECHNOLOGIES -C",
+          "weight": 3.21
+        },
+        {
+          "rank": 10,
+          "code": "2308",
+          "name": "台達電",
+          "weight": 3.17
+        }
+      ]
+    },
+    "00991A": {
+      "code": "00991A",
+      "source_date": "2026-09-22T05:31:01.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "2330",
+          "name": "台灣積體",
+          "weight": 11.79
+        },
+        {
+          "rank": 2,
+          "code": "2408",
+          "name": "南亞科技",
+          "weight": 8.65
+        },
+        {
+          "rank": 3,
+          "code": "2383",
+          "name": "台光電子",
+          "weight": 8.46
+        },
+        {
+          "rank": 4,
+          "code": "2059",
+          "name": "川湖科技",
+          "weight": 7.99
+        },
+        {
+          "rank": 5,
+          "code": "3037",
+          "name": "欣興電子",
+          "weight": 7.2
+        },
+        {
+          "rank": 6,
+          "code": "2454",
+          "name": "聯發科技",
+          "weight": 7.05
+        },
+        {
+          "rank": 7,
+          "code": "2327",
+          "name": "國巨股份",
+          "weight": 5.4
+        },
+        {
+          "rank": 8,
+          "code": "3017",
+          "name": "奇鋐科技",
+          "weight": 5.34
+        },
+        {
+          "rank": 9,
+          "code": "3189",
+          "name": "景碩科技",
+          "weight": 4.87
+        },
+        {
+          "rank": 10,
+          "code": "8046",
+          "name": "南亞電路",
+          "weight": 4.85
+        }
+      ]
+    },
+    "00992A": {
+      "code": "00992A",
+      "source_date": "2026-09-22T05:30:00.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "3017",
+          "name": "奇鋐",
+          "weight": 8.0
+        },
+        {
+          "rank": 2,
+          "code": "3037",
+          "name": "欣興",
+          "weight": 6.55
+        },
+        {
+          "rank": 3,
+          "code": "2330",
+          "name": "台積電",
+          "weight": 6.47
+        },
+        {
+          "rank": 4,
+          "code": "8996",
+          "name": "高力",
+          "weight": 6.36
+        },
+        {
+          "rank": 5,
+          "code": "3665",
+          "name": "貿聯-KY",
+          "weight": 6.14
+        },
+        {
+          "rank": 6,
+          "code": "2059",
+          "name": "川湖",
+          "weight": 6.12
+        },
+        {
+          "rank": 7,
+          "code": "2383",
+          "name": "台光電",
+          "weight": 5.33
+        },
+        {
+          "rank": 8,
+          "code": "2345",
+          "name": "智邦",
+          "weight": 4.98
+        },
+        {
+          "rank": 9,
+          "code": "3008",
+          "name": "大立光",
+          "weight": 4.42
+        },
+        {
+          "rank": 10,
+          "code": "6223",
+          "name": "旺矽",
+          "weight": 3.38
+        }
+      ]
+    },
+    "00998A": {
+      "code": "00998A",
+      "source_date": "2026-09-22T08:59:40.000Z",
+      "fetched_at": "2026-09-23T00:34:03",
+      "holdings": [
+        {
+          "rank": 1,
+          "code": "ABN NA",
+          "name": "荷蘭銀行公眾有限公司",
+          "weight": 5.17
+        },
+        {
+          "rank": 2,
+          "code": "AGN NA",
+          "name": "荷蘭保險公司",
+          "weight": 4.64
+        },
+        {
+          "rank": 3,
+          "code": "AV/ LN",
+          "name": "英傑華保險",
+          "weight": 4.58
+        },
+        {
+          "rank": 4,
+          "code": "DA_NTD",
+          "name": "AFTER DEDUCTING SECURITIES PURCHASES AMOUNT",
+          "weight": 4.44
+        },
+        {
+          "rank": 5,
+          "code": "TPEIR GA",
+          "name": "Piraeus Bank SA",
+          "weight": 4.28
+        },
+        {
+          "rank": 6,
+          "code": "ADM LN",
+          "name": "Admiral集團公開有限公司",
+          "weight": 4.04
+        },
+        {
+          "rank": 7,
+          "code": "NWG LN",
+          "name": "國民西敏集團公開有限公司",
+          "weight": 3.78
+        },
+        {
+          "rank": 8,
+          "code": "LLOY LN",
+          "name": "勞埃德銀行集團",
+          "weight": 3.38
+        },
+        {
+          "rank": 9,
+          "code": "DBK GY",
+          "name": "德意志銀行",
+          "weight": 3.37
+        },
+        {
+          "rank": 10,
+          "code": "ASRNL NA",
+          "name": "ASR荷蘭公眾有限公司",
+          "weight": 2.88
+        }
+      ]
+    }
+  },
+  "updated_at": "2026-09-23 01:05:43"
+}

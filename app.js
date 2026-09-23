@@ -7,6 +7,7 @@ if (window.ChartDataLabels) {
 
 let TICKERS = null;
 let META = null;
+let ETF_HOLDINGS = null;
 let MACRO = null;
 let CURRENT_TAB = "stocks";
 const CACHE = {}; // code -> stock json
@@ -82,6 +83,100 @@ function renderMacroPanel() {
 let marketFlowChart = null;
 let futuresFlowChart = null;
 
+let indexCharts = {};
+
+function renderIndexCharts() {
+  if (!window.LightweightCharts) return;
+  const configs = [
+    { key: "taiex", host: "taiex-index-chart", label: "大盤" },
+    { key: "otc", host: "otc-index-chart", label: "櫃買" },
+  ];
+  const maLines = [
+    { key: "ma10", label: "10日", color: "#f59e0b" },
+    { key: "ma20", label: "20日", color: "#a78bfa" },
+    { key: "ma60", label: "60日", color: "#38bdf8" },
+    { key: "ma240", label: "240日", color: "#f472b6" },
+  ];
+  configs.forEach(({ key, host: hostId, label }) => {
+    const host = document.getElementById(hostId);
+    const raw = MACRO[key] || [];
+    if (!host || !raw.length) return;
+    if (indexCharts[key]) indexCharts[key].remove();
+    host.innerHTML = "";
+    const readout = document.createElement("div");
+    readout.className = "index-readout";
+    host.appendChild(readout);
+    const legend = document.createElement("div");
+    legend.className = "index-legend";
+    host.appendChild(legend);
+    const chartEl = document.createElement("div");
+    chartEl.className = "index-chart-canvas";
+    host.appendChild(chartEl);
+    const rows = raw.filter((p) => p.c !== null && p.c !== undefined).map((p) => ({
+      t: p.t, o: p.o ?? p.c, h: p.h ?? p.c, l: p.l ?? p.c, c: p.c, v: p.v ?? 0,
+    }));
+    if (!rows.length) return;
+    const chart = LightweightCharts.createChart(chartEl, {
+      width: chartEl.clientWidth,
+      height: 340,
+      layout: { background: { color: "#171a21" }, textColor: "#e8eaed" },
+      grid: { vertLines: { color: "#2a2f3a" }, horzLines: { color: "#2a2f3a" } },
+      timeScale: { timeVisible: false },
+      crosshair: {
+        mode: LightweightCharts.CrosshairMode.Normal,
+        vertLine: { color: "#8b93a7", width: 1, style: 3, labelBackgroundColor: "#3a4152" },
+        horzLine: { visible: false, labelVisible: false },
+      },
+    });
+    const candle = chart.addCandlestickSeries({
+      upColor: "#ef4444", downColor: "#22c55e",
+      borderUpColor: "#ef4444", borderDownColor: "#22c55e",
+      wickUpColor: "#ef4444", wickDownColor: "#22c55e",
+    });
+    candle.setData(rows.map((p) => ({ time: p.t, open: p.o, high: p.h, low: p.l, close: p.c })));
+    const volume = chart.addHistogramSeries({ priceScaleId: "", priceFormat: { type: "volume" }, lastValueVisible: false, priceLineVisible: false });
+    chart.priceScale("").applyOptions({ scaleMargins: { top: 0.8, bottom: 0 } });
+    volume.setData(rows.filter((p) => p.v > 0).map((p) => ({ time: p.t, value: p.v, color: p.c >= p.o ? "#ef4444" : "#22c55e" })));
+    const closes = rows.map((p) => p.c);
+    maLines.forEach((ma) => {
+      const data = movingAverage(closes, Number(ma.key.slice(2))).map((value, i) => value === null ? null : ({ time: rows[i].t, value })).filter(Boolean);
+      const line = chart.addLineSeries({ color: ma.color, lineWidth: 1, title: ma.label, priceLineVisible: false, lastValueVisible: false, crosshairMarkerVisible: false });
+      line.setData(data);
+      const item = document.createElement("span");
+      item.innerHTML = `<i style="background:${ma.color}"></i>${ma.label}`;
+      legend.appendChild(item);
+    });
+    const rowDates = new Map(rows.map((p, i) => [p.t, i]));
+    const renderIndexReadout = (idx) => {
+      const row = rows[idx] || rows[rows.length - 1];
+      const prev = idx > 0 ? rows[idx - 1] : null;
+      const diff = prev ? row.c - prev.c : null;
+      const cls = diff === null ? "" : diff > 0 ? "up" : diff < 0 ? "down" : "flat";
+      const n = (value) => Number(value).toFixed(2);
+      readout.innerHTML = `<span class="date">${row.t}</span>` +
+        `<span>\u958b <b>${n(row.o)}</b></span>` +
+        `<span>\u9ad8 <b>${n(row.h)}</b></span>` +
+        `<span>\u4f4e <b>${n(row.l)}</b></span>` +
+        `<span>\u6536 <b class="${cls}">${n(row.c)}</b></span>` +
+        (row.v ? `<span>\u91cf <b>${Math.round(row.v / 1000).toLocaleString()}</b> \u5343</span>` : "");
+    };
+    renderIndexReadout(rows.length - 1);
+    chart.subscribeCrosshairMove((param) => {
+      const bar = param.seriesData && param.seriesData.get(candle);
+      if (!bar || param.time === undefined || param.time === null) {
+        renderIndexReadout(rows.length - 1);
+        return;
+      }
+      const time = typeof param.time === "object"
+        ? `${param.time.year}-${String(param.time.month).padStart(2, "0")}-${String(param.time.day).padStart(2, "0")}`
+        : String(param.time);
+      const idx = rowDates.get(time);
+      renderIndexReadout(idx === undefined ? rows.length - 1 : idx);
+    });
+    chart.timeScale().fitContent();
+    indexCharts[key] = chart;
+  });
+}
 function renderMarketFlowChart() {
   const canvas = document.getElementById("market-flow-chart");
   const foreign = (MACRO.foreign_net || []).slice(-120);
@@ -148,11 +243,16 @@ async function buildCards(codes, kind) {
       const latestPe = kind === "stock" && s.pe && s.pe.length
         ? s.pe.filter(p => p.pe !== null).slice(-1)[0]
         : null;
+      const latestPrice = s.price && s.price.length ? s.price[s.price.length - 1] : null;
+      const volume = latestPrice && latestPrice.v !== null && latestPrice.v !== undefined ? Number(latestPrice.v) : null;
+      const amount = latestPrice && volume !== null && latestPrice.c !== null ? volume * Number(latestPrice.c) : null;
       cards.push({
         code,
         name: (TICKERS.names && TICKERS.names[code]) || code,
         kind,
         close: s.latest_close,
+        volume,
+        amount,
         yield: s.trailing_yield_pct,
         yoy: latestYoy ? latestYoy.yoy_pct : null,
         pe: latestPe ? latestPe.pe : null,
@@ -189,14 +289,18 @@ function renderCards(cards) {
 
 let sortMode = "code";
 let searchTerm = "";
-let allCardsByTab = { stocks: [], etfs: [] };
+let allCardsByTab = { stocks: [], banks: [], etfs: [], bonds: [] };
 
 function applyFilterSort() {
   let cards = [...allCardsByTab[CURRENT_TAB]];
   if (searchTerm) {
     cards = cards.filter((c) => c.code.includes(searchTerm) || c.name.includes(searchTerm));
   }
-  if (sortMode === "yield-desc") {
+  if (sortMode === "volume-desc") {
+    cards.sort((a, b) => (b.volume ?? -1) - (a.volume ?? -1));
+  } else if (sortMode === "amount-desc") {
+    cards.sort((a, b) => (b.amount ?? -1) - (a.amount ?? -1));
+  } else if (sortMode === "yield-desc") {
     cards.sort((a, b) => (b.yield ?? -999) - (a.yield ?? -999));
   } else if (sortMode === "yoy-desc") {
     cards.sort((a, b) => (b.yoy ?? -999) - (a.yoy ?? -999));
@@ -209,12 +313,21 @@ function applyFilterSort() {
   renderCards(cards);
 }
 
+function codesForTab(tab) {
+  const bonds = new Set(TICKERS.bonds || []);
+  const banks = new Set(TICKERS.banks || []);
+  if (tab === "banks") return [...banks];
+  if (tab === "bonds") return [...bonds];
+  if (tab === "stocks") return TICKERS.stocks.filter((code) => !banks.has(code));
+  return TICKERS.etfs.filter((code) => !bonds.has(code));
+}
+
 async function switchTab(tab) {
   CURRENT_TAB = tab;
   document.querySelectorAll(".tab-btn").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
   if (!allCardsByTab[tab].length) {
-    const codes = tab === "stocks" ? TICKERS.stocks : TICKERS.etfs;
-    allCardsByTab[tab] = await buildCards(codes, tab === "stocks" ? "stock" : "etf");
+    const kind = (tab === "stocks" || tab === "banks") ? "stock" : "etf";
+    allCardsByTab[tab] = await buildCards(codesForTab(tab), kind);
   }
   applyFilterSort();
 }
@@ -631,8 +744,31 @@ async function openDetail(code, kind, name) {
     document.getElementById("div-table").classList.add("hidden");
     divEmpty.classList.remove("hidden");
   }
+  renderETFHoldings(s);
 }
 
+function renderETFHoldings(stock) {
+  const block = document.getElementById("etf-holdings-block");
+  const tbody = document.querySelector("#etf-holdings-table tbody");
+  const empty = document.getElementById("etf-holdings-empty");
+  if (!block || !tbody || !empty) return;
+  const item = ETF_HOLDINGS && ETF_HOLDINGS.items && ETF_HOLDINGS.items[stock.code];
+  const rows = item && Array.isArray(item.holdings) ? item.holdings : [];
+  tbody.innerHTML = "";
+  if (stock.kind !== "etf" || !rows.length) {
+    block.classList.add("hidden");
+    return;
+  }
+  block.classList.remove("hidden");
+  empty.classList.add("hidden");
+  rows.forEach((holding) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${holding.rank}</td><td>${holding.code}</td><td>${holding.name}</td><td>${Number(holding.weight).toFixed(2)}%</td>`;
+    tbody.appendChild(tr);
+  });
+  const date = item.source_date ? String(item.source_date).slice(0, 10) : "";
+  document.getElementById("etf-holdings-updated").textContent = date ? "\u8cc7\u6599\u65e5\u671f\uff1a" + date : "";
+}
 function closeDetail() {
   document.getElementById("detail-modal").classList.add("hidden");
   if (candleChart) { candleChart.remove(); candleChart = null; }
@@ -641,10 +777,13 @@ function closeDetail() {
 async function init() {
   TICKERS = await loadJSON("data/tickers.json");
   try { META = await loadJSON("data/meta.json"); } catch (e) { META = null; }
+  try { ETF_HOLDINGS = await loadJSON("data/etf_holdings.json"); } catch (e) { ETF_HOLDINGS = null; }
   MACRO = await loadJSON("data/macro.json");
 
-  document.getElementById("stock-count").textContent = TICKERS.stocks.length;
-  document.getElementById("etf-count").textContent = TICKERS.etfs.length;
+  document.getElementById("stock-count").textContent = codesForTab("stocks").length;
+  document.getElementById("bank-count").textContent = codesForTab("banks").length;
+  document.getElementById("etf-count").textContent = codesForTab("etfs").length;
+  document.getElementById("bond-count").textContent = codesForTab("bonds").length;
   if (!META) {
     document.getElementById("updated-at").textContent = "尚未執行「更新資料.bat」，目前沒有資料";
   } else {
@@ -673,6 +812,7 @@ async function init() {
   adjBtn.addEventListener("click", () => setAdjusted(!ADJUSTED));
 
   renderMacroPanel();
+  renderIndexCharts();
   renderMarketFlowChart();
   renderFuturesFlowChart();
   await switchTab("stocks");

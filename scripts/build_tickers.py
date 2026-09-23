@@ -22,6 +22,16 @@ OUT_PATH = os.path.join(HERE, "..", "data", "tickers.json")
 
 # 台股大盤指數：不算個股/ETF，另外放進總經面板
 MACRO_INDEX = [{"code": "IX0001", "name": "台股加權指數"}]
+# 獨立分頁分類：債券 ETF 與銀行/金控股。
+BOND_CODES = {
+    "00679B", "00687B", "00688L", "00719B", "00720B", "00725B",
+    "00764B", "00795B", "00933B", "00937B", "00945B", "00953B", "00981B",
+}
+BANK_CODES = {
+    "2801", "2812", "2834", "2845",
+    "2880", "2881", "2882", "2883", "2884", "2885", "2886", "2887", "2890", "2891", "2892",
+    "5876", "5880",
+}
 
 
 def read_watchlist():
@@ -58,6 +68,8 @@ def main():
                           "；實際清單見 scripts/watchlist.txt",
         "stocks": stocks,
         "etfs": etfs,
+        "bonds": sorted(c for c in etfs if c in BOND_CODES),
+        "banks": sorted(c for c in stocks if c in BANK_CODES),
         "macro_index": MACRO_INDEX,
     }
 
