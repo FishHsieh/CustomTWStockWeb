@@ -23,6 +23,7 @@ const MACRO_LABELS = {
   nasdaq: { label: "那斯達克", fmt: (v) => v.toLocaleString(undefined, { maximumFractionDigits: 0 }) },
   vietnam: { label: "越南大盤", fmt: (v) => v.toLocaleString(undefined, { maximumFractionDigits: 0 }) },
   sp500: { label: "S&P 500", fmt: (v) => v.toLocaleString(undefined, { maximumFractionDigits: 0 }) },
+  btc_usd: { label: "比特幣（BTC/USD）", fmt: (v) => "$" + v.toLocaleString(undefined, { maximumFractionDigits: 0 }) },
   usdtwd: { label: "美元/台幣", fmt: (v) => v.toFixed(3) },
 };
 

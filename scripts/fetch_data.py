@@ -939,6 +939,35 @@ def fetch_tpex_index():
     return sorted(out, key=lambda row: row["t"])
 
 
+def fetch_vietnam_index():
+    """抓取越南 VN-Index 近一年日線資料；Yahoo 的 VNINDEX 目前只回傳最新一筆。"""
+    today = datetime.today()
+    data = http_get_json(
+        "https://kbbuddywts.kbsec.com.vn/iis-server/investment/index/VNINDEX/data_day",
+        {
+            "sdate": (today - timedelta(days=365)).strftime("%d-%m-%Y"),
+            "edate": today.strftime("%d-%m-%Y"),
+        },
+        cache_key="macro_vietnam_index",
+        max_age_hours=12,
+    ) or {}
+    rows_by_date = {}
+    for item in data.get("data_day") or []:
+        try:
+            date_text = str(item["t"])[:10]
+            rows_by_date[date_text] = {
+                "t": date_text,
+                "o": float(item["o"]),
+                "h": float(item["h"]),
+                "l": float(item["l"]),
+                "c": float(item["c"]),
+                "v": float(item.get("v") or 0),
+            }
+        except (KeyError, TypeError, ValueError):
+            continue
+    return sorted(rows_by_date.values(), key=lambda row: row["t"])
+
+
 def build_macro():
     foreign_net, trust_net, dealer_net, institutional_net, retail_net = fetch_market_flow()
     foreign_futures_net, trust_futures_net = fetch_futures_flow()
@@ -951,8 +980,9 @@ def build_macro():
         "kospi": yahoo_chart("^KS11", "macro_kospi"),
         "philadelphia_semiconductor": yahoo_chart("^SOX", "macro_philadelphia_semiconductor"),
         "nasdaq": yahoo_chart("^IXIC", "macro_nasdaq"),
-        "vietnam": yahoo_chart("^VNINDEX.VN", "macro_vietnam"),
+        "vietnam": fetch_vietnam_index(),
         "sp500": yahoo_chart("^GSPC", "macro_sp500"),
+        "btc_usd": yahoo_chart("BTC-USD", "macro_btc_usd"),
 
         "otc": fetch_tpex_index(),
         "usdtwd": yahoo_chart("TWD=X", "macro_usdtwd"),
