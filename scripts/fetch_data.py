@@ -769,6 +769,33 @@ def yahoo_chart(symbol, cache_key, rng="1y"):
 def fetch_twse_taiex_recent(base_rows):
     """用證交所盤中資料補 Yahoo 尚未提供的最近幾個交易日。"""
     rows_by_date = {row["t"]: row for row in base_rows}
+
+    # Yahoo 的大盤指數 OHLC 會正常回傳，但成交量常常是 0。
+    # 改用證交所 FMTQIK 的每日成交股數補上最近資料，避免量柱被前端濾掉。
+    volume_by_date = {}
+    amount_by_date = {}
+    volume_data = http_get_json(
+        "https://www.twse.com.tw/rwd/zh/afterTrading/FMTQIK",
+        {"response": "json", "date": datetime.today().strftime("%Y%m%d")},
+        cache_key="macro_taiex_volume",
+        max_age_hours=24,
+    ) or {}
+    for item in volume_data.get("data") or []:
+        try:
+            raw_date = str(item[0]).replace("/", "")
+            if len(raw_date) != 7:
+                continue
+            date_text = f"{int(raw_date[:3]) + 1911:04d}-{raw_date[3:5]}-{raw_date[5:7]}"
+            volume_by_date[date_text] = float(str(item[1]).replace(",", ""))
+            amount_by_date[date_text] = float(str(item[2]).replace(",", ""))
+        except (IndexError, TypeError, ValueError):
+            continue
+
+    for date_text, volume in volume_by_date.items():
+        if date_text in rows_by_date:
+            rows_by_date[date_text]["v"] = volume
+            rows_by_date[date_text]["a"] = amount_by_date.get(date_text, 0)
+
     today = datetime.today()
     for offset in range(10):
         date = (today - timedelta(days=offset)).strftime("%Y%m%d")
@@ -793,7 +820,8 @@ def fetch_twse_taiex_recent(base_rows):
             "h": round(max(points), 4),
             "l": round(min(points), 4),
             "c": round(points[-1], 4),
-            "v": 0,
+            "v": volume_by_date.get(date_text, 0),
+            "a": amount_by_date.get(date_text, 0),
         }
     return sorted(rows_by_date.values(), key=lambda row: row["t"])
 
@@ -876,11 +904,13 @@ def fetch_tpex_index():
         {}, cache_key="macro_otc_volume", force=True,
     ) or []
     volumes = {}
+    amounts = {}
     for row in volume_data:
         raw_date = str(row.get("Date") or "")
         if len(raw_date) == 7 and raw_date.isdigit():
             date = f"{int(raw_date[:3]) + 1911:04d}-{raw_date[3:5]}-{raw_date[5:]}"
             volumes[date] = float(row.get("TradeVolume") or 0)
+            amounts[date] = float(row.get("TradeAmount") or 0)
 
     out = []
     seen = set()
@@ -901,6 +931,7 @@ def fetch_tpex_index():
                 "l": float(row[3]),
                 "c": float(row[4]),
                 "v": volumes.get(date, 0),
+                "a": amounts.get(date, 0),
             })
             seen.add(date)
         except (TypeError, ValueError):
@@ -916,6 +947,12 @@ def build_macro():
         "oil_wti": yahoo_chart("CL=F", "macro_oil"),
         "us10y_yield": yahoo_chart("^TNX", "macro_us10y"),
         "taiex": fetch_twse_taiex_recent(yahoo_chart("^TWII", "macro_taiex")),
+        "nikkei225": yahoo_chart("^N225", "macro_nikkei225"),
+        "kospi": yahoo_chart("^KS11", "macro_kospi"),
+        "philadelphia_semiconductor": yahoo_chart("^SOX", "macro_philadelphia_semiconductor"),
+        "nasdaq": yahoo_chart("^IXIC", "macro_nasdaq"),
+        "vietnam": yahoo_chart("^VNINDEX.VN", "macro_vietnam"),
+        "sp500": yahoo_chart("^GSPC", "macro_sp500"),
 
         "otc": fetch_tpex_index(),
         "usdtwd": yahoo_chart("TWD=X", "macro_usdtwd"),

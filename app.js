@@ -17,6 +17,12 @@ const MACRO_LABELS = {
   oil_wti: { label: "原油 WTI (CL=F)", fmt: (v) => "$" + v.toFixed(2) },
   us10y_yield: { label: "美債10年殖利率", fmt: (v) => v.toFixed(2) + "%" },
   taiex: { label: "台股加權指數", fmt: (v) => v.toLocaleString(undefined, { maximumFractionDigits: 0 }) },
+  nikkei225: { label: "日本大盤（日經225）", fmt: (v) => v.toLocaleString(undefined, { maximumFractionDigits: 0 }) },
+  kospi: { label: "韓國大盤（KOSPI）", fmt: (v) => v.toLocaleString(undefined, { maximumFractionDigits: 0 }) },
+  philadelphia_semiconductor: { label: "費城半導體", fmt: (v) => v.toLocaleString(undefined, { maximumFractionDigits: 0 }) },
+  nasdaq: { label: "那斯達克", fmt: (v) => v.toLocaleString(undefined, { maximumFractionDigits: 0 }) },
+  vietnam: { label: "越南大盤", fmt: (v) => v.toLocaleString(undefined, { maximumFractionDigits: 0 }) },
+  sp500: { label: "S&P 500", fmt: (v) => v.toLocaleString(undefined, { maximumFractionDigits: 0 }) },
   usdtwd: { label: "美元/台幣", fmt: (v) => v.toFixed(3) },
 };
 
@@ -113,7 +119,7 @@ function renderIndexCharts() {
     chartEl.className = "index-chart-canvas";
     host.appendChild(chartEl);
     const rows = raw.filter((p) => p.c !== null && p.c !== undefined).map((p) => ({
-      t: p.t, o: p.o ?? p.c, h: p.h ?? p.c, l: p.l ?? p.c, c: p.c, v: p.v ?? 0,
+      t: p.t, o: p.o ?? p.c, h: p.h ?? p.c, l: p.l ?? p.c, c: p.c, v: p.v ?? 0, a: p.a ?? 0,
     }));
     if (!rows.length) return;
     const chart = LightweightCharts.createChart(chartEl, {
@@ -136,7 +142,8 @@ function renderIndexCharts() {
     candle.setData(rows.map((p) => ({ time: p.t, open: p.o, high: p.h, low: p.l, close: p.c })));
     const volume = chart.addHistogramSeries({ priceScaleId: "", priceFormat: { type: "volume" }, lastValueVisible: false, priceLineVisible: false });
     chart.priceScale("").applyOptions({ scaleMargins: { top: 0.8, bottom: 0 } });
-    volume.setData(rows.filter((p) => p.v > 0).map((p) => ({ time: p.t, value: p.v, color: p.c >= p.o ? "#ef4444" : "#22c55e" })));
+    // 大盤成交金額資料是元，圖表統一以「億元」呈現。
+    volume.setData(rows.filter((p) => p.a > 0).map((p) => ({ time: p.t, value: p.a / 1e8, color: p.c >= p.o ? "#ef4444" : "#22c55e" })));
     const closes = rows.map((p) => p.c);
     maLines.forEach((ma) => {
       const data = movingAverage(closes, Number(ma.key.slice(2))).map((value, i) => value === null ? null : ({ time: rows[i].t, value })).filter(Boolean);
@@ -158,7 +165,7 @@ function renderIndexCharts() {
         `<span>\u9ad8 <b>${n(row.h)}</b></span>` +
         `<span>\u4f4e <b>${n(row.l)}</b></span>` +
         `<span>\u6536 <b class="${cls}">${n(row.c)}</b></span>` +
-        (row.v ? `<span>\u91cf <b>${Math.round(row.v / 1000).toLocaleString()}</b> \u5343</span>` : "");
+        (row.a ? `<span>\u91cf <b>${(row.a / 1e8).toFixed(2)}</b> \u5104</span>` : "");
     };
     renderIndexReadout(rows.length - 1);
     chart.subscribeCrosshairMove((param) => {
@@ -582,6 +589,12 @@ function drawCandle(s) {
     });
 
     candleChart.timeScale().fitContent();
+    // 個股 K 線預設聚焦最近六個月，完整歷史資料仍保留供左右拖曳查看。
+    const lastDate = new Date(`${rows[rows.length - 1].t}T00:00:00Z`);
+    const firstVisibleDate = new Date(lastDate);
+    firstVisibleDate.setUTCMonth(firstVisibleDate.getUTCMonth() - 6);
+    const firstVisibleRow = rows.find((row) => new Date(`${row.t}T00:00:00Z`) >= firstVisibleDate) || rows[0];
+    candleChart.timeScale().setVisibleRange({ from: firstVisibleRow.t, to: rows[rows.length - 1].t });
   }
 }
 
