@@ -41,6 +41,114 @@
   </div>
 </section>
 
+<section id="manager-changes-panel">
+  <h2>主動式 ETF 經理人調整追蹤</h2>
+  <div class="manager-toolbar">
+    <label>ETF <select id="manager-etf-select">
+      <option value="all">00981A＋00991A＋00990A</option>
+      <option value="00981A">00981A 主動統一台股增長</option>
+      <option value="00991A">00991A 主動復華未來50</option>
+      <option value="00990A">00990A 主動元大AI新經濟</option>
+    </select></label>
+    <label>動作 <select id="manager-action-select">
+      <option value="all">全部異動</option>
+      <option value="買進">新進／加碼</option>
+      <option value="賣出">剔除／減碼</option>
+    </select></label>
+    <span id="manager-changes-period" class="table-note"></span>
+  </div>
+  <p class="manager-note">張數＝每日公開持股快照的差額；價格＝同日個股收盤參考價；估算金額不是經理人的逐筆成交回報，僅供比對操作方向。</p>
+  <div class="manager-table-wrap">
+    <table id="manager-changes-table">
+      <thead><tr><th>日期</th><th>ETF</th><th>代號／名稱</th><th>動作</th><th>張數變化</th><th>前 → 後</th><th>收盤參考價</th><th>估算金額</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p id="manager-changes-empty" class="empty-note hidden">目前沒有可用的異動資料，請先執行「更新資料.bat」。</p>
+  <div class="manager-top-movers">
+    <h3>近 3 個月最多進出 60 檔股票</h3>
+    <p class="manager-note">依三檔 ETF 合計進出張數排序；進出量為買進張數加上賣出張數，淨變化僅表示持股差額。</p>
+    <div class="manager-table-wrap">
+      <table id="manager-top-movers-table">
+        <thead><tr><th>排名</th><th>代號／名稱</th><th>涵蓋 ETF</th><th>買進</th><th>賣出</th><th>總進出</th><th>淨變化</th><th>異動次數</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="foreign-flow-panel">
+  <h2>外資近三個月買賣對象</h2>
+  <div class="foreign-flow-toolbar">
+    <label for="foreign-flow-period-select">期間</label>
+    <select id="foreign-flow-period-select">
+      <option value="7">近一週</option>
+      <option value="14">近兩週</option>
+      <option value="31">近一個月</option>
+      <option value="62">近兩個月</option>
+      <option value="93" selected>近三個月</option>
+    </select>
+  </div>
+  <p id="foreign-flow-period" class="manager-note"></p>
+  <div class="foreign-flow-grid">
+    <div>
+      <h3>外資買超前 20</h3>
+      <div class="manager-table-wrap">
+        <table id="foreign-buy-table"><thead><tr><th>排名</th><th>代號／名稱</th><th>買超</th><th>賣超</th><th>淨買賣</th><th>交易日</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+    <div>
+      <h3>外資賣超前 20</h3>
+      <div class="manager-table-wrap">
+        <table id="foreign-sell-table"><thead><tr><th>排名</th><th>代號／名稱</th><th>買超</th><th>賣超</th><th>淨買賣</th><th>交易日</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+  </div>
+  <p id="foreign-flow-empty" class="empty-note hidden">目前沒有外資排行資料，請先執行「更新資料.bat」。</p>
+</section>
+
+<section id="dividend-etf-flow-panel">
+  <h2>高股息 ETF 法人買賣</h2>
+  <div class="foreign-flow-toolbar">
+    <label for="dividend-etf-flow-period-select">期間</label>
+    <select id="dividend-etf-flow-period-select">
+      <option value="7">近一週</option>
+      <option value="14">近兩週</option>
+      <option value="31">近一個月</option>
+      <option value="62">近兩個月</option>
+      <option value="93" selected>近三個月</option>
+    </select>
+  </div>
+  <p id="dividend-etf-flow-period" class="manager-note"></p>
+  <div class="manager-table-wrap">
+    <table id="dividend-etf-flow-table">
+      <thead><tr><th>ETF</th><th>外資買進</th><th>外資賣出</th><th>外資淨買賣</th><th>投信買進</th><th>投信賣出</th><th>投信淨買賣</th><th>散戶買進</th><th>散戶賣出</th><th>散戶淨買賣</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p id="dividend-etf-flow-empty" class="empty-note hidden">目前沒有指定 ETF 法人資料，請先執行「更新資料.bat」。</p>
+</section>
+
+<section id="watchlist-manager-panel">
+  <h2>新增追蹤標的</h2>
+  <form id="watchlist-form" class="watchlist-form">
+    <label>類型
+      <select id="watchlist-kind">
+        <option value="stock">個股</option>
+        <option value="etf">ETF</option>
+      </select>
+    </label>
+    <label>代號
+      <input id="watchlist-code" required pattern="[0-9]{4,6}[A-Za-z]{0,2}" placeholder="例如 2330／00990A">
+    </label>
+    <label>名稱（可選）
+      <input id="watchlist-name" placeholder="例如 台積電">
+    </label>
+    <button type="submit">加入並更新資料</button>
+  </form>
+  <p id="watchlist-status" class="manager-note">新增後會寫入本機追蹤清單，並抓取該標的資料；更新完成後重新整理頁面即可看到。</p>
+</section>
+
 <nav id="tabs">
   <button class="tab-btn active" data-tab="stocks">個股 (<span id="stock-count">0</span>)</button>
   <button class="tab-btn" data-tab="banks">銀行 (<span id="bank-count">0</span>)</button>
@@ -122,6 +230,6 @@
   </div>
 </div>
 
-<script src="app.js?v=20260924-4"></script>
+<script src="app.js?v=20260927-1"></script>
 </body>
 </html>

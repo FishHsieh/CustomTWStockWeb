@@ -8,6 +8,9 @@ if (window.ChartDataLabels) {
 let TICKERS = null;
 let META = null;
 let ETF_HOLDINGS = null;
+let MANAGER_CHANGES = null;
+let FOREIGN_FLOW = null;
+let DIVIDEND_ETF_FLOW = null;
 let MACRO = null;
 let CURRENT_TAB = "stocks";
 const CACHE = {}; // code -> stock json
@@ -796,6 +799,162 @@ function renderETFHoldings(stock) {
   const date = item.source_date ? String(item.source_date).slice(0, 10) : "";
   document.getElementById("etf-holdings-updated").textContent = date ? "\u8cc7\u6599\u65e5\u671f\uff1a" + date : "";
 }
+
+function renderManagerChanges() {
+  const table = document.getElementById("manager-changes-table");
+  const tbody = table && table.querySelector("tbody");
+  const empty = document.getElementById("manager-changes-empty");
+  const period = document.getElementById("manager-changes-period");
+  if (!tbody || !MANAGER_CHANGES || !MANAGER_CHANGES.items) {
+    if (table) table.classList.add("hidden");
+    if (empty) empty.classList.remove("hidden");
+    return;
+  }
+  const etf = document.getElementById("manager-etf-select")?.value || "all";
+  const actionFilter = document.getElementById("manager-action-select")?.value || "all";
+  const rows = Object.values(MANAGER_CHANGES.items)
+    .filter((item) => etf === "all" || item.code === etf)
+    .flatMap((item) => (item.events || []).map((row) => ({ ...row, etf: item.code })))
+    .filter((row) => actionFilter === "all" ||
+      (actionFilter === "買進" && ["新進", "加碼"].includes(row.action)) ||
+      (actionFilter === "賣出" && ["剔除", "減碼"].includes(row.action)))
+    .sort((a, b) => `${b.date}${b.etf}${b.code}`.localeCompare(`${a.date}${a.etf}${a.code}`));
+  const selected = etf === "all" ? Object.values(MANAGER_CHANGES.items) : [MANAGER_CHANGES.items[etf]];
+  const from = selected.map((item) => item && item.from).filter(Boolean).sort()[0];
+  const to = selected.map((item) => item && item.to).filter(Boolean).sort().pop();
+  period.textContent = from && to ? `資料期間：${from}～${to}｜共 ${rows.length} 筆` : "";
+  tbody.innerHTML = "";
+  table.classList.toggle("hidden", !rows.length);
+  empty.classList.toggle("hidden", Boolean(rows.length));
+  rows.forEach((row) => {
+    const tr = document.createElement("tr");
+    const delta = Number(row.delta_lots || 0);
+    const tone = delta > 0 ? "up" : "down";
+    const price = row.price == null ? "—" : Number(row.price).toLocaleString("zh-TW", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const estimated = row.estimated_amount == null ? "—" : `${(Math.abs(row.estimated_amount) / 10000).toLocaleString("zh-TW", { maximumFractionDigits: 1 })} 萬`;
+    tr.innerHTML = `<td>${row.date}</td><td>${row.etf}</td><td>${row.code} ${row.name}</td>` +
+      `<td class="${tone}">${row.action}</td><td class="${tone}">${delta > 0 ? "+" : ""}${delta.toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td>${(Number(row.shares_prev || 0) / 1000).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} → ${(Number(row.shares || 0) / 1000).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td title="${row.price_label || ""}">${price}</td><td>${estimated}</td>`;
+    tbody.appendChild(tr);
+  });
+  renderManagerTopMovers();
+}
+
+function renderManagerTopMovers() {
+  const tbody = document.querySelector("#manager-top-movers-table tbody");
+  if (!tbody) return;
+  const names = {
+    "00981A": "00981A",
+    "00991A": "00991A",
+    "00990A": "00990A",
+  };
+  tbody.innerHTML = "";
+  (MANAGER_CHANGES.top_movers || []).forEach((row, index) => {
+    const net = Number(row.net_lots || 0);
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${index + 1}</td><td>${row.code} ${row.name}</td><td>${(row.etfs || []).map((code) => names[code] || code).join("、")}</td>` +
+      `<td class="up">+${Number(row.buy_lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td class="down">-${Number(row.sell_lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td>${Number(row.turnover_lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td class="${net >= 0 ? "up" : "down"}">${net >= 0 ? "+" : ""}${net.toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td>${row.event_count || 0}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderForeignFlow() {
+  const empty = document.getElementById("foreign-flow-empty");
+  if (!FOREIGN_FLOW) {
+    empty.classList.remove("hidden");
+    return;
+  }
+  const selector = document.getElementById("foreign-flow-period-select");
+  const period = selector?.value || "93";
+  const selected = FOREIGN_FLOW.periods?.[period] || FOREIGN_FLOW;
+  document.getElementById("foreign-flow-period").textContent =
+    `資料期間：${selected.from}～${selected.to}｜涵蓋網站已抓取個股 ${selected.universe} 檔`;
+  const formatLots = (value) => `${Number(value || 0).toLocaleString("zh-TW", { maximumFractionDigits: 0 })} 張`;
+  const fill = (id, rows) => {
+    const tbody = document.querySelector(`#${id} tbody`);
+    tbody.innerHTML = "";
+    (rows || []).forEach((row, index) => {
+      const net = Number(row.net_lots || 0);
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td>${index + 1}</td><td>${row.code} ${row.name}</td><td class="up">${formatLots(row.buy_lots)}</td>` +
+        `<td class="down">${formatLots(row.sell_lots)}</td><td class="${net >= 0 ? "up" : "down"}">${net >= 0 ? "+" : "-"}${Math.abs(net).toLocaleString("zh-TW", { maximumFractionDigits: 0 })} 張</td><td>${row.days}</td>`;
+      tbody.appendChild(tr);
+    });
+  };
+  fill("foreign-buy-table", selected.top_buy);
+  fill("foreign-sell-table", selected.top_sell);
+  empty.classList.toggle("hidden", Boolean((selected.top_buy || []).length || (selected.top_sell || []).length));
+}
+
+function renderDividendEtfFlow() {
+  const empty = document.getElementById("dividend-etf-flow-empty");
+  const tbody = document.querySelector("#dividend-etf-flow-table tbody");
+  if (!empty || !tbody) return;
+  if (!DIVIDEND_ETF_FLOW) {
+    empty.classList.remove("hidden");
+    return;
+  }
+  const period = document.getElementById("dividend-etf-flow-period-select")?.value || "93";
+  const selected = DIVIDEND_ETF_FLOW.periods?.[period];
+  if (!selected) {
+    empty.classList.remove("hidden");
+    return;
+  }
+  document.getElementById("dividend-etf-flow-period").textContent =
+    `資料期間：${selected.from}～${selected.to}`;
+  const fmt = (value) => Number(value || 0).toLocaleString("zh-TW", { maximumFractionDigits: 0 });
+  const cell = (metric, key) => `<td class="${metric[key + "_lots"] >= 0 ? "up" : "down"}">${fmt(metric[key + "_lots"])}</td>`;
+  tbody.innerHTML = "";
+  (selected.rows || []).forEach((row) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${row.code} ${row.name}</td>` +
+      cell(row.foreign, "buy") + cell(row.foreign, "sell") + cell(row.foreign, "net") +
+      cell(row.trust, "buy") + cell(row.trust, "sell") + cell(row.trust, "net") +
+      cell(row.retail, "buy") + cell(row.retail, "sell") + cell(row.retail, "net");
+    tbody.appendChild(tr);
+  });
+  empty.classList.toggle("hidden", Boolean((selected.rows || []).length));
+}
+
+function setupWatchlistManager() {
+  const form = document.getElementById("watchlist-form");
+  const status = document.getElementById("watchlist-status");
+  if (!form || !status) return;
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const code = document.getElementById("watchlist-code").value.trim().toUpperCase();
+    const kind = document.getElementById("watchlist-kind").value;
+    const name = document.getElementById("watchlist-name").value.trim();
+    const button = form.querySelector("button[type=submit]");
+    button.disabled = true;
+    status.textContent = `${code} 已送出，正在加入追蹤清單並抓取資料，請稍候…`;
+    try {
+      const addResponse = await fetch("api/watchlist/add", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, kind, name }),
+      });
+      const add = await addResponse.json();
+      if (!addResponse.ok || !add.ok) throw new Error(add.error || "加入追蹤清單失敗");
+      status.textContent = `${code} 已加入，正在更新行情資料…`;
+      const updateResponse = await fetch("api/watchlist/update", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, kind }),
+      });
+      const update = await updateResponse.json();
+      if (!updateResponse.ok || !update.ok) throw new Error(update.error || "資料更新失敗，但標的已加入清單");
+      status.textContent = `${code} 更新完成，頁面即將重新整理。`;
+      setTimeout(() => location.reload(), 700);
+    } catch (error) {
+      status.textContent = `更新失敗：${error.message}`;
+      button.disabled = false;
+    }
+  });
+}
 function closeDetail() {
   document.getElementById("detail-modal").classList.add("hidden");
   if (candleChart) { candleChart.remove(); candleChart = null; }
@@ -805,6 +964,9 @@ async function init() {
   TICKERS = await loadJSON("data/tickers.json");
   try { META = await loadJSON("data/meta.json"); } catch (e) { META = null; }
   try { ETF_HOLDINGS = await loadJSON("data/etf_holdings.json"); } catch (e) { ETF_HOLDINGS = null; }
+  try { MANAGER_CHANGES = await loadJSON("data/active_etf_changes.json"); } catch (e) { MANAGER_CHANGES = null; }
+  try { FOREIGN_FLOW = await loadJSON("data/foreign_flow.json"); } catch (e) { FOREIGN_FLOW = null; }
+  try { DIVIDEND_ETF_FLOW = await loadJSON("data/dividend_etf_flow.json"); } catch (e) { DIVIDEND_ETF_FLOW = null; }
   MACRO = await loadJSON("data/macro.json");
 
   document.getElementById("stock-count").textContent = codesForTab("stocks").length;
@@ -839,6 +1001,12 @@ async function init() {
   adjBtn.addEventListener("click", () => setAdjusted(!ADJUSTED));
 
   renderMacroPanel();
+  renderManagerChanges();
+  document.getElementById("foreign-flow-period-select")?.addEventListener("change", renderForeignFlow);
+  document.getElementById("dividend-etf-flow-period-select")?.addEventListener("change", renderDividendEtfFlow);
+  renderForeignFlow();
+  renderDividendEtfFlow();
+  setupWatchlistManager();
   renderIndexCharts();
   renderMarketFlowChart();
   renderFuturesFlowChart();
@@ -855,6 +1023,8 @@ async function init() {
     sortMode = e.target.value;
     applyFilterSort();
   });
+  document.getElementById("manager-etf-select").addEventListener("change", renderManagerChanges);
+  document.getElementById("manager-action-select").addEventListener("change", renderManagerChanges);
   document.getElementById("modal-close").addEventListener("click", closeDetail);
   document.getElementById("detail-modal").addEventListener("click", (e) => {
     if (e.target.id === "detail-modal") closeDetail();

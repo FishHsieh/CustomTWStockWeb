@@ -74,6 +74,19 @@ STATE_FILE = os.path.join(CACHE_DIR, "_fetch_state.json")
 ETF_HOLDINGS_FILE = os.path.join(DATA_DIR, "etf_holdings.json")
 ETF_HOLDINGS_URL = "https://www.sinotrade.com.tw/richclub/api/graphql"
 ETF_HOLDINGS_FRESH_DAYS = 5
+ACTIVE_ETF_CHANGES_FILE = os.path.join(DATA_DIR, "active_etf_changes.json")
+FOREIGN_FLOW_FILE = os.path.join(DATA_DIR, "foreign_flow.json")
+ACTIVE_ETF_DATES_URL = "https://super168.work/api/dates"
+ACTIVE_ETF_DIFF_URL = "https://super168.work/api/diff"
+ACTIVE_ETF_TREND_URL = "https://www.jojoradar.com/api/{etf}/stock_trend/{stock}"
+ACTIVE_ETF_CODES = ("00981A", "00991A", "00990A")
+DIVIDEND_ETF_CODES = ("00919", "0056", "00878", "00918", "00901", "00891", "00830", "00947", "00735", "0052", "0050")
+DIVIDEND_ETF_FLOW_FILE = os.path.join(DATA_DIR, "dividend_etf_flow.json")
+ACTIVE_ETF_NAMES = {
+    "00981A": "主動統一台股增長",
+    "00991A": "主動復華未來50",
+    "00990A": "主動元大AI新經濟",
+}
 
 # 每天各種資料公布的時間不一樣（以下是台北時間的大致情況）：
 #   上市(twse)收盤價     14:00 前後就抓得到
@@ -350,6 +363,340 @@ def fetch_etf_holdings(codes):
     save_etf_holdings_db(db)
     log(f"ETF 成分股：更新 {refreshed} 檔、沿用 {skipped} 檔、失敗 {failed} 檔")
     return db
+
+
+def fetch_active_etf_changes(codes=ACTIVE_ETF_CODES):
+    """抓主動式 ETF 近一個月每日持股快照差異。
+
+    super168 的 diff API 以官方每日 PCF 快照計算異動；JoJoRadar 的
+    stock_trend API 用來補齊新進／剔除在前後兩日的實際股數。價格不是
+    交易回報，而是本專案同日個股收盤價，僅作估算參考。
+    """
+    all_items = {}
+    price_cache = {}
+    trend_cache = {}
+
+    def close_price(stock, date):
+        if stock not in price_cache:
+            try:
+                with open(os.path.join(STOCKS_DIR, f"{stock}.json"), encoding="utf-8") as f:
+                    payload = json.load(f)
+                price_cache[stock] = {row.get("t"): row.get("c") for row in payload.get("price", [])}
+            except (OSError, ValueError, TypeError):
+                price_cache[stock] = {}
+        return price_cache[stock].get(date)
+
+    def trend_shares(etf, stock, date):
+        # 00990A 可能含海外股票代碼（例如「DIOD US」），JoJoRadar
+        # 的逐股趨勢端點只支援台股代號；海外標的改用 diff API 的股數。
+        if etf == "00990A" or not re.fullmatch(r"\d{4,6}", stock):
+            return None
+        key = (etf, stock)
+        if key not in trend_cache:
+            payload = http_get_json(
+                ACTIVE_ETF_TREND_URL.format(etf=etf, stock=stock), {},
+                cache_key=f"active_etf_trend_{etf}_{stock}", max_age_hours=12,
+            ) or {}
+            trend_cache[key] = {row.get("date"): row.get("shares_qty") for row in payload.get("rows", [])}
+        values = trend_cache[key]
+        if date in values and values[date] is not None:
+            return float(values[date])
+        prior = [d for d in values if d and d <= date and values[d] is not None]
+        return float(values[max(prior)]) if prior else None
+
+    def make_item(etf, date, row, action, previous=None, current=None):
+        stock = str(row.get("code") or "")
+        if not stock:
+            return None
+        if previous is None:
+            previous = row.get("shares_prev")
+        if current is None:
+            current = row.get("shares")
+        previous = float(previous or 0)
+        current = float(current or 0)
+        delta = current - previous
+        price = close_price(stock, date)
+        price_label = "同日收盤參考價"
+        if price is None:
+            prior_dates = [d for d in price_cache.get(stock, {}) if d and d < date and price_cache[stock][d] is not None]
+            pct = row.get("pct")
+            if prior_dates and pct is not None:
+                prior_price = price_cache[stock][max(prior_dates)]
+                price = round(float(prior_price) * (1 + float(pct) / 100), 2)
+                price_label = "以前日收盤按來源漲跌幅推算"
+        return {
+            "date": date,
+            "action": action,
+            "code": stock,
+            "name": row.get("name") or stock,
+            "shares_prev": previous,
+            "shares": current,
+            "delta_shares": delta,
+            "delta_lots": delta / 1000,
+            "price": price,
+            "price_label": price_label,
+            "estimated_amount": abs(delta) * price if price is not None else None,
+            "weight": row.get("weight"),
+            "weight_prev": row.get("weight_prev"),
+        }
+
+    for etf in codes:
+        dates = http_get_json(
+            f"{ACTIVE_ETF_DATES_URL}/{etf}", {"ds": "active"},
+            cache_key=f"active_etf_dates_{etf}", force=True,
+        ) or []
+        dates = sorted(str(date) for date in dates if date)
+        if len(dates) < 2:
+            continue
+        latest = datetime.strptime(dates[-1], "%Y-%m-%d")
+        start = (latest - timedelta(days=93)).strftime("%Y-%m-%d")
+        recent_dates = [date for date in dates if date >= start]
+        events = []
+        for previous_date, date in zip(recent_dates, recent_dates[1:]):
+            diff = http_get_json(
+                f"{ACTIVE_ETF_DIFF_URL}/{etf}",
+                {"from": previous_date, "to": date, "ds": "active"},
+                cache_key=f"active_etf_diff_{etf}_{date}", force=True,
+            ) or {}
+            for row in diff.get("added", []):
+                stock = str(row.get("code") or "")
+                current = trend_shares(etf, stock, date)
+                item = make_item(etf, date, row, "新進", previous=0, current=current or row.get("shares"))
+                if item and item["delta_shares"] > 0:
+                    events.append(item)
+            for row in diff.get("removed", []):
+                stock = str(row.get("code") or "")
+                previous = trend_shares(etf, stock, previous_date)
+                current = trend_shares(etf, stock, date)
+                if current is None or current <= 1000:
+                    current = 0
+                item = make_item(etf, date, row, "剔除", previous=previous or row.get("shares"), current=current)
+                if item and item["delta_shares"] < 0:
+                    events.append(item)
+            for row in diff.get("changed", []):
+                action = row.get("action") or ("加碼" if row.get("dshares", 0) > 0 else "減碼")
+                item = make_item(etf, date, row, action)
+                if item and item["delta_shares"] != 0:
+                    events.append(item)
+        all_items[etf] = {
+            "code": etf,
+            "name": ACTIVE_ETF_NAMES.get(etf, etf),
+            "from": recent_dates[0] if recent_dates else None,
+            "to": recent_dates[-1] if recent_dates else None,
+            "events": sorted(events, key=lambda row: (row["date"], row["code"]), reverse=True),
+        }
+
+    mover_map = {}
+    for item in all_items.values():
+        for row in item["events"]:
+            key = row["code"]
+            mover = mover_map.setdefault(key, {
+                "code": key,
+                "name": row["name"],
+                "buy_lots": 0,
+                "sell_lots": 0,
+                "turnover_lots": 0,
+                "net_lots": 0,
+                "event_count": 0,
+                "etfs": set(),
+            })
+            delta_lots = float(row["delta_lots"])
+            if delta_lots > 0:
+                mover["buy_lots"] += delta_lots
+            else:
+                mover["sell_lots"] += abs(delta_lots)
+            mover["turnover_lots"] += abs(delta_lots)
+            mover["net_lots"] += delta_lots
+            mover["event_count"] += 1
+            mover["etfs"].add(item["code"])
+    top_movers = sorted(mover_map.values(), key=lambda row: row["turnover_lots"], reverse=True)[:60]
+    for row in top_movers:
+        row["etfs"] = sorted(row["etfs"])
+        for key in ("buy_lots", "sell_lots", "turnover_lots", "net_lots"):
+            row[key] = round(row[key], 2)
+
+    payload = {
+        "source": {
+            "holdings": "https://super168.work/",
+            "trend": "https://www.jojoradar.com/",
+            "price": "data/stocks/*.json",
+        },
+        "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "items": all_items,
+        "top_movers": top_movers,
+        "top_movers_period_days": 93,
+        "note": "張數為公開每日持股快照差額；價格為同日收盤參考價，不代表經理人逐筆成交價。",
+    }
+    with open(ACTIVE_ETF_CHANGES_FILE, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+    log(f"主動式 ETF 異動已更新：{sum(len(v['events']) for v in all_items.values())} 筆")
+    return payload
+
+
+def rebuild_active_etf_top_movers():
+    """不重抓網路資料，使用既有事件快取重算前 60 名。"""
+    try:
+        with open(ACTIVE_ETF_CHANGES_FILE, encoding="utf-8") as f:
+            payload = json.load(f)
+    except (OSError, ValueError, TypeError):
+        return None
+    mover_map = {}
+    for item in (payload.get("items") or {}).values():
+        for row in item.get("events") or []:
+            key = row.get("code")
+            if not key:
+                continue
+            mover = mover_map.setdefault(key, {
+                "code": key, "name": row.get("name", key), "buy_lots": 0,
+                "sell_lots": 0, "turnover_lots": 0, "net_lots": 0,
+                "event_count": 0, "etfs": set(),
+            })
+            delta = float(row.get("delta_lots") or 0)
+            if delta > 0:
+                mover["buy_lots"] += delta
+            else:
+                mover["sell_lots"] += abs(delta)
+            mover["turnover_lots"] += abs(delta)
+            mover["net_lots"] += delta
+            mover["event_count"] += 1
+            mover["etfs"].add(item.get("code"))
+    top = sorted(mover_map.values(), key=lambda row: row["turnover_lots"], reverse=True)[:60]
+    for row in top:
+        row["etfs"] = sorted(row["etfs"])
+        for key in ("buy_lots", "sell_lots", "turnover_lots", "net_lots"):
+            row[key] = round(row[key], 2)
+    payload["top_movers"] = top
+    payload["top_movers_period_days"] = 93
+    with open(ACTIVE_ETF_CHANGES_FILE, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+    return payload
+
+
+def build_foreign_flow(period_days=93, limit=20):
+    """用已抓好的個股三大法人資料，建立外資近三個月買賣排行。"""
+    names = {}
+    try:
+        with open(os.path.join(DATA_DIR, "tickers.json"), encoding="utf-8") as f:
+            names = (json.load(f).get("names") or {})
+    except (OSError, ValueError, TypeError):
+        pass
+
+    records = []
+    latest_dates = []
+    for filename in os.listdir(STOCKS_DIR):
+        if not filename.endswith(".json"):
+            continue
+        try:
+            with open(os.path.join(STOCKS_DIR, filename), encoding="utf-8") as f:
+                stock = json.load(f)
+            if stock.get("kind") != "stock" or not stock.get("retail_flow"):
+                continue
+            records.append((stock.get("code") or filename[:-5], stock.get("retail_flow") or []))
+            latest_dates.extend(row.get("date") for row in stock.get("retail_flow") or [] if row.get("date"))
+        except (OSError, ValueError, TypeError):
+            continue
+    latest = max(latest_dates) if latest_dates else None
+    if not latest:
+        return None
+    def build_period(days):
+        start = (datetime.strptime(latest, "%Y-%m-%d") - timedelta(days=days)).strftime("%Y-%m-%d")
+        totals = {}
+        for code, rows in records:
+            selected = [row for row in rows if start <= row.get("date", "") <= latest]
+            if not selected:
+                continue
+            buy = sum(max(float(row.get("foreign_lots") or 0), 0) for row in selected)
+            sell = sum(abs(min(float(row.get("foreign_lots") or 0), 0)) for row in selected)
+            net = buy - sell
+            totals[code] = {
+                "code": code,
+                "name": names.get(code, code),
+                "buy_lots": round(buy, 2),
+                "sell_lots": round(sell, 2),
+                "net_lots": round(net, 2),
+                "days": len(selected),
+            }
+        return {
+            "from": start,
+            "to": latest,
+            "universe": len(totals),
+            "top_buy": sorted(totals.values(), key=lambda row: row["net_lots"], reverse=True)[:limit],
+            "top_sell": sorted(totals.values(), key=lambda row: row["net_lots"])[:limit],
+        }
+
+    periods = {str(days): build_period(days) for days in (7, 14, 31, 62, 93)}
+    current = periods[str(period_days)]
+    payload = {
+        "source": "FinMind TaiwanStockInstitutionalInvestorsBuySell",
+        "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "from": current["from"],
+        "to": current["to"],
+        "universe": current["universe"],
+        "periods": periods,
+        "note": "範圍為網站目前已抓取的台股個股；外資包含 Foreign_Investor 與 Foreign_Dealer_Self。",
+        "top_buy": current["top_buy"],
+        "top_sell": current["top_sell"],
+    }
+    with open(FOREIGN_FLOW_FILE, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+    log(f"外資排行資料已更新：涵蓋 {current['universe']} 檔個股")
+    return payload
+
+def build_dividend_etf_flow(period_days=93):
+    """建立指定高股息 ETF 的多期間外資、投信、散戶買賣排行。"""
+    names = {}
+    try:
+        with open(os.path.join(DATA_DIR, "tickers.json"), encoding="utf-8") as f:
+            names = (json.load(f).get("names") or {})
+    except (OSError, ValueError, TypeError):
+        pass
+
+    rows_by_etf = {}
+    latest_dates = []
+    for code in DIVIDEND_ETF_CODES:
+        path = os.path.join(STOCKS_DIR, f"{code}.json")
+        try:
+            with open(path, encoding="utf-8") as f:
+                stock = json.load(f)
+            rows = stock.get("retail_flow") or []
+            rows_by_etf[code] = rows
+            latest_dates.extend(row.get("date") for row in rows if row.get("date"))
+        except (OSError, ValueError, TypeError):
+            rows_by_etf[code] = []
+    latest = max(latest_dates) if latest_dates else None
+    if not latest:
+        return None
+
+    def summarize(days):
+        start = (datetime.strptime(latest, "%Y-%m-%d") - timedelta(days=days)).strftime("%Y-%m-%d")
+        result = []
+        for code in DIVIDEND_ETF_CODES:
+            rows = [row for row in rows_by_etf.get(code, []) if start <= row.get("date", "") <= latest]
+            if not rows:
+                continue
+            metrics = {}
+            for label, key in (("foreign", "foreign_lots"), ("trust", "trust_lots"), ("retail", "retail_lots")):
+                net = sum(float(row.get(key) or 0) for row in rows)
+                metrics[label] = {
+                    "buy_lots": round(sum(max(float(row.get(key) or 0), 0) for row in rows), 2),
+                    "sell_lots": round(sum(abs(min(float(row.get(key) or 0), 0)) for row in rows), 2),
+                    "net_lots": round(net, 2),
+                }
+            result.append({"code": code, "name": names.get(code, code), "days": len(rows), **metrics})
+        return {"from": start, "to": latest, "rows": result}
+
+    periods = {str(days): summarize(days) for days in (7, 14, 31, 62, 93)}
+    payload = {
+        "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "codes": list(DIVIDEND_ETF_CODES),
+        "periods": periods,
+        "note": "買賣張數依 ETF 本身每日三大法人資料加總；散戶為反推的市場散戶淨買賣估計。",
+    }
+    with open(DIVIDEND_ETF_FLOW_FILE, "w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+    log(f"指定 ETF 法人買賣資料已更新：{len(rows_by_etf)} 檔")
+    return payload
+
 
 def finmind(dataset, data_id, start_date, cache_key, min_date=None, force=False,
             max_age_hours=None):
@@ -1128,6 +1475,19 @@ def main():
         log("請等大約 1 小時，讓額度恢復，再重新雙擊「更新資料.bat」，")
         log("之前抓過的會直接用快取跳過，只會繼續抓還沒抓到的部分。")
         log("=" * 60)
+
+    try:
+        fetch_active_etf_changes()
+    except Exception as e:
+        log(f"  !! 主動式 ETF 異動更新失敗：{e}")
+    try:
+        build_foreign_flow()
+    except Exception as e:
+        log(f"  !! 外資排行更新失敗：{e}")
+    try:
+        build_dividend_etf_flow()
+    except Exception as e:
+        log(f"  !! 指定 ETF 法人買賣更新失敗：{e}")
 
     # 用實際存在的檔案算數量，這樣就算這次中途失敗，也能反映之前已經抓好、留在硬碟上的資料
     have_stocks = [c for c in tickers["stocks"] if os.path.exists(os.path.join(STOCKS_DIR, f"{c}.json"))]

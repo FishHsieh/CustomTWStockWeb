@@ -200,12 +200,50 @@ header h1 { margin: 0; font-size: 22px; }
 .empty-note { color: var(--text-dim); font-size: 13px; }
 .hidden { display: none !important; }
 
+#manager-changes-panel { padding: 16px 24px 22px; border-bottom: 1px solid var(--border); }
+#manager-changes-panel h2 { font-size: 15px; color: var(--text-dim); margin: 0 0 10px; font-weight: 600; }
+.manager-toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; font-size: 12px; color: var(--text-dim); }
+.manager-toolbar select { margin-left: 5px; padding: 5px 8px; color: var(--text); background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; }
+.manager-note { margin: 0 0 10px; color: var(--text-dim); font-size: 12px; line-height: 1.6; }
+.manager-table-wrap { overflow-x: auto; max-height: 560px; overflow-y: auto; border: 1px solid var(--border); border-radius: 8px; }
+#manager-changes-table { min-width: 900px; }
+#manager-changes-table th { position: sticky; top: 0; background: var(--panel-2); z-index: 1; }
+#manager-changes-table td, #manager-changes-table th { white-space: nowrap; }
+.manager-top-movers { margin-top: 20px; }
+.manager-top-movers h3 { margin: 0 0 6px; font-size: 14px; color: var(--text-dim); }
+#manager-top-movers-table { min-width: 820px; }
+#manager-top-movers-table th { position: sticky; top: 0; background: var(--panel-2); z-index: 1; }
+#manager-top-movers-table td, #manager-top-movers-table th { white-space: nowrap; }
+#foreign-flow-panel { padding: 16px 24px 22px; border-bottom: 1px solid var(--border); }
+#foreign-flow-panel h2 { font-size: 15px; color: var(--text-dim); margin: 0 0 6px; font-weight: 600; }
+.foreign-flow-toolbar { display: flex; align-items: center; gap: 8px; margin: 6px 0 8px; color: var(--text-dim); font-size: 12px; }
+.foreign-flow-toolbar select { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 4px 8px; }
+.foreign-flow-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.foreign-flow-grid h3 { margin: 8px 0 6px; font-size: 14px; color: var(--text-dim); }
+.foreign-flow-grid .manager-table-wrap { max-height: 560px; }
+.foreign-flow-grid table { min-width: 680px; }
+.foreign-flow-grid th { position: sticky; top: 0; background: var(--panel-2); z-index: 1; }
+.foreign-flow-grid td, .foreign-flow-grid th { white-space: nowrap; }
+#dividend-etf-flow-panel { padding: 16px 24px 22px; border-bottom: 1px solid var(--border); }
+#dividend-etf-flow-panel h2 { font-size: 15px; color: var(--text-dim); margin: 0 0 6px; font-weight: 600; }
+#dividend-etf-flow-panel table { min-width: 1180px; }
+#dividend-etf-flow-panel td, #dividend-etf-flow-panel th { white-space: nowrap; }
+#watchlist-manager-panel { padding: 16px 24px 18px; border-bottom: 1px solid var(--border); }
+#watchlist-manager-panel h2 { font-size: 15px; color: var(--text-dim); margin: 0 0 10px; font-weight: 600; }
+.watchlist-form { display: flex; gap: 10px; align-items: end; flex-wrap: wrap; }
+.watchlist-form label { display: flex; flex-direction: column; gap: 4px; color: var(--text-dim); font-size: 12px; }
+.watchlist-form input, .watchlist-form select { min-height: 31px; padding: 5px 8px; color: var(--text); background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; }
+.watchlist-form input { width: 150px; }
+.watchlist-form button { min-height: 31px; padding: 5px 12px; color: #171a21; background: #e8b341; border: 1px solid #e8b341; border-radius: 6px; cursor: pointer; font-weight: 700; }
+.watchlist-form button:disabled { opacity: .55; cursor: wait; }
+
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); }
 th { color: var(--text-dim); font-weight: 600; }
 
 @media (max-width: 840px) {
   .index-chart-grid { grid-template-columns: 1fr; }
+  .foreign-flow-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
