@@ -98,6 +98,93 @@ function renderMacroPanel() {
   });
 }
 
+function renderSmartPicks() {
+  const tbody = document.querySelector("#smart-picks-table tbody");
+  const empty = document.getElementById("smart-picks-empty");
+  const summary = document.getElementById("smart-picks-summary");
+  if (!tbody || !TICKERS) return;
+
+  const stocks = (TICKERS.stocks || []).filter((code) => !(TICKERS.banks || []).includes(code));
+  const etfBuyMap = new Map();
+  const etfNames = new Map();
+  Object.values(MANAGER_CHANGES?.items || {}).forEach((etf) => {
+    (etf.events || []).forEach((event) => {
+      const delta = Number(event.delta_lots || 0);
+      if (delta > 0 && /^\d{4}$/.test(String(event.code))) {
+        const item = etfBuyMap.get(event.code) || { lots: 0, etfs: [] };
+        item.lots += delta;
+        if (!item.etfs.includes(etf.code)) item.etfs.push(etf.code);
+        etfBuyMap.set(event.code, item);
+        etfNames.set(etf.code, etf.name || etf.code);
+      }
+    });
+  });
+
+  const picks = [];
+  stocks.forEach((code) => {
+    const s = CACHE[code];
+    if (!s || !s.price || s.price.length < 62 || !s.retail_flow?.length) return;
+    const rows = s.price.filter((p) => p.c !== null && p.v !== null && p.ma60 !== null);
+    if (rows.length < 22) return;
+    const last = rows[rows.length - 1];
+    const prev = rows[rows.length - 2];
+    const flow = s.retail_flow;
+    const lastFlow = flow[flow.length - 1];
+    let streak = 0;
+    for (let i = flow.length - 1; i >= 0; i--) {
+      if (Number(flow[i].institutional_lots || 0) > 0) streak++;
+      else break;
+    }
+    const priorVolumes = rows.slice(-21, -1).map((p) => Number(p.v || 0)).filter(Boolean);
+    const avgVolume = priorVolumes.reduce((sum, v) => sum + v, 0) / priorVolumes.length;
+    const volumeRatio = avgVolume ? Number(last.v) / avgVolume : 0;
+    const breakout = Number(last.c) > Number(last.ma60) && Number(prev.c) <= Number(prev.ma60);
+    if (Number(last.c) <= Number(last.ma60)) return;
+    const streakOk = streak >= 3;
+    const breakoutOk = breakout;
+    const volumeOk = volumeRatio >= 1.2;
+    const score = (streakOk ? 4 : streak > 0 ? 2 : 0) + (breakoutOk ? 3 : 0) + (volumeOk ? 3 : volumeRatio >= 1 ? 1 : 0);
+    const etf = etfBuyMap.get(code);
+    picks.push({
+      code,
+      name: TICKERS.names?.[code] || code,
+      close: Number(last.c),
+      streak,
+      foreign: Number(lastFlow.foreign_lots || 0),
+      trust: Number(lastFlow.trust_lots || 0),
+      dealer: Number(lastFlow.dealer_lots || 0),
+      institutional: Number(lastFlow.institutional_lots || 0),
+      ma60: Number(last.ma60),
+      volumeRatio,
+      etfLots: etf?.lots || 0,
+      etfs: etf?.etfs || [],
+      streakOk,
+      breakoutOk,
+      volumeOk,
+      score,
+    });
+  });
+
+  const strictCount = picks.filter((row) => row.streakOk && row.breakoutOk && row.volumeOk).length;
+  picks.sort((a, b) => (b.score - a.score) || (b.streak - a.streak) || (b.institutional - a.institutional) || (b.volumeRatio - a.volumeRatio));
+  const selected = picks.slice(0, 30);
+  tbody.innerHTML = "";
+  selected.forEach((row, index) => {
+    const fmtLots = (v) => `<span class="${v >= 0 ? "up" : "down"}">${v >= 0 ? "+" : ""}${Math.round(v).toLocaleString("zh-TW")}</span>`;
+    const etfLabel = row.etfs.length ? `${row.etfs.join(", ")} +${Math.round(row.etfLots).toLocaleString("zh-TW")} 張` : "未見近期增持";
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${index + 1}</td><td><b>${row.code}</b> ${row.name}</td><td>${row.close.toLocaleString("zh-TW")}</td>` +
+      `<td><span class="signal-badge ${row.streakOk ? "yes" : "no"}">${row.streak} 日${row.streakOk ? " ✓" : ""}</span></td><td>${fmtLots(row.foreign)}</td><td>${fmtLots(row.trust)}</td><td>${fmtLots(row.dealer)}</td>` +
+      `<td>${row.ma60.toFixed(2)} <span class="signal-badge ${row.breakoutOk ? "yes" : "no"}">${row.breakoutOk ? "突破" : "站上"}</span></td><td class="${row.volumeOk ? "up" : "neutral"}">${row.volumeRatio.toFixed(1)} 倍${row.volumeOk ? " ✓" : ""}</td>` +
+      `<td>${row.etfs.length ? `<span class="signal-badge yes">有</span> <small>${etfLabel}</small>` : `<span class="signal-badge no">無</span>`}</td>`;
+    tr.addEventListener("click", () => openDetail(row.code, "stock", row.name));
+    tr.style.cursor = "pointer";
+    tbody.appendChild(tr);
+  });
+  empty.classList.toggle("hidden", selected.length > 0);
+  summary.textContent = `完全符合 ${strictCount} 檔｜顯示 ${selected.length} 檔`;
+}
+
 let marketFlowChart = null;
 let futuresFlowChart = null;
 
@@ -810,6 +897,12 @@ function renderManagerChanges() {
     if (empty) empty.classList.remove("hidden");
     return;
   }
+  const detailHeader = document.querySelector("#manager-changes-table thead tr");
+  if (detailHeader && detailHeader.children.length < 9) {
+    const th = document.createElement("th");
+    th.textContent = "目前淨持有張數";
+    detailHeader.insertBefore(th, detailHeader.children[6]);
+  }
   const etf = document.getElementById("manager-etf-select")?.value || "all";
   const actionFilter = document.getElementById("manager-action-select")?.value || "all";
   const rows = Object.values(MANAGER_CHANGES.items)
@@ -838,7 +931,13 @@ function renderManagerChanges() {
       `<td title="${row.price_label || ""}">${price}</td><td>${estimated}</td>`;
     tbody.appendChild(tr);
   });
-  renderManagerTopMovers();
+  tbody.querySelectorAll("tr").forEach((tr, index) => {
+    const row = rows[index];
+    const td = document.createElement("td");
+    td.innerHTML = row.shares == null ? "—" : `<b>${(Number(row.shares) / 1000).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</b>`;
+    tr.insertBefore(td, tr.children[6]);
+  });
+  renderManagerTopMoversByPeriod();
 }
 
 function renderManagerTopMovers() {
@@ -859,6 +958,71 @@ function renderManagerTopMovers() {
       `<td>${Number(row.turnover_lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
       `<td class="${net >= 0 ? "up" : "down"}">${net >= 0 ? "+" : ""}${net.toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
       `<td>${row.event_count || 0}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function renderManagerTopMoversByPeriod() {
+  const tbody = document.querySelector("#manager-top-movers-table tbody");
+  if (!tbody || !MANAGER_CHANGES?.items) return;
+  const header = document.querySelector("#manager-top-movers-table thead tr");
+  if (header && header.children.length < 12) {
+    ["00981A 淨張數", "00991A 淨張數", "00990A 淨張數", "三檔合計"].forEach((label) => {
+      const th = document.createElement("th");
+      th.textContent = label;
+      header.appendChild(th);
+    });
+  }
+  const periodDays = Number(document.getElementById("manager-top-period-select")?.value || 93);
+  const items = ["00981A", "00991A", "00990A"].map((code) => MANAGER_CHANGES.items[code]).filter(Boolean);
+  const allDates = items.flatMap((item) => (item.events || []).map((row) => row.date)).sort();
+  const latestDate = allDates[allDates.length - 1];
+  if (!latestDate) return;
+  const cutoff = new Date(`${latestDate}T00:00:00Z`);
+  cutoff.setUTCDate(cutoff.getUTCDate() - periodDays + 1);
+  const cutoffDate = cutoff.toISOString().slice(0, 10);
+  const aggregate = new Map();
+  items.forEach((item) => {
+    (item.events || []).filter((event) => event.date >= cutoffDate && event.date <= latestDate).forEach((event) => {
+      const row = aggregate.get(event.code) || { code: event.code, name: event.name || event.code, buy_lots: 0, sell_lots: 0, event_count: 0, etfs: new Set(), holdings: {} };
+      const delta = Number(event.delta_lots || 0);
+      if (delta >= 0) row.buy_lots += delta;
+      else row.sell_lots += Math.abs(delta);
+      row.event_count += 1;
+      row.etfs.add(item.code);
+      if (event.shares !== null && event.shares !== undefined) {
+        const previous = row.holdings[item.code];
+        if (!previous || event.date > previous.date) row.holdings[item.code] = { date: event.date, lots: Number(event.shares) / 1000 };
+      }
+      aggregate.set(event.code, row);
+    });
+  });
+  aggregate.forEach((row) => {
+    items.forEach((item) => {
+      const latest = (item.events || []).filter((event) => event.code === row.code && event.shares !== null && event.shares !== undefined).sort((a, b) => a.date.localeCompare(b.date)).pop();
+      if (latest) row.holdings[item.code] = { date: latest.date, lots: Number(latest.shares) / 1000 };
+    });
+  });
+  const rows = [...aggregate.values()]
+    .map((row) => ({ ...row, etfs: [...row.etfs], turnover_lots: row.buy_lots + row.sell_lots, net_lots: row.buy_lots - row.sell_lots, holdings_total: Object.values(row.holdings).reduce((sum, item) => sum + item.lots, 0) }))
+    .sort((a, b) => b.turnover_lots - a.turnover_lots)
+    .slice(0, 60);
+  const periodNote = document.getElementById("manager-top-movers-period");
+  if (periodNote) periodNote.textContent = `${cutoffDate} ～ ${latestDate}｜三檔 ETF 合計｜共 ${rows.length} 檔`;
+  tbody.innerHTML = "";
+  rows.forEach((row, index) => {
+    const net = Number(row.net_lots || 0);
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${index + 1}</td><td>${row.code} ${row.name}</td><td>${row.etfs.join(", ")}</td>` +
+      `<td class="up">+${Number(row.buy_lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td class="down">-${Number(row.sell_lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td>${Number(row.turnover_lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td class="${net >= 0 ? "up" : "down"}">${net >= 0 ? "+" : ""}${net.toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td>${row.event_count || 0}</td>` +
+      `<td>${Number(row.holdings["00981A"]?.lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td>${Number(row.holdings["00991A"]?.lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td>${Number(row.holdings["00990A"]?.lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td><b>${Number(row.holdings_total || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</b></td>`;
     tbody.appendChild(tr);
   });
 }
@@ -1011,6 +1175,7 @@ async function init() {
   renderMarketFlowChart();
   renderFuturesFlowChart();
   await switchTab("stocks");
+  renderSmartPicks();
 
   document.querySelectorAll(".tab-btn").forEach((btn) => {
     btn.addEventListener("click", () => switchTab(btn.dataset.tab));
@@ -1025,6 +1190,8 @@ async function init() {
   });
   document.getElementById("manager-etf-select").addEventListener("change", renderManagerChanges);
   document.getElementById("manager-action-select").addEventListener("change", renderManagerChanges);
+  document.getElementById("manager-top-period-select")?.addEventListener("change", renderManagerTopMoversByPeriod);
+  renderManagerTopMoversByPeriod();
   document.getElementById("modal-close").addEventListener("click", closeDetail);
   document.getElementById("detail-modal").addEventListener("click", (e) => {
     if (e.target.id === "detail-modal") closeDetail();

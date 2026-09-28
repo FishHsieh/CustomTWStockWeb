@@ -44,6 +44,18 @@ header h1 { margin: 0; font-size: 22px; }
 #macro-panel { padding: 16px 24px; border-bottom: 1px solid var(--border); }
 #macro-panel h2 { font-size: 15px; color: var(--text-dim); margin: 0 0 12px; font-weight: 600; }
 
+#smart-picks-panel { padding: 18px 24px 22px; border-bottom: 1px solid var(--border); }
+#smart-picks-panel h2 { margin: 0 0 5px; font-size: 17px; color: var(--text); }
+.smart-picks-header { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 10px; }
+.smart-picks-table-wrap { max-height: 520px; }
+#smart-picks-table { min-width: 980px; }
+#smart-picks-table th { position: sticky; top: 0; background: var(--panel-2); z-index: 1; }
+#smart-picks-table td, #smart-picks-table th { white-space: nowrap; }
+.signal-badge { display: inline-flex; align-items: center; padding: 2px 7px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.signal-badge.yes { color: #08130c; background: #4ade80; }
+.signal-badge.no { color: var(--text-dim); background: var(--panel-2); }
+.signal-stack { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+
 .macro-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -210,6 +222,10 @@ header h1 { margin: 0; font-size: 22px; }
 #manager-changes-table th { position: sticky; top: 0; background: var(--panel-2); z-index: 1; }
 #manager-changes-table td, #manager-changes-table th { white-space: nowrap; }
 .manager-top-movers { margin-top: 20px; }
+.manager-top-movers-header { display: flex; align-items: end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.manager-top-movers > h3, .manager-top-movers > .manager-note { display: none; }
+.manager-period-label { color: var(--text-dim); font-size: 12px; }
+.manager-period-label select { margin-left: 6px; padding: 5px 8px; color: var(--text); background: var(--panel-2); border: 1px solid var(--border); border-radius: 6px; }
 .manager-top-movers h3 { margin: 0 0 6px; font-size: 14px; color: var(--text-dim); }
 #manager-top-movers-table { min-width: 820px; }
 #manager-top-movers-table th { position: sticky; top: 0; background: var(--panel-2); z-index: 1; }
@@ -249,6 +265,7 @@ th { color: var(--text-dim); font-weight: 600; }
 @media (max-width: 640px) {
   .modal-grid { grid-template-columns: 1fr; }
   header { flex-direction: column; align-items: flex-start; }
+  .smart-picks-header { align-items: flex-start; flex-direction: column; gap: 4px; }
 }
 
 .table-note { margin-left: 8px; font-size: 12px; color: var(--text-dim); font-weight: 400; }

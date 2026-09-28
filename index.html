@@ -41,6 +41,23 @@
   </div>
 </section>
 
+<section id="smart-picks-panel">
+  <div class="smart-picks-header">
+    <div>
+      <h2>法人連買 × 突破季線 × 量增</h2>
+      <p class="manager-note">依最新交易日挑選 30 檔：完全符合「法人連買、突破季線、量增」者優先，不足時依接近度補足；ETF「大買」以近期 ETF 成分股增持異動標註。</p>
+    </div>
+    <span id="smart-picks-summary" class="table-note"></span>
+  </div>
+  <div class="manager-table-wrap smart-picks-table-wrap">
+    <table id="smart-picks-table">
+      <thead><tr><th>排名</th><th>股票</th><th>收盤</th><th>法人連買</th><th>外資</th><th>投信</th><th>自營商</th><th>季線</th><th>量增</th><th>ETF 大買</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p id="smart-picks-empty" class="empty-note hidden">目前沒有同時符合條件的股票。</p>
+</section>
+
 <section id="manager-changes-panel">
   <h2>主動式 ETF 經理人調整追蹤</h2>
   <div class="manager-toolbar">
@@ -66,6 +83,22 @@
   </div>
   <p id="manager-changes-empty" class="empty-note hidden">目前沒有可用的異動資料，請先執行「更新資料.bat」。</p>
   <div class="manager-top-movers">
+    <div class="manager-top-movers-header">
+      <div>
+        <h3>三檔 ETF 合計進出最多 60 檔</h3>
+        <p class="manager-note">依三檔 ETF 合計買進張數＋賣出張數排序。</p>
+      </div>
+      <label class="manager-period-label">期間
+        <select id="manager-top-period-select">
+          <option value="7">近一週</option>
+          <option value="14">近兩週</option>
+          <option value="31">近一個月</option>
+          <option value="62">近兩個月</option>
+          <option value="93" selected>近三個月</option>
+        </select>
+      </label>
+    </div>
+    <span id="manager-top-movers-period" class="table-note"></span>
     <h3>近 3 個月最多進出 60 檔股票</h3>
     <p class="manager-note">依三檔 ETF 合計進出張數排序；進出量為買進張數加上賣出張數，淨變化僅表示持股差額。</p>
     <div class="manager-table-wrap">
