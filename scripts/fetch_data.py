@@ -79,13 +79,16 @@ FOREIGN_FLOW_FILE = os.path.join(DATA_DIR, "foreign_flow.json")
 ACTIVE_ETF_DATES_URL = "https://super168.work/api/dates"
 ACTIVE_ETF_DIFF_URL = "https://super168.work/api/diff"
 ACTIVE_ETF_TREND_URL = "https://www.jojoradar.com/api/{etf}/stock_trend/{stock}"
-ACTIVE_ETF_CODES = ("00981A", "00991A", "00990A")
+ACTIVE_ETF_CODES = ("00981A", "00991A", "00990A", "00982A", "00992A", "00403A")
 DIVIDEND_ETF_CODES = ("00919", "0056", "00878", "00918", "00901", "00891", "00830", "00947", "00735", "0052", "0050")
 DIVIDEND_ETF_FLOW_FILE = os.path.join(DATA_DIR, "dividend_etf_flow.json")
 ACTIVE_ETF_NAMES = {
     "00981A": "主動統一台股增長",
     "00991A": "主動復華未來50",
     "00990A": "主動元大AI新經濟",
+    "00982A": "00982A",
+    "00992A": "00992A",
+    "00403A": "00403A",
 }
 
 # 每天各種資料公布的時間不一樣（以下是台北時間的大致情況）：
@@ -460,14 +463,23 @@ def fetch_active_etf_changes(codes=ACTIVE_ETF_CODES):
             ) or {}
             for row in diff.get("added", []):
                 stock = str(row.get("code") or "")
-                current = trend_shares(etf, stock, date)
+                # The diff endpoint already includes the current share count.
+                # Only fall back to jojoradar when that field is unavailable;
+                # some newer ETFs have constituents that return 404 there.
+                current = row.get("shares")
+                if current is None:
+                    current = row.get("dshares")
                 item = make_item(etf, date, row, "新進", previous=0, current=current or row.get("shares"))
                 if item and item["delta_shares"] > 0:
                     events.append(item)
             for row in diff.get("removed", []):
                 stock = str(row.get("code") or "")
-                previous = trend_shares(etf, stock, previous_date)
-                current = trend_shares(etf, stock, date)
+                previous = row.get("shares_prev")
+                current = row.get("shares")
+                if previous is None:
+                    previous = abs(float(row.get("dshares") or 0))
+                if current is None:
+                    current = 0
                 if current is None or current <= 1000:
                     current = 0
                 item = make_item(etf, date, row, "剔除", previous=previous or row.get("shares"), current=current)

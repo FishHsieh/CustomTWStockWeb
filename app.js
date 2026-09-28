@@ -476,7 +476,7 @@ let ADJUSTED = false;
 try { ADJUSTED = localStorage.getItem("kline-adjusted") === "1"; } catch (e) {}
 let CURRENT_STOCK = null;
 
-const MA_WINDOWS = { ma10: 10, ma20: 20, ma60: 60, ma240: 240 };
+const MA_WINDOWS = { ma5: 5, ma10: 10, ma20: 20, ma60: 60, ma240: 240 };
 
 // 每根K棒要乘的比例 = 它「之後」所有調整事件 factor 的連乘積
 function cumAdjFactors(price, events) {
@@ -523,7 +523,13 @@ function adjustedTechnicalRows(stock) {
 function chartRows(s) {
   const price = s.price || [];
   const events = s.adjustments || [];
-  if (!ADJUSTED || !events.length || !price.length) return price;
+  if (!ADJUSTED || !events.length || !price.length) {
+    const rows = price.map((point) => ({ ...point }));
+    const closes = rows.map((point) => point.c);
+    const ma5 = movingAverage(closes, 5);
+    rows.forEach((point, index) => { point.ma5 = ma5[index]; });
+    return rows;
+  }
   const f = cumAdjFactors(price, events);
   const scale = (v, i) => (v === null || v === undefined ? null : v * f[i]);
   const rows = price.map((p, i) => ({
@@ -631,6 +637,7 @@ function drawCandle(s) {
     }
 
     const MA_LINES = [
+      { key: "ma5", label: "5日", color: "#fb7185" },
       { key: "ma10", label: "10日", color: "#f59e0b" },
       { key: "ma20", label: "月線", color: "#a78bfa" },
       { key: "ma60", label: "季線", color: "#38bdf8" },
@@ -951,6 +958,20 @@ function renderManagerChanges() {
     if (empty) empty.classList.remove("hidden");
     return;
   }
+  const etfSelect = document.getElementById("manager-etf-select");
+  if (etfSelect) {
+    const configuredItems = [...Object.values(MANAGER_CHANGES.items),
+      { code: "00982A", name: "00982A" },
+      { code: "00992A", name: "00992A" },
+      { code: "00403A", name: "00403A" }];
+    configuredItems.forEach((item) => {
+      if (!item?.code || etfSelect.querySelector(`option[value="${item.code}"]`)) return;
+      const option = document.createElement("option");
+      option.value = item.code;
+      option.textContent = `${item.code} ${item.name || ""}`.trim();
+      etfSelect.appendChild(option);
+    });
+  }
   const detailHeader = document.querySelector("#manager-changes-table thead tr");
   if (detailHeader && detailHeader.children.length < 9) {
     const th = document.createElement("th");
@@ -1023,6 +1044,8 @@ function renderManagerTopMovers() {
 function renderManagerTopMoversByPeriod() {
   const tbody = document.querySelector("#manager-top-movers-table tbody");
   if (!tbody || !MANAGER_CHANGES?.items) return;
+  const title = document.querySelector(".manager-top-movers-header h3");
+  if (title) title.textContent = "主動式 ETF 合計進出最多 60 檔";
   const header = document.querySelector("#manager-top-movers-table thead tr");
   if (header && header.children.length < 12) {
     ["00981A 淨張數", "00991A 淨張數", "00990A 淨張數", "三檔合計"].forEach((label) => {
@@ -1032,7 +1055,7 @@ function renderManagerTopMoversByPeriod() {
     });
   }
   const periodDays = Number(document.getElementById("manager-top-period-select")?.value || 93);
-  const items = ["00981A", "00991A", "00990A"].map((code) => MANAGER_CHANGES.items[code]).filter(Boolean);
+  const items = Object.values(MANAGER_CHANGES.items).filter(Boolean);
   const allDates = items.flatMap((item) => (item.events || []).map((row) => row.date)).sort();
   const latestDate = allDates[allDates.length - 1];
   if (!latestDate) return;
@@ -1144,7 +1167,7 @@ async function renderDividendEtfFlow() {
   }
   const expandedCodes = [...new Set([
     ...(DIVIDEND_ETF_FLOW.codes || []),
-    "00922", "00631L", "00685L", "009816", "00991A", "00981A", "00982A", "00876", "00646", "00924",
+    "00900", "00922", "00631L", "00685L", "009816", "00991A", "00981A", "00982A", "00876", "00646", "00924",
     "00909", "00901", "00990A", "00988A", "00911", "009805", "00917", "00885", "00757", "00910",
     "00895", "00635U", "00738U", "00403A"
   ])];
