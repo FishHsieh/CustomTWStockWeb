@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-09-28 20:36:23",
+  "updated_at": "2026-09-28 22:04:36",
   "price_date_twse": "2026-09-24",
   "price_date_tpex": "2026-09-24",
   "price_date": "2026-09-24",
   "institutional_date": "2026-09-24",
-  "status": "partial_quota_exceeded",
+  "status": "complete",
   "stock_count": 252,
   "stock_total": 252,
   "etf_count": 88,

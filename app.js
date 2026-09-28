@@ -103,6 +103,14 @@ function renderSmartPicks() {
   const empty = document.getElementById("smart-picks-empty");
   const summary = document.getElementById("smart-picks-summary");
   if (!tbody || !TICKERS) return;
+  const smartHeader = document.querySelector("#smart-picks-table thead tr");
+  if (smartHeader && smartHeader.children.length < 13) {
+    ["融資餘額", "融券餘額", "券資比"].forEach((label) => {
+      const th = document.createElement("th");
+      th.textContent = label;
+      smartHeader.appendChild(th);
+    });
+  }
 
   const stocks = (TICKERS.stocks || []).filter((code) => !(TICKERS.banks || []).includes(code));
   const etfBuyMap = new Map();
@@ -124,7 +132,7 @@ function renderSmartPicks() {
   stocks.forEach((code) => {
     const s = CACHE[code];
     if (!s || !s.price || s.price.length < 62 || !s.retail_flow?.length) return;
-    const rows = s.price.filter((p) => p.c !== null && p.v !== null && p.ma60 !== null);
+    const rows = adjustedTechnicalRows(s).filter((p) => p.c !== null && p.v !== null && p.ma60 !== null);
     if (rows.length < 22) return;
     const last = rows[rows.length - 1];
     const prev = rows[rows.length - 2];
@@ -145,6 +153,10 @@ function renderSmartPicks() {
     const volumeOk = volumeRatio >= 1.2;
     const score = (streakOk ? 4 : streak > 0 ? 2 : 0) + (breakoutOk ? 3 : 0) + (volumeOk ? 3 : volumeRatio >= 1 ? 1 : 0);
     const etf = etfBuyMap.get(code);
+    const credit = s.margin || s.margin_credit || s.credit || {};
+    const financing = credit.financing_balance ?? s.financing_balance ?? null;
+    const shortBalance = credit.short_balance ?? s.short_balance ?? null;
+    const shortMarginRatio = financing ? (Number(shortBalance || 0) / Number(financing)) * 100 : null;
     picks.push({
       code,
       name: TICKERS.names?.[code] || code,
@@ -162,6 +174,9 @@ function renderSmartPicks() {
       breakoutOk,
       volumeOk,
       score,
+      financing,
+      shortBalance,
+      shortMarginRatio,
     });
   });
 
@@ -177,6 +192,9 @@ function renderSmartPicks() {
       `<td><span class="signal-badge ${row.streakOk ? "yes" : "no"}">${row.streak} 日${row.streakOk ? " ✓" : ""}</span></td><td>${fmtLots(row.foreign)}</td><td>${fmtLots(row.trust)}</td><td>${fmtLots(row.dealer)}</td>` +
       `<td>${row.ma60.toFixed(2)} <span class="signal-badge ${row.breakoutOk ? "yes" : "no"}">${row.breakoutOk ? "突破" : "站上"}</span></td><td class="${row.volumeOk ? "up" : "neutral"}">${row.volumeRatio.toFixed(1)} 倍${row.volumeOk ? " ✓" : ""}</td>` +
       `<td>${row.etfs.length ? `<span class="signal-badge yes">有</span> <small>${etfLabel}</small>` : `<span class="signal-badge no">無</span>`}</td>`;
+    tr.insertAdjacentHTML("beforeend", `<td>${row.financing == null ? "—" : Number(row.financing).toLocaleString("zh-TW") + " 張"}</td>` +
+      `<td>${row.shortBalance == null ? "—" : Number(row.shortBalance).toLocaleString("zh-TW") + " 張"}</td>` +
+      `<td>${row.shortMarginRatio == null ? "—" : row.shortMarginRatio.toFixed(1) + "%"}</td>`);
     tr.addEventListener("click", () => openDetail(row.code, "stock", row.name));
     tr.style.cursor = "pointer";
     tbody.appendChild(tr);
@@ -482,6 +500,23 @@ function movingAverage(closes, window) {
     if (i + 1 >= window) out[i] = sum / window;
   }
   return out;
+}
+
+function adjustedTechnicalRows(stock) {
+  const price = stock.price || [];
+  if (!price.length) return [];
+  const events = stock.adjustments || [];
+  const factors = events.length ? cumAdjFactors(price, events) : new Array(price.length).fill(1);
+  const rows = price.map((point, index) => {
+    const scale = (value) => value === null || value === undefined ? null : Number(value) * factors[index];
+    return { ...point, o: scale(point.o), h: scale(point.h), l: scale(point.l), c: scale(point.c) };
+  });
+  const closes = rows.map((point) => point.c);
+  [5, 10, 20, 60].forEach((window) => {
+    const values = movingAverage(closes, window);
+    rows.forEach((point, index) => { point[`ma${window}`] = values[index]; });
+  });
+  return rows;
 }
 
 // 畫圖要用的資料：沒開還原(或這檔本來就沒有除權息/分割)就直接用抓下來的原始資料
@@ -847,6 +882,25 @@ async function openDetail(code, kind, name) {
   // 配息
   const tbody = document.querySelector("#div-table tbody");
   const divEmpty = document.getElementById("div-empty");
+  const divTitle = document.querySelector("#div-table")?.previousElementSibling;
+  let yieldReadout = document.getElementById("dividend-yield-readout");
+  if (!yieldReadout && divTitle) {
+    yieldReadout = document.createElement("span");
+    yieldReadout.id = "dividend-yield-readout";
+    yieldReadout.className = "dividend-yield-readout";
+    divTitle.appendChild(yieldReadout);
+  }
+  const latestPrice = Number(s.latest_close ?? s.price?.at(-1)?.c ?? 0);
+  const cutoffDate = new Date();
+  cutoffDate.setUTCDate(cutoffDate.getUTCDate() - 365);
+  const trailingDividends = (s.dividends || []).filter((dividend) => dividend.ex_date && new Date(`${dividend.ex_date}T00:00:00Z`) >= cutoffDate);
+  const trailingCash = trailingDividends.reduce((sum, dividend) => sum + Number(dividend.cash_per_share || 0), 0);
+  const liveYield = latestPrice > 0 ? (trailingCash / latestPrice) * 100 : null;
+  if (yieldReadout) {
+    yieldReadout.textContent = liveYield == null
+      ? "即時年殖利率：—"
+      : `即時年殖利率：${liveYield.toFixed(2)}%（近一年配息 ${trailingCash.toFixed(2)}／最新價 ${latestPrice.toFixed(2)}）`;
+  }
   tbody.innerHTML = "";
   const recentDiv = (s.dividends || []).slice(-10).reverse();
   if (recentDiv.length) {
@@ -933,6 +987,10 @@ function renderManagerChanges() {
   });
   tbody.querySelectorAll("tr").forEach((tr, index) => {
     const row = rows[index];
+    tr.children[1].classList.add("link-cell");
+    tr.children[1].addEventListener("click", () => openDetail(row.etf, "etf", row.etf));
+    tr.children[2].classList.add("link-cell");
+    tr.children[2].addEventListener("click", () => openDetail(row.code, "stock", row.name));
     const td = document.createElement("td");
     td.innerHTML = row.shares == null ? "—" : `<b>${(Number(row.shares) / 1000).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</b>`;
     tr.insertBefore(td, tr.children[6]);
@@ -1023,6 +1081,8 @@ function renderManagerTopMoversByPeriod() {
       `<td>${Number(row.holdings["00991A"]?.lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
       `<td>${Number(row.holdings["00990A"]?.lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
       `<td><b>${Number(row.holdings_total || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</b></td>`;
+    tr.children[1].classList.add("link-cell");
+    tr.children[1].addEventListener("click", () => openDetail(row.code, "stock", row.name));
     tbody.appendChild(tr);
   });
 }
@@ -1047,6 +1107,8 @@ function renderForeignFlow() {
       const tr = document.createElement("tr");
       tr.innerHTML = `<td>${index + 1}</td><td>${row.code} ${row.name}</td><td class="up">${formatLots(row.buy_lots)}</td>` +
         `<td class="down">${formatLots(row.sell_lots)}</td><td class="${net >= 0 ? "up" : "down"}">${net >= 0 ? "+" : "-"}${Math.abs(net).toLocaleString("zh-TW", { maximumFractionDigits: 0 })} 張</td><td>${row.days}</td>`;
+      tr.children[1].classList.add("link-cell");
+      tr.children[1].addEventListener("click", () => openDetail(row.code, "stock", row.name));
       tbody.appendChild(tr);
     });
   };
@@ -1055,10 +1117,21 @@ function renderForeignFlow() {
   empty.classList.toggle("hidden", Boolean((selected.top_buy || []).length || (selected.top_sell || []).length));
 }
 
-function renderDividendEtfFlow() {
+async function renderDividendEtfFlow() {
   const empty = document.getElementById("dividend-etf-flow-empty");
   const tbody = document.querySelector("#dividend-etf-flow-table tbody");
   if (!empty || !tbody) return;
+  const periodSelect = document.getElementById("dividend-etf-flow-period-select");
+  if (periodSelect && !document.getElementById("dividend-etf-flow-sort-select")) {
+    const label = document.createElement("label");
+    label.textContent = "排序";
+    const sortSelect = document.createElement("select");
+    sortSelect.id = "dividend-etf-flow-sort-select";
+    sortSelect.innerHTML = `<option value="retail">散戶淨買賣</option><option value="foreign">外資淨買賣</option><option value="trust">投信淨買賣</option>`;
+    label.appendChild(sortSelect);
+    periodSelect.parentElement.appendChild(label);
+    sortSelect.addEventListener("change", renderDividendEtfFlow);
+  }
   if (!DIVIDEND_ETF_FLOW) {
     empty.classList.remove("hidden");
     return;
@@ -1069,20 +1142,157 @@ function renderDividendEtfFlow() {
     empty.classList.remove("hidden");
     return;
   }
+  const expandedCodes = [...new Set([
+    ...(DIVIDEND_ETF_FLOW.codes || []),
+    "00922", "00631L", "00685L", "009816", "00991A", "00981A", "00982A", "00876", "00646", "00924",
+    "00909", "00901", "00990A", "00988A", "00911", "009805", "00917", "00885", "00757", "00910",
+    "00895", "00635U", "00738U", "00403A"
+  ])];
+  const knownCodes = new Set((selected.rows || []).map((row) => row.code));
+  const extraRows = await Promise.all(expandedCodes.filter((code) => !knownCodes.has(code)).map(async (code) => {
+    try {
+      const stock = await loadStock(code);
+      const flows = (stock.retail_flow || []).filter((row) => row.date >= selected.from && row.date <= selected.to);
+      if (!flows.length) return null;
+      const metric = (key) => flows.reduce((sum, row) => sum + Number(row[key] || 0), 0);
+      const netMetric = (key) => metric(key);
+      const split = (value) => ({ buy_lots: Math.max(value, 0), sell_lots: Math.max(-value, 0), net_lots: value });
+      return {
+        code,
+        name: TICKERS.names?.[code] || code,
+        days: flows.length,
+        foreign: split(netMetric("foreign_lots")),
+        trust: split(netMetric("trust_lots")),
+        retail: split(netMetric("retail_lots")),
+        derived: true,
+      };
+    } catch (error) {
+      return null;
+    }
+  }));
+  const rows = [...(selected.rows || []), ...extraRows.filter(Boolean)];
+  const sortKey = document.getElementById("dividend-etf-flow-sort-select")?.value || "retail";
+  rows.sort((a, b) => Number(b[sortKey]?.net_lots || 0) - Number(a[sortKey]?.net_lots || 0));
+  const technicalByCode = new Map();
+  await Promise.all(rows.map(async (row) => {
+    try {
+      const stock = await loadStock(row.code);
+      const prices = adjustedTechnicalRows(stock).filter((point) => point.c !== null && point.c !== undefined);
+      if (prices.length < 61) return;
+      const last = prices.at(-1);
+      const prev = prices.at(-2);
+      const signal = (ma, previousMa) => {
+        if (ma === null || ma === undefined || previousMa === null || previousMa === undefined) return ["—", "below"];
+        if (last.c > ma && prev.c <= previousMa) return ["突破", "breakout"];
+        if (last.c < ma && prev.c >= previousMa) return ["跌破", "breakdown"];
+        return last.c >= ma ? ["站上", "above"] : ["跌下", "below"];
+      };
+      technicalByCode.set(row.code, [
+        signal(last.ma60, prev.ma60),
+        signal(last.ma20, prev.ma20),
+        signal(last.ma10, prev.ma10),
+        signal(last.ma5, prev.ma5),
+      ]);
+    } catch (error) {
+      technicalByCode.set(row.code, [["—", "below"], ["—", "below"], ["—", "below"], ["—", "below"]]);
+    }
+  }));
+  const headerRow = document.querySelector("#dividend-etf-flow-table thead tr");
+  if (headerRow && headerRow.children.length >= 10 && headerRow.dataset.flowOrder !== "retail-first") {
+    const headers = [...headerRow.children];
+    [0, 7, 8, 9, 1, 2, 3, 4, 5, 6].forEach((index) => headerRow.appendChild(headers[index]));
+    headerRow.dataset.flowOrder = "retail-first";
+  }
+  if (headerRow && headerRow.dataset.techOrder !== "yes") {
+    ["季線 60", "月線 20", "10 日線", "5 日線"].reverse().forEach((label) => {
+      const th = document.createElement("th");
+      th.textContent = label;
+      headerRow.insertBefore(th, headerRow.children[1]);
+    });
+    headerRow.dataset.techOrder = "yes";
+  }
   document.getElementById("dividend-etf-flow-period").textContent =
     `資料期間：${selected.from}～${selected.to}`;
   const fmt = (value) => Number(value || 0).toLocaleString("zh-TW", { maximumFractionDigits: 0 });
   const cell = (metric, key) => `<td class="${metric[key + "_lots"] >= 0 ? "up" : "down"}">${fmt(metric[key + "_lots"])}</td>`;
   tbody.innerHTML = "";
-  (selected.rows || []).forEach((row) => {
+  rows.forEach((row) => {
     const tr = document.createElement("tr");
+    const technicalCells = (technicalByCode.get(row.code) || [["—", "below"], ["—", "below"], ["—", "below"], ["—", "below"]])
+      .map(([label, tone]) => `<td><span class="technical-signal ${tone}">${label}</span></td>`).join("");
     tr.innerHTML = `<td>${row.code} ${row.name}</td>` +
+      technicalCells +
+      cell(row.retail, "buy") + cell(row.retail, "sell") + cell(row.retail, "net") +
       cell(row.foreign, "buy") + cell(row.foreign, "sell") + cell(row.foreign, "net") +
-      cell(row.trust, "buy") + cell(row.trust, "sell") + cell(row.trust, "net") +
-      cell(row.retail, "buy") + cell(row.retail, "sell") + cell(row.retail, "net");
+      cell(row.trust, "buy") + cell(row.trust, "sell") + cell(row.trust, "net");
+    tr.children[0].classList.add("link-cell");
+    tr.children[0].addEventListener("click", () => openDetail(row.code, "etf", row.name));
     tbody.appendChild(tr);
   });
-  empty.classList.toggle("hidden", Boolean((selected.rows || []).length));
+  empty.classList.toggle("hidden", Boolean(rows.length));
+}
+
+function renderHighDividendInstitutional() {
+  const tbody = document.querySelector("#high-dividend-institutional-table tbody");
+  const empty = document.getElementById("high-dividend-institutional-empty");
+  if (!tbody || !ETF_HOLDINGS || !TICKERS) return;
+  const etfCodes = [...new Set([
+    "0050", "0056", "00713", "00878", "00915", "00918", "00919", "00929", "00940", "00944",
+    "00922", "00631L", "00685L", "009816", "00991A", "00981A", "00982A", "00876", "00646", "00924",
+    "00909", "00901", "00990A", "00988A", "00911", "009805", "00917", "00885", "00757", "00910",
+    "00895", "00635U", "00738U", "00403A"
+  ])];
+  const pool = new Map();
+  etfCodes.forEach((etfCode) => {
+    const holdings = ETF_HOLDINGS.items?.[etfCode]?.holdings || [];
+    holdings.forEach((holding) => {
+      if (!/^\d{4}$/.test(String(holding.code))) return;
+      const row = pool.get(holding.code) || { etfs: new Set() };
+      row.etfs.add(etfCode);
+      pool.set(holding.code, row);
+    });
+  });
+  const rows = [];
+  pool.forEach((meta, code) => {
+    const s = CACHE[code];
+    if (!s?.price?.length || !s?.retail_flow?.length) return;
+    const prices = adjustedTechnicalRows(s).filter((p) => p.c !== null && p.c !== undefined);
+    if (prices.length < 61) return;
+    const last = prices[prices.length - 1];
+    const prev = prices[prices.length - 2];
+    const flows = s.retail_flow.slice(-20);
+    const sum = (key) => flows.reduce((total, row) => total + Number(row[key] || 0), 0);
+    const foreign = sum("foreign_lots");
+    const trust = sum("trust_lots");
+    const dealer = sum("dealer_lots");
+    const institutional = foreign + trust + dealer;
+    const signal = (ma, previousMa) => {
+      if (ma === null || ma === undefined || previousMa === null || previousMa === undefined) return ["—", "below"];
+      if (last.c > ma && prev.c <= previousMa) return ["突破", "breakout"];
+      if (last.c < ma && prev.c >= previousMa) return ["跌破", "breakdown"];
+      return last.c >= ma ? ["站上", "above"] : ["跌下", "below"];
+    };
+    rows.push({ code, name: TICKERS.names?.[code] || code, foreign, trust, dealer, institutional, etfs: [...meta.etfs], signals: [signal(last.ma60, prev.ma60), signal(last.ma20, prev.ma20), signal(last.ma10, prev.ma10), signal(last.ma5, prev.ma5)] });
+  });
+  rows.sort((a, b) => Math.abs(b.institutional) - Math.abs(a.institutional));
+  const selected = rows.slice(0, 30);
+  tbody.innerHTML = "";
+  const fmt = (value) => `<span class="${value >= 0 ? "up" : "down"}">${value >= 0 ? "+" : ""}${Math.round(value).toLocaleString("zh-TW")}</span>`;
+  selected.forEach((row, index) => {
+    const tr = document.createElement("tr");
+    const signals = row.signals.map(([label, tone]) => `<span class="technical-signal ${tone}">${label}</span>`);
+    tr.innerHTML = `<td>${index + 1}</td><td><b>${row.code}</b> ${row.name}</td><td>${fmt(row.foreign)}</td><td>${fmt(row.trust)}</td><td>${fmt(row.dealer)}</td><td>${fmt(row.institutional)}</td>` +
+      signals.map((cell) => `<td>${cell}</td>`).join("") + `<td>${row.etfs.join(", ")}</td>`;
+    tr.addEventListener("click", () => openDetail(row.code, "stock", row.name));
+    tr.style.cursor = "pointer";
+    tbody.appendChild(tr);
+  });
+  empty.classList.toggle("hidden", selected.length > 0);
+  const period = document.getElementById("high-dividend-institutional-period");
+  if (period && rows.length) {
+    const flowDates = Object.values(CACHE).flatMap((stock) => stock.retail_flow || []).map((row) => row.date).sort();
+    period.textContent = `法人資料：${flowDates[flowDates.length - 20] || ""} ～ ${flowDates[flowDates.length - 1] || ""}｜顯示 ${selected.length} 檔`;
+  }
 }
 
 function setupWatchlistManager() {
@@ -1176,6 +1386,7 @@ async function init() {
   renderFuturesFlowChart();
   await switchTab("stocks");
   renderSmartPicks();
+  renderHighDividendInstitutional();
 
   document.querySelectorAll(".tab-btn").forEach((btn) => {
     btn.addEventListener("click", () => switchTab(btn.dataset.tab));
