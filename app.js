@@ -1507,7 +1507,9 @@ function setupEtfInsight() {
   const codeSelect = document.getElementById("etf-insight-code");
   if (!groupSelect || !codeSelect) return;
   const refreshOptions = () => {
-    const codes = groupSelect.value === "active" ? ACTIVE_ETF_CODES : HIGH_DIVIDEND_ETF_CODES;
+    const codes = groupSelect.value === "active"
+      ? ACTIVE_ETF_CODES
+      : [...new Set([...HIGH_DIVIDEND_ETF_CODES, ...(TICKERS?.etfs || [])])];
     const available = [...new Set(codes)].filter((code) => ETF_HOLDINGS?.items?.[code]?.holdings?.length);
     codeSelect.replaceChildren();
     available.forEach((code) => {
