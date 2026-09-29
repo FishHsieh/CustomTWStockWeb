@@ -16,6 +16,16 @@ let CURRENT_TAB = "stocks";
 let CURRENT_DETAIL = null;
 const CACHE = {}; // code -> stock json
 
+const ACTIVE_ETF_CODES = ["00981A", "00991A", "00990A", "00992A", "00982A", "00403A"];
+const HIGH_DIVIDEND_ETF_CODES = [
+  "0050", "0056", "00713", "00878", "00915", "00918", "00919", "00929", "00940", "00944",
+  "00922", "00631L", "00685L", "009816", "00991A", "00981A", "00982A", "00876", "00646", "00924",
+  "00909", "00901", "00990A", "00988A", "00911", "009805", "00917", "00885", "00757", "00910",
+  "00895", "00635U", "00738U", "00403A",
+];
+const ETF_SIGNAL_MIN_COVERAGE = 0.6;
+let ETF_INSIGHT_REQUEST_ID = 0;
+
 const MACRO_LABELS = {
   gold: { label: "黃金 (GC=F)", fmt: (v) => "$" + v.toFixed(1) },
   oil_wti: { label: "原油 WTI (CL=F)", fmt: (v) => "$" + v.toFixed(2) },
@@ -266,6 +276,19 @@ function renderIndexCharts() {
       wickUpColor: "#ef4444", wickDownColor: "#22c55e",
     });
     candle.setData(rows.map((p) => ({ time: p.t, open: p.o, high: p.h, low: p.l, close: p.c })));
+    const lastBar = rows[rows.length - 1];
+    const cutoff = new Date(`${lastBar.t}T00:00:00Z`);
+    cutoff.setUTCDate(cutoff.getUTCDate() - 90);
+    const range90 = rows.filter((row) => new Date(`${row.t}T00:00:00Z`) >= cutoff);
+    const high90 = range90.reduce((best, row) => row.h > best.h ? row : best, range90[0]);
+    const low90 = range90.reduce((best, row) => row.l < best.l ? row : best, range90[0]);
+    candle.createPriceLine({ price: high90.h, color: "#f87171", lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true });
+    candle.createPriceLine({ price: low90.l, color: "#34d399", lineWidth: 1, lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true });
+    candle.createPriceLine({ price: lastBar.c, color: "#fbbf24", lineWidth: 2, lineStyle: LightweightCharts.LineStyle.Solid, axisLabelVisible: true, title: "最新收盤" });
+    candle.setMarkers([
+      { time: high90.t, position: "aboveBar", color: "#f87171", shape: "arrowDown", text: `90日高 ${high90.t} ${Number(high90.h).toFixed(2)}` },
+      { time: low90.t, position: "belowBar", color: "#34d399", shape: "arrowUp", text: `90日低 ${low90.t} ${Number(low90.l).toFixed(2)}` },
+    ]);
     const volume = chart.addHistogramSeries({ priceScaleId: "", priceFormat: { type: "volume" }, lastValueVisible: false, priceLineVisible: false });
     chart.priceScale("").applyOptions({ scaleMargins: { top: 0.8, bottom: 0 } });
     // 大盤成交金額資料是元，圖表統一以「億元」呈現。
@@ -304,7 +327,8 @@ function renderIndexCharts() {
         ? `${param.time.year}-${String(param.time.month).padStart(2, "0")}-${String(param.time.day).padStart(2, "0")}`
         : String(param.time);
       const idx = rowDates.get(time);
-      renderIndexReadout(idx === undefined ? rows.length - 1 : idx);
+      const selectedIndex = idx === undefined ? rows.length - 1 : idx;
+      renderIndexReadout(selectedIndex);
     });
     chart.timeScale().fitContent();
     const lastDate = new Date(`${rows[rows.length - 1].t}T00:00:00Z`);
@@ -529,6 +553,116 @@ function adjustedTechnicalRows(stock) {
 }
 
 // 畫圖要用的資料：沒開還原(或這檔本來就沒有除權息/分割)就直接用抓下來的原始資料
+function bondSignal(currentClose, currentAverage, previousClose, previousAverage) {
+  if (!Number.isFinite(currentAverage)) return { label: "均線資料不足", state: "" };
+  if (Number.isFinite(previousClose) && Number.isFinite(previousAverage)) {
+    if (previousClose <= previousAverage && currentClose > currentAverage) return { label: "今日突破", state: "breakout" };
+    if (previousClose >= previousAverage && currentClose < currentAverage) return { label: "今日跌破", state: "breakdown" };
+  }
+  return currentClose >= currentAverage
+    ? { label: "均線上方", state: "above" }
+    : { label: "均線下方", state: "below" };
+}
+
+function renderBondCenter() {
+  const tbody = document.querySelector("#bond-center-table tbody");
+  const empty = document.getElementById("bond-center-empty");
+  const summary = document.getElementById("bond-center-summary");
+  if (!tbody || !empty || !summary || !TICKERS) return;
+
+  const codes = [...new Set(TICKERS.bonds || [])];
+  const filter = document.getElementById("bond-center-filter")?.value || "all";
+  const search = (document.getElementById("bond-center-search")?.value || "").trim().toLowerCase();
+  const marketDate = [META?.price_date_twse, META?.price_date_tpex, META?.price_date]
+    .filter(Boolean).map((date) => String(date).slice(0, 10)).sort().at(-1) || "";
+  const items = codes.map((code) => {
+    const stock = CACHE[code];
+    const rows = stock ? adjustedTechnicalRows(stock).filter((row) => Number.isFinite(Number(row.c))) : [];
+    const current = rows.at(-1);
+    const previous = rows.at(-2);
+    const name = TICKERS.names?.[code] || code;
+    const stale = Boolean(current && marketDate && current.t < marketDate);
+    const signals = [5, 10, 20, 60].map((window) => ({
+      window,
+      ...bondSignal(
+        Number(current?.c), current?.[`ma${window}`] == null ? NaN : Number(current[`ma${window}`]),
+        Number(previous?.c), previous?.[`ma${window}`] == null ? NaN : Number(previous[`ma${window}`]),
+      ),
+      average: current?.[`ma${window}`] == null ? NaN : Number(current[`ma${window}`]),
+    }));
+    const change = current && previous && Number(previous.c)
+      ? (Number(current.c) / Number(previous.c) - 1) * 100 : null;
+    return { code, name, current, change, stale, signals };
+  }).filter((item) => {
+    if (!item.current) return false;
+    if (search && !`${item.code} ${item.name}`.toLowerCase().includes(search)) return false;
+    if (filter === "stale") return item.stale;
+    if (item.stale && filter !== "all") return false;
+    if (filter === "breakout" || filter === "breakdown" || filter === "above" || filter === "below") {
+      return item.signals.some((signal) => signal.state === filter);
+    }
+    return true;
+  });
+
+  const staleCount = codes.filter((code) => {
+    const date = CACHE[code]?.price?.at(-1)?.t;
+    return date && marketDate && date < marketDate;
+  }).length;
+  summary.textContent = `已知債券 ETF ${codes.length} 檔｜市場資料基準 ${marketDate || "未知"}｜落後基準 ${staleCount} 檔｜突破／跌破只表示收盤跨越均線，不代表趨勢確認。`;
+  tbody.replaceChildren();
+  empty.classList.toggle("hidden", items.length > 0);
+
+  const formatPrice = (value) => Number.isFinite(value) ? value.toFixed(2) : "—";
+  items.forEach((item) => {
+    const tr = document.createElement("tr");
+    const dateCell = document.createElement("td");
+    dateCell.textContent = item.current.t;
+    if (item.stale) {
+      const badge = document.createElement("span");
+      badge.className = "technical-signal stale";
+      badge.textContent = "落後";
+      dateCell.append(" ", badge);
+    }
+    tr.appendChild(dateCell);
+
+    const nameCell = document.createElement("td");
+    nameCell.className = "link-cell";
+    nameCell.textContent = `${item.code} ${item.name}`;
+    nameCell.addEventListener("click", () => openDetail(item.code, "etf", item.name));
+    tr.appendChild(nameCell);
+
+    const priceCell = document.createElement("td");
+    const changeText = item.change === null ? "—" : `${item.change >= 0 ? "+" : ""}${item.change.toFixed(2)}%`;
+    priceCell.textContent = `${formatPrice(Number(item.current.c))}　${changeText}`;
+    if (item.change !== null) priceCell.classList.add(item.change >= 0 ? "up" : "down");
+    tr.appendChild(priceCell);
+
+    item.signals.forEach((signal) => {
+      const td = document.createElement("td");
+      td.className = "bond-signal-cell";
+      const value = document.createElement("span");
+      value.textContent = formatPrice(signal.average);
+      td.appendChild(value);
+      const badge = document.createElement("span");
+      badge.className = `technical-signal ${signal.state}`.trim();
+      badge.textContent = signal.label;
+      td.appendChild(badge);
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+async function setupBondCenter() {
+  const codes = [...new Set(TICKERS?.bonds || [])];
+  await Promise.all(codes.map(async (code) => {
+    try { await loadStock(code); } catch (error) { /* unavailable price is omitted, never replaced with fabricated values */ }
+  }));
+  renderBondCenter();
+  document.getElementById("bond-center-filter")?.addEventListener("change", renderBondCenter);
+  document.getElementById("bond-center-search")?.addEventListener("input", renderBondCenter);
+}
+
 function chartRows(s) {
   const price = s.price || [];
   const events = s.adjustments || [];
@@ -1355,6 +1489,227 @@ function renderHighDividendInstitutional() {
   }
 }
 
+function setupEtfInsight() {
+  const groupSelect = document.getElementById("etf-insight-group");
+  const codeSelect = document.getElementById("etf-insight-code");
+  if (!groupSelect || !codeSelect) return;
+  const refreshOptions = () => {
+    const codes = groupSelect.value === "active" ? ACTIVE_ETF_CODES : HIGH_DIVIDEND_ETF_CODES;
+    const available = [...new Set(codes)].filter((code) => ETF_HOLDINGS?.items?.[code]?.holdings?.length);
+    codeSelect.replaceChildren();
+    available.forEach((code) => {
+      const option = document.createElement("option");
+      option.value = code;
+      option.textContent = `${code} ${TICKERS?.names?.[code] || ""}`.trim();
+      codeSelect.appendChild(option);
+    });
+    renderEtfInsight();
+  };
+  groupSelect.addEventListener("change", refreshOptions);
+  codeSelect.addEventListener("change", renderEtfInsight);
+  refreshOptions();
+}
+
+function formatEtfPrice(value) {
+  return value === null || value === undefined || !Number.isFinite(Number(value))
+    ? "—" : Number(value).toLocaleString("zh-TW", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function setEtfProbability(upProbability, downProbability, detail) {
+  const up = document.getElementById("etf-insight-up-prob");
+  const down = document.getElementById("etf-insight-down-prob");
+  const upBar = document.getElementById("etf-insight-up-bar");
+  const downBar = document.getElementById("etf-insight-down-bar");
+  document.getElementById("etf-insight-up-detail").textContent = detail;
+  document.getElementById("etf-insight-down-detail").textContent = "上漲機率的互補值";
+  if (upProbability === null || downProbability === null) {
+    up.textContent = down.textContent = "—";
+    upBar.style.width = downBar.style.width = "0%";
+    return;
+  }
+  up.textContent = `${(upProbability * 100).toFixed(1)}%`;
+  down.textContent = `${(downProbability * 100).toFixed(1)}%`;
+  upBar.style.width = `${upProbability * 100}%`;
+  downBar.style.width = `${downProbability * 100}%`;
+}
+
+function wilsonInterval(successes, total) {
+  if (!total) return [0, 1];
+  const z = 1.96;
+  const p = successes / total;
+  const divisor = 1 + z * z / total;
+  const center = (p + z * z / (2 * total)) / divisor;
+  const margin = z * Math.sqrt((p * (1 - p) + z * z / (4 * total)) / total) / divisor;
+  return [Math.max(0, center - margin), Math.min(1, center + margin)];
+}
+
+async function renderEtfInsight() {
+  const code = document.getElementById("etf-insight-code")?.value;
+  const tbody = document.querySelector("#etf-insight-table tbody");
+  const empty = document.getElementById("etf-insight-empty");
+  const method = document.getElementById("etf-insight-method");
+  const datesLabel = document.getElementById("etf-insight-dates");
+  if (!tbody || !empty || !method || !datesLabel) return;
+  const requestId = ++ETF_INSIGHT_REQUEST_ID;
+  tbody.replaceChildren();
+  empty.classList.add("hidden");
+  datesLabel.textContent = "";
+  document.getElementById("etf-insight-momentum").textContent = "—";
+  document.getElementById("etf-insight-coverage").textContent = "載入最新持股與股價…";
+  setEtfProbability(null, null, "載入中…");
+  if (!code) {
+    empty.classList.remove("hidden");
+    method.textContent = "此類別目前沒有可用的前十大持股資料。";
+    return;
+  }
+
+  const holdingItem = ETF_HOLDINGS?.items?.[code];
+  const holdings = (holdingItem?.holdings || []).slice(0, 10);
+  if (!holdings.length) {
+    empty.classList.remove("hidden");
+    method.textContent = `${code} 尚無最新前十大持股資料，請先執行「更新資料.bat」。`;
+    return;
+  }
+
+  let etfStock;
+  let constituentStocks;
+  try {
+    [etfStock, constituentStocks] = await Promise.all([
+      loadStock(code),
+      Promise.all(holdings.map(async (holding) => {
+        try { return await loadStock(String(holding.code)); }
+        catch (error) { return null; }
+      })),
+    ]);
+  } catch (error) {
+    if (requestId !== ETF_INSIGHT_REQUEST_ID) return;
+    empty.classList.remove("hidden");
+    document.getElementById("etf-insight-coverage").textContent = "價格資料載入失敗";
+    method.textContent = `${code} 價格資料讀取失敗：${error.message}`;
+    return;
+  }
+  if (requestId !== ETF_INSIGHT_REQUEST_ID) return;
+
+  const pricesByCode = new Map();
+  holdings.forEach((holding, index) => {
+    const stock = constituentStocks[index];
+    const rows = stock ? adjustedTechnicalRows(stock)
+      .filter((row) => row.t && row.c !== null && row.c !== undefined && Number.isFinite(Number(row.c))) : [];
+    pricesByCode.set(String(holding.code), new Map(rows.map((row) => [row.t, row])));
+  });
+  const etfPrices = adjustedTechnicalRows(etfStock)
+    .filter((row) => row.t && row.c !== null && row.c !== undefined && Number.isFinite(Number(row.c)))
+    .sort((a, b) => a.t.localeCompare(b.t));
+  const totalWeight = holdings.reduce((sum, holding) => sum + Math.max(0, Number(holding.weight) || 0), 0);
+  const scoreAt = (endIndex) => {
+    if (endIndex < 10 || !etfPrices[endIndex]) return null;
+    const startDate = etfPrices[endIndex - 10].t;
+    const endDate = etfPrices[endIndex].t;
+    let coveredWeight = 0;
+    let weightedSum = 0;
+    const components = [];
+    holdings.forEach((holding) => {
+      const weight = Math.max(0, Number(holding.weight) || 0);
+      const priceMap = pricesByCode.get(String(holding.code));
+      const start = priceMap?.get(startDate);
+      const end = priceMap?.get(endDate);
+      if (weight && start && end && Number(start.c) > 0) {
+        const change = Number(end.c) / Number(start.c) - 1;
+        coveredWeight += weight;
+        weightedSum += weight * change;
+        components.push({ code: String(holding.code), start, end, change, weight });
+      }
+    });
+    return {
+      startDate, endDate,
+      coveredWeight,
+      coverage: totalWeight ? coveredWeight / totalWeight : 0,
+      score: coveredWeight ? weightedSum / coveredWeight : null,
+      components,
+    };
+  };
+
+  const currentIndex = etfPrices.length - 1;
+  const current = scoreAt(currentIndex);
+  const currentComponents = new Map((current?.components || []).map((item) => [item.code, item]));
+  holdings.forEach((holding, index) => {
+    const component = currentComponents.get(String(holding.code));
+    const tr = document.createElement("tr");
+    const cells = [
+      holding.rank || index + 1,
+      `${holding.code} ${holding.name || TICKERS?.names?.[holding.code] || ""}`.trim(),
+      `${Number(holding.weight || 0).toFixed(2)}%`,
+      formatEtfPrice(component?.start.c),
+      formatEtfPrice(component?.end.c),
+      component ? `${component.change >= 0 ? "+" : ""}${(component.change * 100).toFixed(2)}%` : "—",
+      component && current?.coveredWeight
+        ? `${component.change * component.weight / current.coveredWeight >= 0 ? "+" : ""}${(component.change * component.weight / current.coveredWeight * 100).toFixed(2)}%`
+        : "—",
+    ];
+    cells.forEach((value, cellIndex) => {
+      const td = document.createElement("td");
+      td.textContent = String(value);
+      if (cellIndex === 5 || cellIndex === 6) {
+        if (component) td.classList.add(component.change >= 0 ? "up" : "down");
+      }
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  const holdingsDate = holdingItem.source_date ? String(holdingItem.source_date).slice(0, 10) : "日期未提供";
+  const endDate = current?.endDate || etfPrices.at(-1)?.t || "價格不足";
+  const startDate = current?.startDate || "—";
+  datesLabel.textContent = `持股資料：${holdingsDate}｜股價區間：${startDate}～${endDate}`;
+  const currentScore = current?.score;
+  const coverageText = current
+    ? `有效權重 ${current.coveredWeight.toFixed(2)}%／前十大合計 ${totalWeight.toFixed(2)}%（覆蓋 ${(current.coverage * 100).toFixed(1)}%）`
+    : "ETF 價格不足 11 個交易日";
+  document.getElementById("etf-insight-coverage").textContent = coverageText;
+  if (currentScore !== null && currentScore !== undefined) {
+    const momentum = document.getElementById("etf-insight-momentum");
+    momentum.textContent = `${currentScore >= 0 ? "+" : ""}${(currentScore * 100).toFixed(2)}%`;
+    momentum.classList.toggle("up", currentScore >= 0);
+    momentum.classList.toggle("down", currentScore < 0);
+  }
+
+  if (!current || current.coverage < ETF_SIGNAL_MIN_COVERAGE || currentScore === null) {
+    const coveragePct = current ? `${(current.coverage * 100).toFixed(1)}%` : "不足";
+    method.textContent = `${code} 前十大成分股近 10 日價格已列於下表；但可用持股權重覆蓋為 ${coveragePct}，低於 60%，不計算隔日機率。請更新缺漏成分股價格後再試。`;
+    setEtfProbability(null, null, "可用持股價格不足，暫不估計");
+    return;
+  }
+
+  const history = [];
+  const firstIndex = Math.max(10, currentIndex - 252);
+  for (let index = firstIndex; index < currentIndex; index += 1) {
+    const signal = scoreAt(index);
+    const todayClose = Number(etfPrices[index]?.c);
+    const nextClose = Number(etfPrices[index + 1]?.c);
+    if (!signal || signal.coverage < ETF_SIGNAL_MIN_COVERAGE || !Number.isFinite(todayClose) || !Number.isFinite(nextClose) || nextClose === todayClose) continue;
+    history.push({ date: etfPrices[index].t, score: signal.score, up: nextClose > todayClose });
+  }
+  const nearest = history.sort((a, b) => Math.abs(a.score - currentScore) - Math.abs(b.score - currentScore)).slice(0, 40);
+  if (nearest.length < 30) {
+    method.textContent = `${code} 前十大成分股近 10 日加權變化為 ${(currentScore * 100).toFixed(2)}%；符合權重覆蓋條件的相似歷史訊號只有 ${nearest.length} 筆，少於 30 筆，因此暫不提供機率。`;
+    setEtfProbability(null, null, `相似歷史樣本 ${nearest.length} 筆，不足 30 筆`);
+    return;
+  }
+
+  const wins = nearest.filter((row) => row.up).length;
+  const upProbability = (wins + 1) / (nearest.length + 2);
+  const downProbability = 1 - upProbability;
+  const [ciLow, ciHigh] = wilsonInterval(wins, nearest.length);
+  const historyDates = history.map((row) => row.date).sort();
+  const historicalPeriod = historyDates.length ? `${historyDates[0]}～${historyDates.at(-1)}` : "—";
+  setEtfProbability(
+    upProbability,
+    downProbability,
+    `相似訊號 ${nearest.length} 筆｜上漲 ${wins}/${nearest.length}｜95% 區間 ${(ciLow * 100).toFixed(0)}～${(ciHigh * 100).toFixed(0)}%`,
+  );
+  method.textContent = `前十大加權 10 日變化 ${(currentScore * 100).toFixed(2)}%；以目前持股權重回算 ${historicalPeriod} 的歷史訊號，取最接近的 ${nearest.length} 筆，統計 ETF 下一交易日方向。持股來源日 ${holdingsDate}；覆蓋率以最新前十大權重合計為分母。`;
+}
+
 async function addAndUpdateDetail() {
   const current = CURRENT_DETAIL;
   if (!current) return;
@@ -1456,6 +1811,8 @@ async function init() {
 
   renderMacroPanel();
   renderManagerChanges();
+  setupEtfInsight();
+  setupBondCenter();
   document.getElementById("foreign-flow-period-select")?.addEventListener("change", renderForeignFlow);
   document.getElementById("dividend-etf-flow-period-select")?.addEventListener("change", renderDividendEtfFlow);
   renderForeignFlow();

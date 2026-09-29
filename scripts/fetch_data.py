@@ -237,7 +237,7 @@ def http_get_json(url, params, cache_key=None, auth_token=None, min_date=None, f
             age_h = (time.time() - os.path.getmtime(cache_path)) / 3600
             if age_h < ttl:
                 cached = read_cache(cache_key)
-                if cached is not None and (min_date is None or cache_reaches(cache_key, cached, min_date)):
+                if cached is not None and (min_date is None or (payload_max_date(cached) or "") >= min_date):
                     return cached
 
     qs = urllib.parse.urlencode(params)
@@ -276,9 +276,11 @@ def http_get_json(url, params, cache_key=None, auth_token=None, min_date=None, f
     log(f"  !! {cache_key or url} 放棄，最後錯誤: {last_err}")
     if cache_key and not FRESH_ONLY:
         stale = read_cache(cache_key)
-        if stale is not None:
+        if stale is not None and (min_date is None or (payload_max_date(stale) or "") >= min_date):
             log(f"  -> {cache_key} 先沿用上次抓到的舊資料（不讓這一項變空白）")
             return stale
+        if stale is not None and min_date:
+            log(f"  -> {cache_key} cache does not reach required date {min_date}; ignoring stale response")
     return None
 
 
@@ -750,6 +752,7 @@ def finmind(dataset, data_id, start_date, cache_key, min_date=None, force=False,
 # 這一輪的基準日，main() 開頭用 probe_targets() 算出來：
 # 上市收盤價 / 上櫃收盤價 / 三大法人，各自最新已經公布到哪一個交易日。
 TARGETS = {"twse": None, "tpex": None, "inst": None}
+PRICE_TARGETS = {"twse": None, "tpex": None}
 MARKET_OF = {}  # 代號 -> "twse" / "tpex"
 # 官方端點一次回傳全市場最新交易日，這裡保留成「市場 -> 代號 -> 日線」的索引。
 # 日線主來源改為 TWSE/TPEx；FinMind 僅在官方沒有該標的或既有歷史不存在時才補上。
@@ -813,7 +816,7 @@ def official_signed_integer(value):
         return 0
 
 
-def fetch_official_daily_prices(market):
+def fetch_official_daily_prices(market, force=False):
     """抓官方全市場最新日線，回傳 {代號: {t,o,h,l,c,v}}。
 
     TWSE 與 TPEx 都是全市場批次端點，因此每日各一次就能補齊追蹤清單，
@@ -823,7 +826,7 @@ def fetch_official_daily_prices(market):
         url, cache_key = TWSE_DAILY_PRICE_URL, "official_price_twse"
     else:
         url, cache_key = TPEX_DAILY_PRICE_URL, "official_price_tpex"
-    payload = http_get_json(url, {}, cache_key=cache_key, max_age_hours=6) or []
+    payload = http_get_json(url, {}, cache_key=cache_key, force=force, max_age_hours=6) or []
     if not isinstance(payload, list):
         log(f"  ! 官方 {market} 日成交端點回應格式不符，改用 FinMind 備援")
         return {}
@@ -1088,7 +1091,7 @@ def price_target(code):
     """這一檔的收盤價應該要有哪一天。上櫃比上市晚公布，所以兩個市場分開看。"""
     market = MARKET_OF.get(code)
     if market in TARGETS:
-        return TARGETS[market]
+        return PRICE_TARGETS.get(market) or TARGETS[market]
     # 不知道是上市還上櫃時取比較早的那個，寧可少抓一次也不要每次都白抓
     known = [d for d in (TARGETS["twse"], TARGETS["tpex"]) if d]
     return min(known) if known else None
@@ -1108,6 +1111,24 @@ def probe_targets(tickers):
             for code in rows:
                 MARKET_OF[code] = market
             log(f"  官方 {market} 日成交：{len(rows)} 檔，最新到 {TARGETS[market]}")
+
+    # TWSE and TPEx normally publish the same trading day. If one official
+    # feed is behind, bypass its local cache once before accepting that date.
+    available_targets = [date for date in (TARGETS["twse"], TARGETS["tpex"]) if date]
+    freshest_target = max(available_targets) if available_targets else None
+    for market in ("twse", "tpex"):
+        if not freshest_target or not TARGETS[market] or TARGETS[market] >= freshest_target:
+            continue
+        log(f"  ! {market} official quotes stop at {TARGETS[market]}, behind {freshest_target}; retrying without cache")
+        rows = fetch_official_daily_prices(market, force=True)
+        if rows:
+            OFFICIAL_PRICE_ROWS[market] = rows
+            TARGETS[market] = max(row["t"] for row in rows.values())
+            for code in rows:
+                MARKET_OF[code] = market
+        if not TARGETS[market] or TARGETS[market] < freshest_target:
+            PRICE_TARGETS[market] = freshest_target
+            log(f"  ! {market} official feed remains behind; fallback prices must reach {freshest_target}")
 
     def latest(data_id, cache_key):
         rows = finmind("TaiwanStockPrice", data_id, REF_START, cache_key, force=True)
@@ -1168,7 +1189,8 @@ def probe_targets(tickers):
 def fetch_price(code):
     market = MARKET_OF.get(code)
     official = OFFICIAL_PRICE_ROWS.get(market, {}).get(code)
-    if official and not FRESH_ONLY:
+    expected_date = price_target(code)
+    if official and not FRESH_ONLY and (not expected_date or official["t"] >= expected_date):
         points_by_date = {point["t"]: point for point in existing_price_history(code)}
         points_by_date[official["t"]] = official
         # 有既有歷史時，官方資料是唯一的最新日線來源；完全新標的才向 FinMind 回補。
@@ -1176,7 +1198,7 @@ def fetch_price(code):
             return add_moving_averages(list(points_by_date.values()))
 
     rows = finmind("TaiwanStockPrice", code, PRICE_START, f"price_{code}",
-                   min_date=price_target(code))
+                   min_date=expected_date)
     points = [
         {
             "t": row["date"],
@@ -1195,6 +1217,12 @@ def fetch_price(code):
         raise RuntimeError(f"{code} 沒有取得新的價格資料")
     if official:
         points = [point for point in points if point["t"] != official["t"]] + [official]
+    if not points and not FRESH_ONLY:
+        points = existing_price_history(code)
+        if official:
+            points = [point for point in points if point["t"] != official["t"]] + [official]
+        if points:
+            log(f"  ! {code} has no fresh price response; preserving existing price history")
     return add_moving_averages(points)
 
 

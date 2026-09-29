@@ -113,6 +113,90 @@
   </div>
 </section>
 
+<section id="etf-insight-panel">
+  <div class="etf-insight-heading">
+    <div>
+      <h2>ETF 專區｜成分股近 10 日與隔日方向</h2>
+      <p class="manager-note">使用最新前十大持股，對照各成分股近 10 個交易日還原收盤價變化，並估計 ETF 下一交易日收漲機率。</p>
+    </div>
+    <div class="etf-insight-controls">
+      <label>類別
+        <select id="etf-insight-group">
+          <option value="active">主動型 ETF</option>
+          <option value="dividend">高股息 ETF</option>
+        </select>
+      </label>
+      <label>ETF
+        <select id="etf-insight-code"></select>
+      </label>
+    </div>
+  </div>
+  <div class="etf-insight-summary">
+    <div class="etf-insight-metric">
+      <span>前十大加權 10 日變化</span>
+      <strong id="etf-insight-momentum">—</strong>
+      <small id="etf-insight-coverage">等待載入成分股價格</small>
+    </div>
+    <div class="etf-insight-metric etf-probability-metric">
+      <span>隔日上漲估計機率</span>
+      <strong id="etf-insight-up-prob">—</strong>
+      <small id="etf-insight-up-detail">需足夠歷史樣本與持股價格</small>
+      <div class="etf-probability-track up-track"><span id="etf-insight-up-bar"></span></div>
+    </div>
+    <div class="etf-insight-metric etf-probability-metric">
+      <span>隔日下跌估計機率</span>
+      <strong id="etf-insight-down-prob">—</strong>
+      <small id="etf-insight-down-detail">上漲機率的互補值</small>
+      <div class="etf-probability-track down-track"><span id="etf-insight-down-bar"></span></div>
+    </div>
+  </div>
+  <p id="etf-insight-method" class="manager-note etf-insight-method">選擇 ETF 後載入最新持股及價格資料。</p>
+  <div class="etf-insight-table-heading">
+    <h3>最新前十大成分股｜近 10 個交易日</h3>
+    <span id="etf-insight-dates" class="table-note"></span>
+  </div>
+  <div class="manager-table-wrap">
+    <table id="etf-insight-table">
+      <thead><tr><th>排名</th><th>代號／名稱</th><th>持股權重</th><th>10 日前還原收盤</th><th>最新還原收盤</th><th>股價變化</th><th>加權貢獻</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p id="etf-insight-empty" class="empty-note hidden">目前沒有可用的成分股或價格資料，請先執行「更新資料.bat」。</p>
+  <p class="manager-note etf-insight-disclaimer">機率是描述性歷史估計，不保證未來。以目前成分股及權重回算最多近 252 個歷史訊號，取加權 10 日變化最接近的 40 個案例統計隔日方向；可能有成分股存續偏差，不代表已用歷史持股做無偏回測。可用持股權重覆蓋不足 60% 或相似樣本少於 30 筆時不提供機率。價格以專案的還原收盤價計算。</p>
+</section>
+
+<section id="bond-center-panel">
+  <div class="bond-center-heading">
+    <div>
+      <h2>債券專區｜債券 ETF 均線與突破狀態</h2>
+      <p class="manager-note">快速瀏覽追蹤清單中的債券 ETF。狀態依各檔最新可用收盤價與 5／10／20／60 日均線計算；資料日期落後市場基準時會標示，不冒充今日訊號。</p>
+    </div>
+    <div class="bond-center-controls">
+      <label for="bond-center-filter">訊號
+        <select id="bond-center-filter">
+          <option value="all">全部</option>
+          <option value="breakout">今日突破均線</option>
+          <option value="breakdown">今日跌破均線</option>
+          <option value="above">收盤在均線上方</option>
+          <option value="below">收盤在均線下方</option>
+          <option value="stale">資料落後</option>
+        </select>
+      </label>
+      <label for="bond-center-search">搜尋
+        <input id="bond-center-search" type="search" placeholder="代號或名稱">
+      </label>
+    </div>
+  </div>
+  <p id="bond-center-summary" class="table-note"></p>
+  <div class="manager-table-wrap bond-center-table-wrap">
+    <table id="bond-center-table">
+      <thead><tr><th>最新資料日</th><th>債券 ETF</th><th>收盤／漲跌</th><th>5 日</th><th>10 日</th><th>20 日</th><th>60 日</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p id="bond-center-empty" class="empty-note hidden">目前沒有符合篩選條件的債券 ETF 價格資料。</p>
+</section>
+
 <section id="foreign-flow-panel">
   <h2>外資近三個月買賣對象</h2>
   <div class="foreign-flow-toolbar">
@@ -285,6 +369,6 @@
   </div>
 </div>
 
-<script src="app.js?v=20260927-1"></script>
+<script src="app.js?v=20260929-index-90day-extremes-1"></script>
 </body>
 </html>
