@@ -1667,6 +1667,9 @@ async function renderEtfInsight() {
       }
       tr.appendChild(td);
     });
+    tr.classList.add("clickable-row");
+    tr.title = "點擊查看成分股 K 線";
+    tr.addEventListener("click", () => openDetail(holding.code, "stock", holding.name));
     tbody.appendChild(tr);
   });
 

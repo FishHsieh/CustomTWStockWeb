@@ -292,6 +292,8 @@ header h1 { margin: 0; font-size: 22px; }
 .technical-signal.above { color: #86efac; background: rgba(34,197,94,.16); }
 .technical-signal.below { color: #fca5a5; background: rgba(239,68,68,.16); }
 .link-cell { color: var(--accent); cursor: pointer; }
+.clickable-row { cursor: pointer; }
+.clickable-row:hover { background: rgba(232, 179, 65, 0.08); }
 .link-cell:hover { text-decoration: underline; }
 #watchlist-manager-panel { padding: 16px 24px 18px; border-bottom: 1px solid var(--border); }
 #watchlist-manager-panel h2 { font-size: 15px; color: var(--text-dim); margin: 0 0 10px; font-weight: 600; }
