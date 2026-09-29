@@ -47,10 +47,17 @@ async function loadJSON(path) {
   return res.json();
 }
 
+function normalizeStockFileCode(code) {
+  return String(code).trim().replace(/[\s_]+(US|JP|KS|UQ|UN|NA|JT|HK|VN|LN|KP|GA|GY|CT|UR|CH|CS\(HK\)|CG\(HK\))$/i, ".$1");
+}
+
+function isForeignComponentCode(code) {
+  return /\.(US|JP|KS|UQ|UN|NA|JT|HK|VN|LN|KP|GA|GY|CT|UR|CH|CS\(HK\)|CG\(HK\))$/i.test(normalizeStockFileCode(code));
+}
+
 async function loadStock(code) {
   if (CACHE[code]) return CACHE[code];
-  const rawCode = String(code);
-  const normalizedCode = rawCode.replace(/[\s_]+(US|JP|KS|UQ|UN|NA|JT)$/i, ".$1");
+  const normalizedCode = normalizeStockFileCode(code);
   const data = await loadJSON(`data/stocks/${normalizedCode}.json`);
   CACHE[code] = data;
   return data;
@@ -892,9 +899,10 @@ async function openDetail(code, kind, name) {
   const trackButton = document.getElementById("detail-track-update");
   const trackStatus = document.getElementById("detail-track-status");
   const tracked = isTrackedCode(code);
+  const loadable = tracked || isForeignComponentCode(code);
   let s = emptyStockRecord(code, kind);
   let loadError = null;
-  if (tracked) {
+  if (loadable) {
     try {
       s = await loadStock(code);
     } catch (error) {
@@ -902,7 +910,7 @@ async function openDetail(code, kind, name) {
     }
   }
   if (trackButton) {
-    trackButton.classList.toggle("hidden", tracked && !loadError);
+    trackButton.classList.toggle("hidden", loadable && !loadError);
     trackButton.disabled = false;
     trackButton.textContent = tracked ? "重新抓取完整資料" : "加入追蹤並抓取完整資料";
   }
@@ -1109,6 +1117,9 @@ function renderETFHoldings(stock) {
   rows.forEach((holding) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `<td>${holding.rank}</td><td>${holding.code}</td><td>${holding.name}</td><td>${Number(holding.weight).toFixed(2)}%</td>`;
+    tr.classList.add("clickable-row");
+    tr.title = "點擊查看成分股 K 線";
+    tr.addEventListener("click", () => openDetail(holding.code, "stock", holding.name));
     tbody.appendChild(tr);
   });
   const date = item.source_date ? String(item.source_date).slice(0, 10) : "";

@@ -1620,7 +1620,7 @@ def foreign_component_identity(raw_code):
         ticker, market = code.rsplit(None, 1)
     else:
         return None
-    if market not in {"US", "JP", "KS", "UQ", "UN", "NA", "JT"} or not ticker:
+    if market not in {"US", "JP", "KS", "UQ", "UN", "NA", "JT", "HK", "VN", "LN", "KP", "GA", "GY", "CT", "UR", "CH", "CS(HK)", "CG(HK)"} or not ticker:
         return None
     return ticker, market, f"{ticker}.{market}"
 
@@ -1637,14 +1637,30 @@ def fetch_foreign_etf_component_prices(holdings_db):
     failed = 0
     for code in codes:
         ticker, market, _ = foreign_component_identity(code)
-        if market in {"US", "UQ", "UN"}:
+        if market in {"US", "UQ", "UN", "UR"}:
             symbol = ticker
         elif market in {"JP", "JT"}:
             symbol = f"{ticker}.T"
         elif market == "NA":
             symbol = f"{ticker}.AS"
-        else:
+        elif market in {"KS", "KP"}:
             symbol = f"{ticker}.KS"
+        elif market == "HK":
+            symbol = f"{ticker.zfill(4)}.HK"
+        elif market in {"CH", "CS(HK)", "CG(HK)"}:
+            symbol = f"{ticker}.SZ" if ticker.startswith(("0", "2", "3")) else f"{ticker}.SS"
+        elif market == "VN":
+            symbol = f"{ticker}.VN"
+        elif market == "LN":
+            symbol = f"{ticker}.L"
+        elif market == "GY":
+            symbol = f"{ticker}.DE"
+        elif market == "GA":
+            symbol = f"{ticker}.AT"
+        elif market == "CT":
+            symbol = f"{ticker}.TO"
+        else:
+            return None
         rows = yahoo_chart(symbol, f"foreign_component_{market}_{ticker}", rng="2y")
         if not rows:
             failed += 1
