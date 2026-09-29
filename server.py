@@ -4,6 +4,7 @@ import json
 import re
 import subprocess
 import sys
+import time
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
@@ -34,6 +35,20 @@ def current_codes():
     return codes
 
 
+def rebuild_tickers():
+    return subprocess.run(
+        [sys.executable, "scripts/build_tickers.py"], cwd=ROOT,
+        capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
+    )
+
+
+def remove_watchlist_code(code):
+    lines = WATCHLIST.read_text(encoding="utf-8").splitlines(keepends=True)
+    kept = [line for line in lines if line.split("#", 1)[0].strip().upper() != code]
+    WATCHLIST.write_text("".join(kept), encoding="utf-8")
+    return rebuild_tickers()
+
+
 class Handler(SimpleHTTPRequestHandler):
     def do_GET(self):
         if urlparse(self.path).path == "/api/watchlist":
@@ -42,7 +57,7 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_POST(self):
         path = urlparse(self.path).path
-        if path not in ("/api/watchlist/add", "/api/watchlist/update"):
+        if path not in ("/api/watchlist/add", "/api/watchlist/add-and-update", "/api/watchlist/update"):
             return json_response(self, 404, {"ok": False, "error": "Not found"})
         try:
             length = min(int(self.headers.get("Content-Length", "0")), 8192)
@@ -60,33 +75,64 @@ class Handler(SimpleHTTPRequestHandler):
         if (kind == "etf") != bool(ETF_RE.fullmatch(code)):
             return json_response(self, 400, {"ok": False, "error": "個股與 ETF 代號類型不一致"})
 
-        if path.endswith("/add"):
-            if code in current_codes():
-                return json_response(self, 200, {"ok": True, "added": False, "message": f"{code} 已在追蹤清單"})
-            line = f"{code}   # {name or code}\n"
-            with WATCHLIST.open("a", encoding="utf-8") as f:
-                f.write(line)
-            result = subprocess.run(
-                [sys.executable, "scripts/build_tickers.py"], cwd=ROOT,
-                capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
-            )
-            if result.returncode != 0:
-                text = WATCHLIST.read_text(encoding="utf-8")
-                WATCHLIST.write_text(text.removesuffix(line), encoding="utf-8")
-                return json_response(self, 500, {"ok": False, "error": result.stderr[-1000:]})
-            return json_response(self, 200, {"ok": True, "added": True, "message": f"已加入 {code}，請按更新資料抓取行情"})
+        newly_added = False
+        line = None
+        if path.endswith("/add") or path.endswith("/add-and-update"):
+            if code not in current_codes():
+                safe_name = re.sub(r"\s+", " ", name).strip()
+                line = f"{code}   # {safe_name or code}\n"
+                with WATCHLIST.open("a", encoding="utf-8") as f:
+                    f.write(line)
+                newly_added = True
+                result = rebuild_tickers()
+                if result.returncode != 0:
+                    remove_watchlist_code(code)
+                    return json_response(self, 500, {"ok": False, "error": result.stderr[-1000:]})
+            if path.endswith("/add"):
+                return json_response(self, 200, {
+                    "ok": True, "added": newly_added,
+                    "message": f"{code} 已加入追蹤清單，請抓取行情",
+                })
 
         if code not in current_codes():
             return json_response(self, 404, {"ok": False, "error": f"{code} 尚未加入追蹤清單"})
+        stock_path = ROOT / "data" / "stocks" / f"{code}.json"
+        previous_mtime_ns = stock_path.stat().st_mtime_ns if stock_path.exists() else 0
+        started_ns = time.time_ns()
         try:
             result = subprocess.run(
-                [sys.executable, "scripts/fetch_data.py", "--only", code], cwd=ROOT,
+                [sys.executable, "scripts/fetch_data.py", "--only", code, "--fresh-only"], cwd=ROOT,
                 capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=900,
             )
         except subprocess.TimeoutExpired:
-            return json_response(self, 504, {"ok": False, "error": "抓取時間超過 15 分鐘，請查看命令視窗或稍後重新整理"})
-        if result.returncode != 0:
-            return json_response(self, 500, {"ok": False, "error": result.stderr[-1500:] or result.stdout[-1500:]})
+            error = "抓取時間超過 15 分鐘；沒有使用舊快取冒充新資料"
+            if newly_added:
+                remove_watchlist_code(code)
+            return json_response(self, 504, {"ok": False, "error": error})
+        meta_path = ROOT / "data" / "meta.json"
+        try:
+            meta = json.loads(meta_path.read_text(encoding="utf-8"))
+            stock_mtime_ns = stock_path.stat().st_mtime_ns if stock_path.exists() else 0
+            stock_fresh = stock_mtime_ns >= started_ns and stock_mtime_ns > previous_mtime_ns
+            complete = meta.get("status") == "complete" and stock_fresh
+        except (OSError, ValueError, TypeError):
+            complete = False
+        if result.returncode != 0 or not complete:
+            if result.returncode != 0:
+                error = result.stderr[-1500:] or result.stdout[-1500:] or "新資料抓取失敗"
+            else:
+                error = "未取得完整的新資料；舊快取不會顯示為更新結果"
+            if newly_added:
+                remove_watchlist_code(code)
+            return json_response(self, 500, {"ok": False, "error": error})
+        if name:
+            tickers_path = ROOT / "data" / "tickers.json"
+            try:
+                tickers = json.loads(tickers_path.read_text(encoding="utf-8"))
+                tickers.setdefault("names", {})[code] = re.sub(r"\s+", " ", name).strip()
+                tickers_path.write_text(json.dumps(tickers, ensure_ascii=False, indent=2), encoding="utf-8")
+            except (OSError, ValueError, TypeError):
+                pass
         return json_response(self, 200, {"ok": True, "message": f"{code} 資料更新完成", "output": result.stdout[-2000:]})
 
 

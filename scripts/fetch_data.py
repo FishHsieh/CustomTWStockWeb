@@ -20,6 +20,7 @@ FinMind 免費/匿名額度是 300 次/小時，這個網站一次要跑約 500 
 """
 import bisect
 import hashlib
+import http.client
 import json
 import os
 import re
@@ -28,6 +29,7 @@ import time
 import urllib.request
 import urllib.parse
 import urllib.error
+import ssl
 from datetime import datetime, timedelta
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -49,7 +51,19 @@ def load_finmind_token():
 
 
 FINMIND_TOKEN = load_finmind_token()
+FRESH_ONLY = False  # 單檔加入追蹤時不讀舊快取，避免把舊資料冒充成剛更新。
 FINMIND_URL = "https://api.finmindtrade.com/api/v4/data"
+TWSE_DAILY_PRICE_URL = "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL"
+TPEX_DAILY_PRICE_URL = "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes"
+TWSE_DAILY_INSTITUTIONAL_URL = "https://www.twse.com.tw/rwd/zh/fund/T86"
+TPEX_DAILY_INSTITUTIONAL_URL = "https://www.tpex.org.tw/openapi/v1/tpex_3insti_daily_trading"
+TWSE_MONTHLY_REVENUE_URL = "https://openapi.twse.com.tw/v1/opendata/t187ap05_L"
+TPEX_MONTHLY_REVENUE_URL = "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap05_O"
+TWSE_MARKET_INSTITUTIONAL_URL = "https://www.twse.com.tw/rwd/zh/fund/BFI82U"
+TAIFEX_DAILY_INSTITUTIONAL_URL = (
+    "https://openapi.taifex.com.tw/v1/"
+    "MarketDataOfMajorInstitutionalTradersDetailsOfFuturesContractsBytheDate"
+)
 CACHE_FRESH_HOURS = 20  # 沒特別指定時的預設時效
 MACRO_FRESH_HOURS = 1   # 總經那幾條(黃金/原油/美債/大盤/匯率)：美股是台灣半夜收盤，時效要短
 SHORT_RETRY_HOURS = 3   # 追不到基準日時，隔多久才願意再試一次（避免每次跑都白打一輪）
@@ -217,7 +231,7 @@ def http_get_json(url, params, cache_key=None, auth_token=None, min_date=None, f
     force=True 則一律重抓（用來抓基準日）。
     真的抓不到時會退回舊快取，不會讓畫面整條資料變空白。"""
     ttl = CACHE_FRESH_HOURS if max_age_hours is None else max_age_hours
-    if cache_key and not force:
+    if cache_key and not force and not FRESH_ONLY:
         cache_path = os.path.join(CACHE_DIR, cache_key + ".json")
         if os.path.exists(cache_path):
             age_h = (time.time() - os.path.getmtime(cache_path)) / 3600
@@ -227,7 +241,7 @@ def http_get_json(url, params, cache_key=None, auth_token=None, min_date=None, f
                     return cached
 
     qs = urllib.parse.urlencode(params)
-    full_url = f"{url}?{qs}"
+    full_url = f"{url}?{qs}" if qs else url
     last_err = None
     headers = {"User-Agent": "Mozilla/5.0"}
     if auth_token:
@@ -253,13 +267,14 @@ def http_get_json(url, params, cache_key=None, auth_token=None, min_date=None, f
             wait = min(30, 2 ** attempt)
             log(f"  ! {cache_key or url} 失敗 ({e})，{wait}s 後重試 ({attempt}/{MAX_RETRIES})")
             time.sleep(wait)
-        except (urllib.error.URLError, TimeoutError) as e:
+        except (urllib.error.URLError, TimeoutError, http.client.HTTPException,
+                json.JSONDecodeError, UnicodeDecodeError) as e:
             last_err = e
             wait = min(30, 2 ** attempt)
-            log(f"  ! {cache_key or url} 失敗 ({e})，{wait}s 後重試 ({attempt}/{MAX_RETRIES})")
+            log(f"  ! {cache_key or url} 傳輸/JSON 不完整或連線失敗 ({e})，{wait}s 後重試 ({attempt}/{MAX_RETRIES})")
             time.sleep(wait)
     log(f"  !! {cache_key or url} 放棄，最後錯誤: {last_err}")
-    if cache_key:
+    if cache_key and not FRESH_ONLY:
         stale = read_cache(cache_key)
         if stale is not None:
             log(f"  -> {cache_key} 先沿用上次抓到的舊資料（不讓這一項變空白）")
@@ -271,11 +286,17 @@ def post_json(url, payload):
     """以 JSON POST 呼叫公開資料端點。"""
     body = json.dumps(payload).encode("utf-8")
     headers = {"User-Agent": "Mozilla/5.0", "Content-Type": "application/json"}
+    # Sinotrade's chain omits a Subject Key Identifier required by OpenSSL's
+    # optional X.509 strict-profile checks. Keep CA-chain and hostname checks
+    # enabled, relaxing only that profile check for this ETF API helper.
+    tls_context = ssl.create_default_context()
+    if hasattr(ssl, "VERIFY_X509_STRICT"):
+        tls_context.verify_flags &= ~ssl.VERIFY_X509_STRICT
     last_err = None
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             req = urllib.request.Request(url, data=body, headers=headers, method="POST")
-            with urllib.request.urlopen(req, timeout=20) as resp:
+            with urllib.request.urlopen(req, timeout=20, context=tls_context) as resp:
                 return json.loads(resp.read().decode("utf-8"))
         except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError) as e:
             last_err = e
@@ -717,9 +738,11 @@ def finmind(dataset, data_id, start_date, cache_key, min_date=None, force=False,
         params["data_id"] = data_id
     data = http_get_json(
         FINMIND_URL, params, cache_key=cache_key, auth_token=FINMIND_TOKEN,
-        min_date=min_date, force=force, max_age_hours=max_age_hours,
+        min_date=min_date, force=(force or FRESH_ONLY), max_age_hours=max_age_hours,
     )
     if not data or data.get("status") != 200:
+        if FRESH_ONLY:
+            raise RuntimeError(f"FinMind {dataset}/{data_id or 'all'} 沒有取得新資料，拒絕使用快取")
         return []
     return data.get("data", [])
 
@@ -728,6 +751,337 @@ def finmind(dataset, data_id, start_date, cache_key, min_date=None, force=False,
 # 上市收盤價 / 上櫃收盤價 / 三大法人，各自最新已經公布到哪一個交易日。
 TARGETS = {"twse": None, "tpex": None, "inst": None}
 MARKET_OF = {}  # 代號 -> "twse" / "tpex"
+# 官方端點一次回傳全市場最新交易日，這裡保留成「市場 -> 代號 -> 日線」的索引。
+# 日線主來源改為 TWSE/TPEx；FinMind 僅在官方沒有該標的或既有歷史不存在時才補上。
+OFFICIAL_PRICE_ROWS = {"twse": {}, "tpex": {}}
+# 個股法人資料由 TWSE T86 與 TPEx 全市場端點供應；兩者都能保留現有
+# Foreign_Investor + Foreign_Dealer_Self、投信與自營商合計的欄位定義。
+OFFICIAL_INSTITUTIONAL_ROWS = {"twse": {}, "tpex": {}}
+OFFICIAL_INSTITUTIONAL_DATES = {"twse": None, "tpex": None}
+# 月營收官方端點每次回傳全市場「最新已公告月份」；金額單位為千元，讀取時
+# 會轉成現有 JSON／FinMind 使用的元，避免前端與 YoY/MoM 計算改變單位。
+OFFICIAL_REVENUE_ROWS = {"twse": {}, "tpex": {}}
+# FinMind 的 TaiwanStockTotalInstitutionalInvestors 實際對應上市市場（TWSE）
+# 的 BFI82U 三大法人買賣金額表，不是上市櫃合併值。
+OFFICIAL_MARKET_INSTITUTIONAL = None
+OFFICIAL_FUTURES_FLOW = None
+
+
+def roc_date_to_iso(value):
+    """把官方 API 的民國日期（1150924 / 115/09/24）轉成 YYYY-MM-DD。"""
+    digits = re.sub(r"\D", "", str(value or ""))
+    if len(digits) != 7:
+        return None
+    try:
+        return f"{int(digits[:3]) + 1911:04d}-{digits[3:5]}-{digits[5:]}"
+    except ValueError:
+        return None
+
+
+def roc_year_month(value):
+    """把官方月營收的民國年月（11508）轉成 (2026, 8)。"""
+    digits = re.sub(r"\D", "", str(value or ""))
+    if len(digits) != 5:
+        return None, None
+    year, month = int(digits[:3]) + 1911, int(digits[3:])
+    return (year, month) if 1 <= month <= 12 else (None, None)
+
+
+def official_number(value):
+    """官方日成交端點的數值可能帶逗號、空白或 --。"""
+    text = str(value or "").replace(",", "").strip()
+    if not text or text in ("--", "---", "----"):
+        return None
+    try:
+        return float(text)
+    except ValueError:
+        return None
+
+
+def official_integer(value):
+    number = official_number(value)
+    return int(number) if number is not None else None
+
+
+def official_signed_integer(value):
+    text = str(value or "").replace(",", "").strip()
+    if not text or text in ("--", "---", "----"):
+        return 0
+    try:
+        return int(float(text))
+    except ValueError:
+        return 0
+
+
+def fetch_official_daily_prices(market):
+    """抓官方全市場最新日線，回傳 {代號: {t,o,h,l,c,v}}。
+
+    TWSE 與 TPEx 都是全市場批次端點，因此每日各一次就能補齊追蹤清單，
+    不再為每一檔標的各呼叫一次 FinMind。
+    """
+    if market == "twse":
+        url, cache_key = TWSE_DAILY_PRICE_URL, "official_price_twse"
+    else:
+        url, cache_key = TPEX_DAILY_PRICE_URL, "official_price_tpex"
+    payload = http_get_json(url, {}, cache_key=cache_key, max_age_hours=6) or []
+    if not isinstance(payload, list):
+        log(f"  ! 官方 {market} 日成交端點回應格式不符，改用 FinMind 備援")
+        return {}
+
+    rows = {}
+    for item in payload:
+        if not isinstance(item, dict):
+            continue
+        if market == "twse":
+            code = str(item.get("Code") or "")
+            point = {
+                "t": roc_date_to_iso(item.get("Date")),
+                "o": official_number(item.get("OpeningPrice")),
+                "h": official_number(item.get("HighestPrice")),
+                "l": official_number(item.get("LowestPrice")),
+                "c": official_number(item.get("ClosingPrice")),
+                "v": official_integer(item.get("TradeVolume")),
+            }
+        else:
+            code = str(item.get("SecuritiesCompanyCode") or "")
+            point = {
+                "t": roc_date_to_iso(item.get("Date")),
+                "o": official_number(item.get("Open")),
+                "h": official_number(item.get("High")),
+                "l": official_number(item.get("Low")),
+                "c": official_number(item.get("Close")),
+                "v": official_integer(item.get("TradingShares")),
+            }
+        # 停牌／無成交資料不覆蓋既有歷史，交給 FinMind fallback 或下次更新。
+        if code and point["t"] and point["c"] is not None:
+            rows[code] = point
+    return rows
+
+
+def fetch_twse_daily_institutional(date):
+    """抓 TWSE T86 全市場三大法人明細，標準化為 FinMind 既有的淨買賣股數。
+
+    T86 明確分出「外陸資（不含外資自營商）」與「外資自營商」，因此合併後
+    與現有 Foreign_Investor + Foreign_Dealer_Self 的定義一致。
+    """
+    if not date:
+        return {}
+    payload = http_get_json(
+        TWSE_DAILY_INSTITUTIONAL_URL,
+        {"response": "json", "date": date.replace("-", ""), "selectType": "ALLBUT0999"},
+        cache_key=f"official_institutional_twse_{date}", max_age_hours=6,
+    ) or {}
+    fields, data = payload.get("fields"), payload.get("data")
+    if not isinstance(fields, list) or not isinstance(data, list) or len(fields) < 18:
+        log("  ! 官方 TWSE 三大法人端點回應格式不符，改用 FinMind 備援")
+        return {}
+
+    rows = {}
+    for item in data:
+        if not isinstance(item, list) or len(item) < 18:
+            continue
+        code = str(item[0] or "").strip()
+        if not code:
+            continue
+        # 欄位位置依 TWSE T86 官方欄位順序：外資(不含自營商)、外資自營商、
+        # 投信、自營商自行買賣、自營商避險；所有數值單位皆為股。
+        rows[code] = {
+            "foreign": (
+                official_signed_integer(item[2]) - official_signed_integer(item[3])
+                + official_signed_integer(item[5]) - official_signed_integer(item[6])
+            ),
+            "trust": official_signed_integer(item[8]) - official_signed_integer(item[9]),
+            "dealer": (
+                official_signed_integer(item[12]) - official_signed_integer(item[13])
+                + official_signed_integer(item[15]) - official_signed_integer(item[16])
+            ),
+        }
+    return rows
+
+
+def fetch_tpex_daily_institutional():
+    """抓 TPEx 全市場三大法人明細，回傳 (ISO 日期, {代號: 淨買賣股數})。
+
+    TPEx 端點提供外資（不含外資自營商）、外資自營商、投信及自營商合計；
+    既有輸出只存自營商合計，所以不需要另行拆分自行買賣／避險。
+    """
+    payload = http_get_json(
+        TPEX_DAILY_INSTITUTIONAL_URL, {}, cache_key="official_institutional_tpex",
+        max_age_hours=6,
+    ) or []
+    if not isinstance(payload, list):
+        log("  ! 官方 TPEx 三大法人端點回應格式不符，改用 FinMind 備援")
+        return None, {}
+
+    rows, dates = {}, set()
+    for item in payload:
+        if not isinstance(item, dict):
+            continue
+        code = str(item.get("SecuritiesCompanyCode") or "").strip()
+        date = roc_date_to_iso(item.get("Date"))
+        if not code or not date:
+            continue
+        dates.add(date)
+        foreign = (
+            official_signed_integer(
+                item.get("ForeignInvestorsInclude MainlandAreaInvestors-Difference")
+            )
+            + official_signed_integer(item.get("ForeignDealers-Difference"))
+        )
+        rows[code] = {
+            "foreign": foreign,
+            "trust": official_signed_integer(item.get("SecuritiesInvestmentTrustCompanies-Difference")),
+            "dealer": official_signed_integer(item.get("Dealers-Difference")),
+        }
+    # 官方回應預期為單一交易日；多日期時拒用，避免把資料寫到錯誤日期。
+    if len(dates) != 1:
+        log("  ! 官方 TPEx 三大法人日期不唯一，改用 FinMind 備援")
+        return None, {}
+    return dates.pop(), rows
+
+
+def fetch_official_monthly_revenue(market):
+    """抓官方全市場最新月營收，轉成 {(西元年, 月): 元} 的既有單位。"""
+    if market == "twse":
+        url, cache_key = TWSE_MONTHLY_REVENUE_URL, "official_revenue_twse"
+    else:
+        url, cache_key = TPEX_MONTHLY_REVENUE_URL, "official_revenue_tpex"
+    payload = http_get_json(
+        url, {}, cache_key=cache_key, max_age_hours=revenue_ttl_hours()
+    ) or []
+    if not isinstance(payload, list):
+        log(f"  ! 官方 {market} 月營收端點回應格式不符，改用 FinMind 備援")
+        return {}
+
+    rows = {}
+    for item in payload:
+        if not isinstance(item, dict):
+            continue
+        code = str(item.get("公司代號") or "").strip()
+        year, month = roc_year_month(item.get("資料年月"))
+        # TWSE／TPEx 公開資料的月營收單位是「千元」；現有資料是「元」。
+        revenue_thousands = official_integer(item.get("營業收入-當月營收"))
+        if code and year and month and revenue_thousands is not None:
+            rows[code] = (year, month, revenue_thousands * 1000)
+    return rows
+
+
+def fetch_twse_market_institutional(date):
+    """抓 TWSE BFI82U 全市場法人買賣金額，保留 FinMind 的既有分類口徑。"""
+    if not date:
+        return None
+    payload = http_get_json(
+        TWSE_MARKET_INSTITUTIONAL_URL,
+        {"response": "json", "dayDate": date.replace("-", ""), "type": "day"},
+        cache_key=f"official_market_institutional_{date}", max_age_hours=6,
+    ) or {}
+    rows = payload.get("data") if isinstance(payload, dict) else None
+    if not isinstance(rows, list) or len(rows) < 6:
+        log("  ! 官方 TWSE 全市場法人端點回應格式不符，改用 FinMind 備援")
+        return None
+    try:
+        # BFI82U 順序：自營商自行、避險、投信、外資、外資自營商、合計。
+        # 為了不改變既有圖表，外資自營商仍併到 foreign；官方合計則原樣使用。
+        return {
+            "date": date,
+            "foreign": official_signed_integer(rows[3][3]) + official_signed_integer(rows[4][3]),
+            "trust": official_signed_integer(rows[2][3]),
+            "dealer": official_signed_integer(rows[0][3]) + official_signed_integer(rows[1][3]),
+            "total": official_signed_integer(rows[5][3]),
+        }
+    except (IndexError, TypeError):
+        log("  ! 官方 TWSE 全市場法人欄位不完整，改用 FinMind 備援")
+        return None
+
+
+def fetch_taifex_futures_institutional():
+    """抓 TAIFEX 最新 TX 外資、投信未平倉淨口數。"""
+    payload = http_get_json(
+        TAIFEX_DAILY_INSTITUTIONAL_URL, {}, cache_key="official_futures_institutional_TX",
+        max_age_hours=6,
+    ) or []
+    if not isinstance(payload, list):
+        log("  ! 官方 TAIFEX 法人期貨端點回應格式不符，改用 FinMind 備援")
+        return None
+
+    tx_name = "\u81fa\u80a1\u671f\u8ca8"
+    trust_name = "\u6295\u4fe1"
+    foreign_names = ("\u5916\u8cc7\u53ca\u9678\u8cc7", "\u5916\u8cc7")
+    rows = [row for row in payload if isinstance(row, dict) and row.get("ContractCode") == tx_name]
+    dates = {str(row.get("Date") or "") for row in rows if row.get("Date")}
+    if len(dates) != 1:
+        log("  ! 官方 TAIFEX TX 日期不唯一，改用 FinMind 備援")
+        return None
+
+    date_digits = dates.pop()
+    if len(date_digits) != 8 or not date_digits.isdigit():
+        log("  ! 官方 TAIFEX TX 日期格式不符，改用 FinMind 備援")
+        return None
+    date = f"{date_digits[:4]}-{date_digits[4:6]}-{date_digits[6:]}"
+    result = {"date": date}
+    for row in rows:
+        item = row.get("Item")
+        if item == trust_name:
+            result["trust"] = official_signed_integer(row.get("OpenInterest(Net)"))
+        elif item in foreign_names:
+            result["foreign"] = official_signed_integer(row.get("OpenInterest(Net)"))
+    if "foreign" not in result or "trust" not in result:
+        log("  ! 官方 TAIFEX TX 缺少外資或投信欄位，改用 FinMind 備援")
+        return None
+    return result
+
+
+def add_moving_averages(points):
+    """替標準化後的日線重算均線，避免不同來源留下不一致的 ma 值。"""
+    points = sorted(points, key=lambda point: point["t"])
+    closes = [point["c"] for point in points]
+    for key, window in MA_WINDOWS.items():
+        for i, point in enumerate(points):
+            point[key] = None if i + 1 < window else round(
+                sum(closes[i + 1 - window:i + 1]) / window, 4
+            )
+    return points
+
+
+def existing_price_history(code):
+    """讀取既有輸出日線；官方批次日線只補最新一天，歷史仍可沿用。"""
+    path = os.path.join(STOCKS_DIR, f"{code}.json")
+    try:
+        with open(path, encoding="utf-8") as f:
+            rows = json.load(f).get("price") or []
+        return [
+            {key: row.get(key) for key in ("t", "o", "h", "l", "c", "v")}
+            for row in rows
+            if row.get("t") and row.get("c") is not None
+        ]
+    except (OSError, ValueError, TypeError):
+        return []
+
+
+def existing_retail_flow(code):
+    path = os.path.join(STOCKS_DIR, f"{code}.json")
+    try:
+        with open(path, encoding="utf-8") as f:
+            rows = json.load(f).get("retail_flow") or []
+        return [row for row in rows if row.get("date")]
+    except (OSError, ValueError, TypeError):
+        return []
+
+
+def existing_revenue_history(code):
+    """讀取既有月營收，讓官方快照只取代最新已公告月份。"""
+    path = os.path.join(STOCKS_DIR, f"{code}.json")
+    try:
+        with open(path, encoding="utf-8") as f:
+            rows = json.load(f).get("revenue") or []
+        return {
+            (int(row["year"]), int(row["month"])): row.get("revenue")
+            for row in rows
+            if row.get("year") is not None and row.get("month") is not None
+            and row.get("revenue") is not None
+        }
+    except (OSError, ValueError, TypeError, KeyError):
+        return {}
 
 
 def price_target(code):
@@ -741,52 +1095,107 @@ def price_target(code):
 
 
 def probe_targets(tickers):
-    """問 FinMind：上市收盤價、上櫃收盤價、三大法人，現在各自最新公布到哪一個交易日。
-    用「實際已經公布到哪天」當基準，就不必猜公布時間，也不用維護台股行事曆
-    （颱風假、補班、連假這些寫死時間表一定會出錯的狀況都自動涵蓋）。
-    每個市場拿 2 檔當樣本取最大值，避免剛好挑到當天停牌的標的。"""
+    """取得各市場最新公布日。
+
+    價格優先使用官方全市場日成交資料；官方端點暫時失敗時才以 FinMind 樣本
+    探測日期。個別法人與月營收也優先使用官方全市場端點，無法取得時才備援。
+    """
+    for market in ("twse", "tpex"):
+        rows = fetch_official_daily_prices(market)
+        OFFICIAL_PRICE_ROWS[market] = rows
+        if rows:
+            TARGETS[market] = max(row["t"] for row in rows.values())
+            for code in rows:
+                MARKET_OF[code] = market
+            log(f"  官方 {market} 日成交：{len(rows)} 檔，最新到 {TARGETS[market]}")
+
     def latest(data_id, cache_key):
         rows = finmind("TaiwanStockPrice", data_id, REF_START, cache_key, force=True)
         dates = [r.get("date") for r in rows if r.get("date")]
         return max(dates) if dates else None
 
     for market in ("twse", "tpex"):
+        if TARGETS[market]:
+            continue
         refs = [c for c in tickers["stocks"] if MARKET_OF.get(c) == market][:2]
         found = [d for d in (latest(c, f"ref_price_{market}_{i}") for i, c in enumerate(refs)) if d]
         TARGETS[market] = max(found) if found else None
+
+    # 上市個別三大法人與價格共用官方公布日，成功時可避免每檔都打 FinMind。
+    OFFICIAL_INSTITUTIONAL_ROWS["twse"] = fetch_twse_daily_institutional(TARGETS["twse"])
+    if OFFICIAL_INSTITUTIONAL_ROWS["twse"]:
+        OFFICIAL_INSTITUTIONAL_DATES["twse"] = TARGETS["twse"]
+        log(f"  官方 TWSE 三大法人：{len(OFFICIAL_INSTITUTIONAL_ROWS['twse'])} 檔，"
+            f"最新到 {TARGETS['twse']}")
+
+    tpex_inst_date, tpex_inst_rows = fetch_tpex_daily_institutional()
+    if tpex_inst_rows and tpex_inst_date == TARGETS["tpex"]:
+        OFFICIAL_INSTITUTIONAL_ROWS["tpex"] = tpex_inst_rows
+        OFFICIAL_INSTITUTIONAL_DATES["tpex"] = tpex_inst_date
+        log(f"  官方 TPEx 三大法人：{len(tpex_inst_rows)} 檔，最新到 {tpex_inst_date}")
+    elif tpex_inst_rows:
+        log(f"  ! 官方 TPEx 三大法人到 {tpex_inst_date}，與收盤價日期 "
+            f"{TARGETS['tpex']} 不同，改用 FinMind 備援")
+
+    for market in ("twse", "tpex"):
+        OFFICIAL_REVENUE_ROWS[market] = fetch_official_monthly_revenue(market)
+        if OFFICIAL_REVENUE_ROWS[market]:
+            latest = max((year, month) for year, month, _ in OFFICIAL_REVENUE_ROWS[market].values())
+            log(f"  官方 {market} 月營收：{len(OFFICIAL_REVENUE_ROWS[market])} 檔，"
+                f"最新到 {latest[0]}-{latest[1]:02d}")
+
+    global OFFICIAL_MARKET_INSTITUTIONAL
+    OFFICIAL_MARKET_INSTITUTIONAL = fetch_twse_market_institutional(TARGETS["twse"])
+    if OFFICIAL_MARKET_INSTITUTIONAL:
+        log(f"  官方 TWSE 全市場法人：最新到 {OFFICIAL_MARKET_INSTITUTIONAL['date']}")
+
+    global OFFICIAL_FUTURES_FLOW
+    OFFICIAL_FUTURES_FLOW = fetch_taifex_futures_institutional()
+    if OFFICIAL_FUTURES_FLOW:
+        log(f"  官方 TAIFEX TX 法人未平倉：最新到 {OFFICIAL_FUTURES_FLOW['date']}")
 
     # 三大法人這份是全市場合計，順便就是 build_macro() 要用的那份快取，不會多打一次 API
     rows = finmind("TaiwanStockTotalInstitutionalInvestors", None, FIN_START,
                    "market_institutional", force=True)
     dates = [r.get("date") for r in rows if r.get("date")]
     TARGETS["inst"] = max(dates) if dates else None
+    if OFFICIAL_FUTURES_FLOW and OFFICIAL_FUTURES_FLOW["date"] != TARGETS["inst"]:
+        log(f"  ! TAIFEX 官方期貨資料到 {OFFICIAL_FUTURES_FLOW['date']}，與法人基準日 "
+            f"{TARGETS['inst']} 不同，改用 FinMind 備援")
+        OFFICIAL_FUTURES_FLOW = None
 
 
 def fetch_price(code):
+    market = MARKET_OF.get(code)
+    official = OFFICIAL_PRICE_ROWS.get(market, {}).get(code)
+    if official and not FRESH_ONLY:
+        points_by_date = {point["t"]: point for point in existing_price_history(code)}
+        points_by_date[official["t"]] = official
+        # 有既有歷史時，官方資料是唯一的最新日線來源；完全新標的才向 FinMind 回補。
+        if len(points_by_date) > 1:
+            return add_moving_averages(list(points_by_date.values()))
+
     rows = finmind("TaiwanStockPrice", code, PRICE_START, f"price_{code}",
                    min_date=price_target(code))
     points = [
         {
-            "t": r["date"],
-            "o": r.get("open"),
-            "h": r.get("max"),
-            "l": r.get("min"),
-            "c": r.get("close"),
-            "v": r.get("Trading_Volume"),
+            "t": row["date"],
+            "o": row.get("open"),
+            "h": row.get("max"),
+            "l": row.get("min"),
+            "c": row.get("close"),
+            "v": row.get("Trading_Volume"),
         }
-        for r in rows
+        for row in rows
         # FinMind 偶爾會回傳整根都是 0 的K棒（停牌/當天沒有交易），
         # 收盤價 0 不是真的價格：留著會把K線的縱軸壓扁，也會污染均線，所以直接濾掉。
-        if r.get("close")
+        if row.get("close")
     ]
-    closes = [p["c"] for p in points]
-    for key, window in MA_WINDOWS.items():
-        for i, p in enumerate(points):
-            if i + 1 < window:
-                p[key] = None
-            else:
-                p[key] = round(sum(closes[i + 1 - window:i + 1]) / window, 4)
-    return points
+    if FRESH_ONLY and not points:
+        raise RuntimeError(f"{code} 沒有取得新的價格資料")
+    if official:
+        points = [point for point in points if point["t"] != official["t"]] + [official]
+    return add_moving_averages(points)
 
 
 def fetch_dividend(code):
@@ -962,15 +1371,8 @@ def check_adjustments(code, price, events):
             f"{(ratio - 1) * 100:+.0f}% 的跳空，{hint}")
 
 
-def fetch_revenue(code):
-    rows = finmind("TaiwanStockMonthRevenue", code, FIN_START, f"rev_{code}",
-                   max_age_hours=jittered_hours(code, revenue_ttl_hours()))
-    by_month = {}
-    for r in rows:
-        y, m = r.get("revenue_year"), r.get("revenue_month")
-        if y is None or m is None:
-            continue
-        by_month[(y, m)] = r.get("revenue")
+def build_revenue_records(by_month):
+    """依既有 schema 從月營收值重算 YoY/MoM。"""
     sorted_items = sorted(by_month.items())
     out = []
     for i, ((y, m), rev) in enumerate(sorted_items):
@@ -980,6 +1382,30 @@ def fetch_revenue(code):
         mom = ((rev - prev_month) / prev_month * 100) if (rev is not None and prev_month) else None
         out.append({"year": y, "month": m, "revenue": rev, "yoy_pct": yoy, "mom_pct": mom})
     return out
+
+
+def fetch_revenue(code):
+    official = OFFICIAL_REVENUE_ROWS.get(MARKET_OF.get(code), {}).get(code)
+    if official and not FRESH_ONLY:
+        year, month, revenue = official
+        by_month = existing_revenue_history(code)
+        by_month[(year, month)] = revenue
+        # 有既有歷史時，官方資料是唯一的最新月營收來源；新標的才用 FinMind 回補。
+        if len(by_month) > 1:
+            return build_revenue_records(by_month)
+
+    rows = finmind("TaiwanStockMonthRevenue", code, FIN_START, f"rev_{code}",
+                   max_age_hours=jittered_hours(code, revenue_ttl_hours()))
+    by_month = {}
+    for r in rows:
+        y, m = r.get("revenue_year"), r.get("revenue_month")
+        if y is None or m is None:
+            continue
+        by_month[(y, m)] = r.get("revenue")
+    if official:
+        year, month, revenue = official
+        by_month[(year, month)] = revenue
+    return build_revenue_records(by_month)
 
 
 def fetch_eps(code):
@@ -1021,6 +1447,27 @@ def fetch_retail_flow(code):
     邏輯：外資+投信+自營商+散戶 當日買進股數合計 = 賣出股數合計 = 當日成交量，
     所以 散戶買賣超 = -(三大法人合計買賣超)，不用額外抓成交量就能反推。
     """
+    market = MARKET_OF.get(code)
+    official = OFFICIAL_INSTITUTIONAL_ROWS.get(market, {}).get(code)
+    official_date = OFFICIAL_INSTITUTIONAL_DATES.get(market)
+    if official and official_date and not FRESH_ONLY:
+        by_date = {row["date"]: row for row in existing_retail_flow(code)}
+        by_date[official_date] = {
+            "date": official_date,
+            "foreign_lots": round(official["foreign"] / 1000),
+            "trust_lots": round(official["trust"] / 1000),
+            "dealer_lots": round(official["dealer"] / 1000),
+            "institutional_lots": round(
+                (official["foreign"] + official["trust"] + official["dealer"]) / 1000
+            ),
+            "retail_lots": round(
+                -(official["foreign"] + official["trust"] + official["dealer"]) / 1000
+            ),
+        }
+        # 有既有歷史時，官方資料是唯一的最新個別法人來源；新標的才用 FinMind 回補。
+        if len(by_date) > 1:
+            return [by_date[date] for date in sorted(by_date)]
+
     rows = finmind("TaiwanStockInstitutionalInvestorsBuySell", code, FIN_START, f"inst_{code}",
                    min_date=TARGETS["inst"])
     by_date = {}
@@ -1049,6 +1496,18 @@ def fetch_retail_flow(code):
             "institutional_lots": round(total_net / 1000),
             "retail_lots": round(-total_net / 1000),
         })
+    if official and official_date:
+        out = [row for row in out if row["date"] != official_date]
+        total_net = official["foreign"] + official["trust"] + official["dealer"]
+        out.append({
+            "date": official_date,
+            "foreign_lots": round(official["foreign"] / 1000),
+            "trust_lots": round(official["trust"] / 1000),
+            "dealer_lots": round(official["dealer"] / 1000),
+            "institutional_lots": round(total_net / 1000),
+            "retail_lots": round(-total_net / 1000),
+        })
+        out.sort(key=lambda row: row["date"])
     return out
 
 
@@ -1185,8 +1644,45 @@ def fetch_twse_taiex_recent(base_rows):
     return sorted(rows_by_date.values(), key=lambda row: row["t"])
 
 
+def existing_market_flow():
+    """讀取既有 macro 的全市場法人歷史，讓官方資料只取代最新交易日。"""
+    keys = ("foreign_net", "trust_net", "dealer_net", "institutional_net", "retail_net")
+    try:
+        with open(os.path.join(DATA_DIR, "macro.json"), encoding="utf-8") as f:
+            macro = json.load(f)
+        out = []
+        for key in keys:
+            rows = [row for row in (macro.get(key) or []) if row.get("t")]
+            if not rows:
+                return None
+            out.append({row["t"]: row.get("c") for row in rows})
+        return out
+    except (OSError, ValueError, TypeError):
+        return None
+
+
+def official_market_flow_series(official):
+    values = (
+        official["foreign"], official["trust"], official["dealer"],
+        official["total"], -official["total"],
+    )
+    return [{"t": official["date"], "c": round(value / 1e8, 2)} for value in values]
+
+
 def fetch_market_flow():
     """全市場三大法人「外資/投信/自營商」個別買賣超、三大法人合計、與反推「散戶買賣超」，單位:億元。"""
+    official = OFFICIAL_MARKET_INSTITUTIONAL
+    if official:
+        existing = existing_market_flow()
+        if existing and all(len(series) > 1 for series in existing):
+            latest = official_market_flow_series(official)
+            for series, point in zip(existing, latest):
+                series[point["t"]] = point["c"]
+            return [
+                [{"t": date, "c": value} for date, value in sorted(series.items())]
+                for series in existing
+            ]
+
     rows = finmind("TaiwanStockTotalInstitutionalInvestors", None, FIN_START, "market_institutional",
                    min_date=TARGETS["inst"])
     by_date = {}
@@ -1211,12 +1707,36 @@ def fetch_market_flow():
         dealer_out.append({"t": d, "c": round(dealer / 1e8, 2)})
         institutional_out.append({"t": d, "c": round(total / 1e8, 2) if total is not None else None})
         retail_out.append({"t": d, "c": round(-total / 1e8, 2) if total is not None else None})
+    if official:
+        latest = official_market_flow_series(official)
+        out = (foreign_out, trust_out, dealer_out, institutional_out, retail_out)
+        for series, point in zip(out, latest):
+            series[:] = [row for row in series if row["t"] != point["t"]] + [point]
+            series.sort(key=lambda row: row["t"])
     return foreign_out, trust_out, dealer_out, institutional_out, retail_out
 
 
 def fetch_futures_flow():
     """全市場台指期(TX)「外資」、「投信」每日淨未平倉部位(口) = 多單-空單。
     負值代表淨空單(偏空)，正值代表淨多單(偏多)。"""
+    official = OFFICIAL_FUTURES_FLOW
+    if official:
+        try:
+            with open(os.path.join(DATA_DIR, "macro.json"), encoding="utf-8") as f:
+                macro = json.load(f)
+            foreign_out = [row for row in (macro.get("foreign_futures_net") or []) if row.get("t")]
+            trust_out = [row for row in (macro.get("trust_futures_net") or []) if row.get("t")]
+        except (OSError, ValueError, TypeError):
+            foreign_out, trust_out = [], []
+        if len(foreign_out) > 1 and len(trust_out) > 1:
+            foreign_out = [row for row in foreign_out if row["t"] != official["date"]]
+            trust_out = [row for row in trust_out if row["t"] != official["date"]]
+            foreign_out.append({"t": official["date"], "c": official["foreign"]})
+            trust_out.append({"t": official["date"], "c": official["trust"]})
+            foreign_out.sort(key=lambda row: row["t"])
+            trust_out.sort(key=lambda row: row["t"])
+            return foreign_out, trust_out
+
     rows = finmind("TaiwanFuturesInstitutionalInvestors", "TX", FIN_START, "futures_inst_TX",
                    min_date=TARGETS["inst"])
     foreign_by_date = {}
@@ -1234,6 +1754,13 @@ def fetch_futures_flow():
     dates = sorted(set(foreign_by_date) | set(trust_by_date))
     foreign_out = [{"t": d, "c": foreign_by_date.get(d)} for d in dates]
     trust_out = [{"t": d, "c": trust_by_date.get(d)} for d in dates]
+    if official:
+        foreign_out = [row for row in foreign_out if row["t"] != official["date"]]
+        trust_out = [row for row in trust_out if row["t"] != official["date"]]
+        foreign_out.append({"t": official["date"], "c": official["foreign"]})
+        trust_out.append({"t": official["date"], "c": official["trust"]})
+        foreign_out.sort(key=lambda row: row["t"])
+        trust_out.sort(key=lambda row: row["t"])
     return foreign_out, trust_out
 
 
@@ -1363,7 +1890,8 @@ def fetch_names():
     上櫃收盤價每天比上市晚公布，要分開判斷快取新不新。"""
     data = http_get_json(
         FINMIND_URL, {"dataset": "TaiwanStockInfo"}, cache_key="stock_info",
-        auth_token=FINMIND_TOKEN, max_age_hours=NAMES_FRESH_DAYS * 24,
+        auth_token=FINMIND_TOKEN, force=FRESH_ONLY,
+        max_age_hours=NAMES_FRESH_DAYS * 24,
     )
     names, markets = {}, {}
     if data and data.get("status") == 200:
@@ -1395,6 +1923,8 @@ def latest_date_in_files(tickers, field, date_key, codes=None):
 
 
 def main():
+    global FRESH_ONLY
+    FRESH_ONLY = "--fresh-only" in sys.argv
     only = None
     if "--only" in sys.argv:
         idx = sys.argv.index("--only")
@@ -1409,11 +1939,11 @@ def main():
         stocks = [c for c in stocks if c in only]
         etfs = [c for c in etfs if c in only]
 
-    total = len(stocks) + len(etfs) + 1
+    total = len(stocks) + len(etfs) + (0 if only else 1)
     done = 0
     status = "complete"
 
-    log(f"開始抓取：{len(stocks)} 檔個股 + {len(etfs)} 檔ETF + 總經面板")
+    log(f"開始抓取：{len(stocks)} 檔個股 + {len(etfs)} 檔ETF" + ("（強制使用新資料）" if FRESH_ONLY else " + 總經面板"))
     if FINMIND_TOKEN:
         log("已讀到 FinMind API Token，會用比較高的額度。")
     else:
@@ -1446,10 +1976,11 @@ def main():
         + ("（三大法人是盤後約下午4點後才公布，太早跑就只會抓到前一個交易日）"
            if TARGETS["inst"] and TARGETS["twse"] and TARGETS["inst"] < TARGETS["twse"] else ""))
 
-    log("抓總經面板 (黃金/原油/美債10年/台股大盤/匯率)...")
-    build_macro()
-    done += 1
-    log(f"  [{done}/{total}] 完成")
+    if not only:
+        log("抓總經面板 (黃金/原油/美債10年/台股大盤/匯率)...")
+        build_macro()
+        done += 1
+        log(f"  [{done}/{total}] 完成")
 
     log("抓股票分割/面額變更紀錄（還原K線要用，全市場一次抓完）...")
     try:
@@ -1488,18 +2019,19 @@ def main():
         log("之前抓過的會直接用快取跳過，只會繼續抓還沒抓到的部分。")
         log("=" * 60)
 
-    try:
-        fetch_active_etf_changes()
-    except Exception as e:
-        log(f"  !! 主動式 ETF 異動更新失敗：{e}")
-    try:
-        build_foreign_flow()
-    except Exception as e:
-        log(f"  !! 外資排行更新失敗：{e}")
-    try:
-        build_dividend_etf_flow()
-    except Exception as e:
-        log(f"  !! 指定 ETF 法人買賣更新失敗：{e}")
+    if not only:
+        try:
+            fetch_active_etf_changes()
+        except Exception as e:
+            log(f"  !! 主動式 ETF 異動更新失敗：{e}")
+        try:
+            build_foreign_flow()
+        except Exception as e:
+            log(f"  !! 外資排行更新失敗：{e}")
+        try:
+            build_dividend_etf_flow()
+        except Exception as e:
+            log(f"  !! 指定 ETF 法人買賣更新失敗：{e}")
 
     # 用實際存在的檔案算數量，這樣就算這次中途失敗，也能反映之前已經抓好、留在硬碟上的資料
     have_stocks = [c for c in tickers["stocks"] if os.path.exists(os.path.join(STOCKS_DIR, f"{c}.json"))]

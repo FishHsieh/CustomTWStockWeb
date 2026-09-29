@@ -1,1490 +1,1490 @@
 {
   "source": "FinMind TaiwanStockInstitutionalInvestorsBuySell",
-  "updated_at": "2026-09-28 22:04:36",
-  "from": "2026-06-23",
-  "to": "2026-09-24",
+  "updated_at": "2026-09-29 20:26:57",
+  "from": "2026-06-28",
+  "to": "2026-09-29",
   "universe": 251,
   "periods": {
     "7": {
-      "from": "2026-09-17",
-      "to": "2026-09-24",
+      "from": "2026-09-22",
+      "to": "2026-09-29",
       "universe": 251,
       "top_buy": [
         {
-          "code": "2409",
-          "name": "友達",
-          "buy_lots": 534430.0,
-          "sell_lots": 286050.0,
-          "net_lots": 248380.0,
-          "days": 6
-        },
-        {
-          "code": "6770",
-          "name": "力積電",
-          "buy_lots": 143076.0,
-          "sell_lots": 66603.0,
-          "net_lots": 76473.0,
-          "days": 6
-        },
-        {
-          "code": "2449",
-          "name": "京元電子",
-          "buy_lots": 43379.0,
-          "sell_lots": 3967.0,
-          "net_lots": 39412.0,
-          "days": 6
-        },
-        {
-          "code": "2303",
-          "name": "聯電",
-          "buy_lots": 87863.0,
-          "sell_lots": 51233.0,
-          "net_lots": 36630.0,
-          "days": 6
-        },
-        {
           "code": "1101",
           "name": "台泥",
-          "buy_lots": 56632.0,
-          "sell_lots": 22612.0,
-          "net_lots": 34020.0,
-          "days": 6
-        },
-        {
-          "code": "3711",
-          "name": "日月光投控",
-          "buy_lots": 29195.0,
-          "sell_lots": 0,
-          "net_lots": 29195.0,
-          "days": 6
-        },
-        {
-          "code": "2609",
-          "name": "陽明",
-          "buy_lots": 33014.0,
-          "sell_lots": 4060.0,
-          "net_lots": 28954.0,
-          "days": 6
-        },
-        {
-          "code": "2412",
-          "name": "中華電",
-          "buy_lots": 27445.0,
-          "sell_lots": 0,
-          "net_lots": 27445.0,
-          "days": 6
-        },
-        {
-          "code": "6257",
-          "name": "矽格",
-          "buy_lots": 31061.0,
-          "sell_lots": 3686.0,
-          "net_lots": 27375.0,
-          "days": 6
-        },
-        {
-          "code": "2892",
-          "name": "第一金",
-          "buy_lots": 26481.0,
-          "sell_lots": 1407.0,
-          "net_lots": 25074.0,
-          "days": 6
-        },
-        {
-          "code": "2886",
-          "name": "兆豐金",
-          "buy_lots": 24500.0,
-          "sell_lots": 1019.0,
-          "net_lots": 23481.0,
-          "days": 6
-        },
-        {
-          "code": "3264",
-          "name": "欣銓",
-          "buy_lots": 24475.0,
-          "sell_lots": 2105.0,
-          "net_lots": 22370.0,
-          "days": 6
+          "buy_lots": 44893.0,
+          "sell_lots": 12699.0,
+          "net_lots": 32194.0,
+          "days": 3
         },
         {
           "code": "3016",
           "name": "嘉晶",
-          "buy_lots": 23230.0,
-          "sell_lots": 1727.0,
-          "net_lots": 21503.0,
-          "days": 6
-        },
-        {
-          "code": "5347",
-          "name": "世界",
-          "buy_lots": 20212.0,
-          "sell_lots": 191.0,
-          "net_lots": 20021.0,
-          "days": 6
-        },
-        {
-          "code": "3037",
-          "name": "欣興",
-          "buy_lots": 18205.0,
+          "buy_lots": 20811.0,
           "sell_lots": 0,
-          "net_lots": 18205.0,
-          "days": 6
-        },
-        {
-          "code": "2885",
-          "name": "元大金",
-          "buy_lots": 23676.0,
-          "sell_lots": 6464.0,
-          "net_lots": 17212.0,
-          "days": 6
+          "net_lots": 20811.0,
+          "days": 3
         },
         {
           "code": "3189",
           "name": "景碩",
-          "buy_lots": 22394.0,
-          "sell_lots": 5205.0,
-          "net_lots": 17189.0,
-          "days": 6
-        },
-        {
-          "code": "2408",
-          "name": "南亞科",
-          "buy_lots": 61738.0,
-          "sell_lots": 46521.0,
-          "net_lots": 15217.0,
-          "days": 6
-        },
-        {
-          "code": "2855",
-          "name": "統一證",
-          "buy_lots": 14150.0,
+          "buy_lots": 19734.0,
           "sell_lots": 0,
-          "net_lots": 14150.0,
-          "days": 6
+          "net_lots": 19734.0,
+          "days": 3
         },
         {
-          "code": "2330",
-          "name": "台積電",
-          "buy_lots": 20646.0,
-          "sell_lots": 8998.0,
-          "net_lots": 11648.0,
-          "days": 6
+          "code": "3264",
+          "name": "欣銓",
+          "buy_lots": 20003.0,
+          "sell_lots": 3366.0,
+          "net_lots": 16637.0,
+          "days": 4
+        },
+        {
+          "code": "2886",
+          "name": "兆豐金",
+          "buy_lots": 17377.0,
+          "sell_lots": 1019.0,
+          "net_lots": 16358.0,
+          "days": 3
+        },
+        {
+          "code": "3711",
+          "name": "日月光投控",
+          "buy_lots": 14394.0,
+          "sell_lots": 0,
+          "net_lots": 14394.0,
+          "days": 3
+        },
+        {
+          "code": "2449",
+          "name": "京元電子",
+          "buy_lots": 17296.0,
+          "sell_lots": 3967.0,
+          "net_lots": 13329.0,
+          "days": 3
+        },
+        {
+          "code": "3037",
+          "name": "欣興",
+          "buy_lots": 12885.0,
+          "sell_lots": 0,
+          "net_lots": 12885.0,
+          "days": 3
+        },
+        {
+          "code": "2409",
+          "name": "友達",
+          "buy_lots": 245314.0,
+          "sell_lots": 233887.0,
+          "net_lots": 11427.0,
+          "days": 3
+        },
+        {
+          "code": "8046",
+          "name": "南電",
+          "buy_lots": 10595.0,
+          "sell_lots": 0,
+          "net_lots": 10595.0,
+          "days": 3
+        },
+        {
+          "code": "2892",
+          "name": "第一金",
+          "buy_lots": 10597.0,
+          "sell_lots": 1407.0,
+          "net_lots": 9190.0,
+          "days": 3
+        },
+        {
+          "code": "2412",
+          "name": "中華電",
+          "buy_lots": 8897.0,
+          "sell_lots": 0,
+          "net_lots": 8897.0,
+          "days": 3
+        },
+        {
+          "code": "1102",
+          "name": "亞泥",
+          "buy_lots": 8391.0,
+          "sell_lots": 1330.0,
+          "net_lots": 7061.0,
+          "days": 3
+        },
+        {
+          "code": "2609",
+          "name": "陽明",
+          "buy_lots": 6951.0,
+          "sell_lots": 0,
+          "net_lots": 6951.0,
+          "days": 3
+        },
+        {
+          "code": "3045",
+          "name": "台灣大",
+          "buy_lots": 6590.0,
+          "sell_lots": 0,
+          "net_lots": 6590.0,
+          "days": 3
+        },
+        {
+          "code": "5347",
+          "name": "世界",
+          "buy_lots": 6586.0,
+          "sell_lots": 191.0,
+          "net_lots": 6395.0,
+          "days": 4
+        },
+        {
+          "code": "2618",
+          "name": "長榮航",
+          "buy_lots": 17829.0,
+          "sell_lots": 11905.0,
+          "net_lots": 5924.0,
+          "days": 3
+        },
+        {
+          "code": "2610",
+          "name": "華航",
+          "buy_lots": 19835.0,
+          "sell_lots": 14209.0,
+          "net_lots": 5626.0,
+          "days": 3
+        },
+        {
+          "code": "3293",
+          "name": "鈊象",
+          "buy_lots": 5065.0,
+          "sell_lots": 0,
+          "net_lots": 5065.0,
+          "days": 4
+        },
+        {
+          "code": "2303",
+          "name": "聯電",
+          "buy_lots": 50545.0,
+          "sell_lots": 45507.0,
+          "net_lots": 5038.0,
+          "days": 3
         }
       ],
       "top_sell": [
         {
+          "code": "2883",
+          "name": "凱基金",
+          "buy_lots": 0,
+          "sell_lots": 30985.0,
+          "net_lots": -30985.0,
+          "days": 3
+        },
+        {
           "code": "2887",
           "name": "台新新光金",
           "buy_lots": 0,
-          "sell_lots": 57493.0,
-          "net_lots": -57493.0,
-          "days": 6
+          "sell_lots": 27511.0,
+          "net_lots": -27511.0,
+          "days": 3
+        },
+        {
+          "code": "3231",
+          "name": "緯創",
+          "buy_lots": 7873.0,
+          "sell_lots": 34570.0,
+          "net_lots": -26697.0,
+          "days": 3
+        },
+        {
+          "code": "3481",
+          "name": "群創",
+          "buy_lots": 24830.0,
+          "sell_lots": 49799.0,
+          "net_lots": -24969.0,
+          "days": 3
+        },
+        {
+          "code": "1815",
+          "name": "富喬",
+          "buy_lots": 0,
+          "sell_lots": 23148.0,
+          "net_lots": -23148.0,
+          "days": 4
         },
         {
           "code": "2002",
           "name": "中鋼",
           "buy_lots": 0,
-          "sell_lots": 46843.0,
-          "net_lots": -46843.0,
-          "days": 6
+          "sell_lots": 22760.0,
+          "net_lots": -22760.0,
+          "days": 3
         },
         {
-          "code": "1303",
-          "name": "南亞",
-          "buy_lots": 19975.0,
-          "sell_lots": 48802.0,
-          "net_lots": -28827.0,
-          "days": 6
-        },
-        {
-          "code": "2801",
-          "name": "彰銀",
-          "buy_lots": 11.0,
-          "sell_lots": 24387.0,
-          "net_lots": -24376.0,
-          "days": 6
-        },
-        {
-          "code": "1815",
-          "name": "富喬",
-          "buy_lots": 11647.0,
-          "sell_lots": 35635.0,
-          "net_lots": -23988.0,
-          "days": 6
+          "code": "2834",
+          "name": "臺企銀",
+          "buy_lots": 0,
+          "sell_lots": 18558.0,
+          "net_lots": -18558.0,
+          "days": 3
         },
         {
           "code": "5871",
           "name": "中租-KY",
           "buy_lots": 0,
-          "sell_lots": 23101.0,
-          "net_lots": -23101.0,
-          "days": 6
+          "sell_lots": 16836.0,
+          "net_lots": -16836.0,
+          "days": 3
         },
         {
-          "code": "3231",
-          "name": "緯創",
-          "buy_lots": 18799.0,
-          "sell_lots": 38072.0,
-          "net_lots": -19273.0,
-          "days": 6
-        },
-        {
-          "code": "3481",
-          "name": "群創",
-          "buy_lots": 57975.0,
-          "sell_lots": 76407.0,
-          "net_lots": -18432.0,
-          "days": 6
-        },
-        {
-          "code": "2834",
-          "name": "臺企銀",
-          "buy_lots": 26931.0,
-          "sell_lots": 43464.0,
-          "net_lots": -16533.0,
-          "days": 6
+          "code": "1303",
+          "name": "南亞",
+          "buy_lots": 17802.0,
+          "sell_lots": 32896.0,
+          "net_lots": -15094.0,
+          "days": 3
         },
         {
           "code": "2812",
           "name": "台中銀",
-          "buy_lots": 4974.0,
-          "sell_lots": 20036.0,
-          "net_lots": -15062.0,
-          "days": 6
+          "buy_lots": 0,
+          "sell_lots": 14887.0,
+          "net_lots": -14887.0,
+          "days": 3
+        },
+        {
+          "code": "2891",
+          "name": "中信金",
+          "buy_lots": 0,
+          "sell_lots": 14210.0,
+          "net_lots": -14210.0,
+          "days": 3
+        },
+        {
+          "code": "2408",
+          "name": "南亞科",
+          "buy_lots": 29196.0,
+          "sell_lots": 42398.0,
+          "net_lots": -13202.0,
+          "days": 3
+        },
+        {
+          "code": "4763",
+          "name": "材料*-KY",
+          "buy_lots": 0,
+          "sell_lots": 12136.0,
+          "net_lots": -12136.0,
+          "days": 3
+        },
+        {
+          "code": "6443",
+          "name": "元晶",
+          "buy_lots": 666.0,
+          "sell_lots": 12396.0,
+          "net_lots": -11730.0,
+          "days": 3
         },
         {
           "code": "2317",
           "name": "鴻海",
-          "buy_lots": 21552.0,
-          "sell_lots": 36275.0,
-          "net_lots": -14723.0,
-          "days": 6
+          "buy_lots": 12672.0,
+          "sell_lots": 23873.0,
+          "net_lots": -11201.0,
+          "days": 3
         },
         {
-          "code": "2884",
-          "name": "玉山金",
-          "buy_lots": 9960.0,
-          "sell_lots": 24295.0,
-          "net_lots": -14335.0,
-          "days": 6
-        },
-        {
-          "code": "2313",
-          "name": "華通",
-          "buy_lots": 5444.0,
-          "sell_lots": 17972.0,
-          "net_lots": -12528.0,
-          "days": 6
-        },
-        {
-          "code": "6446",
-          "name": "藥華藥",
-          "buy_lots": 0,
-          "sell_lots": 11545.0,
-          "net_lots": -11545.0,
-          "days": 6
+          "code": "6770",
+          "name": "力積電",
+          "buy_lots": 32738.0,
+          "sell_lots": 42587.0,
+          "net_lots": -9849.0,
+          "days": 3
         },
         {
           "code": "2356",
           "name": "英業達",
           "buy_lots": 0,
-          "sell_lots": 11361.0,
-          "net_lots": -11361.0,
-          "days": 6
+          "sell_lots": 9842.0,
+          "net_lots": -9842.0,
+          "days": 3
+        },
+        {
+          "code": "2337",
+          "name": "旺宏",
+          "buy_lots": 3730.0,
+          "sell_lots": 12641.0,
+          "net_lots": -8911.0,
+          "days": 3
+        },
+        {
+          "code": "2353",
+          "name": "宏碁",
+          "buy_lots": 870.0,
+          "sell_lots": 9705.0,
+          "net_lots": -8835.0,
+          "days": 3
         },
         {
           "code": "2382",
           "name": "廣達",
-          "buy_lots": 4790.0,
-          "sell_lots": 15843.0,
-          "net_lots": -11053.0,
-          "days": 6
-        },
-        {
-          "code": "6443",
-          "name": "元晶",
-          "buy_lots": 2207.0,
-          "sell_lots": 13079.0,
-          "net_lots": -10872.0,
-          "days": 6
-        },
-        {
-          "code": "2368",
-          "name": "金像電",
-          "buy_lots": 71.0,
-          "sell_lots": 10662.0,
-          "net_lots": -10591.0,
-          "days": 6
-        },
-        {
-          "code": "2890",
-          "name": "永豐金",
-          "buy_lots": 3790.0,
-          "sell_lots": 14001.0,
-          "net_lots": -10211.0,
-          "days": 6
-        },
-        {
-          "code": "8110",
-          "name": "華東",
-          "buy_lots": 2308.0,
-          "sell_lots": 12150.0,
-          "net_lots": -9842.0,
-          "days": 6
+          "buy_lots": 0,
+          "sell_lots": 8463.0,
+          "net_lots": -8463.0,
+          "days": 3
         }
       ]
     },
     "14": {
-      "from": "2026-09-10",
-      "to": "2026-09-24",
+      "from": "2026-09-15",
+      "to": "2026-09-29",
       "universe": 251,
       "top_buy": [
         {
           "code": "2409",
           "name": "友達",
-          "buy_lots": 605438.0,
-          "sell_lots": 513677.0,
-          "net_lots": 91761.0,
-          "days": 11
-        },
-        {
-          "code": "2412",
-          "name": "中華電",
-          "buy_lots": 70841.0,
-          "sell_lots": 0,
-          "net_lots": 70841.0,
-          "days": 11
-        },
-        {
-          "code": "2609",
-          "name": "陽明",
-          "buy_lots": 71870.0,
-          "sell_lots": 8314.0,
-          "net_lots": 63556.0,
-          "days": 11
-        },
-        {
-          "code": "2892",
-          "name": "第一金",
-          "buy_lots": 59064.0,
-          "sell_lots": 5558.0,
-          "net_lots": 53506.0,
-          "days": 11
+          "buy_lots": 586903.0,
+          "sell_lots": 323807.0,
+          "net_lots": 263096.0,
+          "days": 8
         },
         {
           "code": "6770",
           "name": "力積電",
-          "buy_lots": 221056.0,
-          "sell_lots": 177746.0,
-          "net_lots": 43310.0,
-          "days": 11
+          "buy_lots": 185717.0,
+          "sell_lots": 138681.0,
+          "net_lots": 47036.0,
+          "days": 8
+        },
+        {
+          "code": "2412",
+          "name": "中華電",
+          "buy_lots": 45140.0,
+          "sell_lots": 0,
+          "net_lots": 45140.0,
+          "days": 8
+        },
+        {
+          "code": "2609",
+          "name": "陽明",
+          "buy_lots": 48844.0,
+          "sell_lots": 4060.0,
+          "net_lots": 44784.0,
+          "days": 8
         },
         {
           "code": "2449",
           "name": "京元電子",
-          "buy_lots": 49530.0,
-          "sell_lots": 9343.0,
-          "net_lots": 40187.0,
-          "days": 11
+          "buy_lots": 43848.0,
+          "sell_lots": 5842.0,
+          "net_lots": 38006.0,
+          "days": 8
         },
         {
           "code": "6257",
           "name": "矽格",
-          "buy_lots": 38065.0,
-          "sell_lots": 6474.0,
-          "net_lots": 31591.0,
-          "days": 11
-        },
-        {
-          "code": "2886",
-          "name": "兆豐金",
-          "buy_lots": 39121.0,
-          "sell_lots": 7821.0,
-          "net_lots": 31300.0,
-          "days": 11
-        },
-        {
-          "code": "5347",
-          "name": "世界",
-          "buy_lots": 30378.0,
-          "sell_lots": 1991.0,
-          "net_lots": 28387.0,
-          "days": 11
-        },
-        {
-          "code": "2880",
-          "name": "華南金",
-          "buy_lots": 29118.0,
-          "sell_lots": 2671.0,
-          "net_lots": 26447.0,
-          "days": 11
-        },
-        {
-          "code": "5880",
-          "name": "合庫金",
-          "buy_lots": 35923.0,
-          "sell_lots": 10078.0,
-          "net_lots": 25845.0,
-          "days": 11
+          "buy_lots": 31887.0,
+          "sell_lots": 3964.0,
+          "net_lots": 27923.0,
+          "days": 8
         },
         {
           "code": "3711",
           "name": "日月光投控",
-          "buy_lots": 36571.0,
-          "sell_lots": 13157.0,
-          "net_lots": 23414.0,
-          "days": 11
+          "buy_lots": 31801.0,
+          "sell_lots": 5097.0,
+          "net_lots": 26704.0,
+          "days": 8
         },
         {
-          "code": "3264",
-          "name": "欣銓",
-          "buy_lots": 26157.0,
-          "sell_lots": 5663.0,
-          "net_lots": 20494.0,
-          "days": 11
-        },
-        {
-          "code": "3045",
-          "name": "台灣大",
-          "buy_lots": 20707.0,
-          "sell_lots": 334.0,
-          "net_lots": 20373.0,
-          "days": 11
-        },
-        {
-          "code": "3016",
-          "name": "嘉晶",
-          "buy_lots": 28170.0,
-          "sell_lots": 7992.0,
-          "net_lots": 20178.0,
-          "days": 11
-        },
-        {
-          "code": "2303",
-          "name": "聯電",
-          "buy_lots": 108531.0,
-          "sell_lots": 88911.0,
-          "net_lots": 19620.0,
-          "days": 11
-        },
-        {
-          "code": "2891",
-          "name": "中信金",
-          "buy_lots": 34694.0,
-          "sell_lots": 15203.0,
-          "net_lots": 19491.0,
-          "days": 11
-        },
-        {
-          "code": "3189",
-          "name": "景碩",
-          "buy_lots": 25301.0,
-          "sell_lots": 5897.0,
-          "net_lots": 19404.0,
-          "days": 11
-        },
-        {
-          "code": "3037",
-          "name": "欣興",
-          "buy_lots": 19562.0,
-          "sell_lots": 2496.0,
-          "net_lots": 17066.0,
-          "days": 11
-        },
-        {
-          "code": "3702",
-          "name": "大聯大",
-          "buy_lots": 17043.0,
-          "sell_lots": 1052.0,
-          "net_lots": 15991.0,
-          "days": 11
-        }
-      ],
-      "top_sell": [
-        {
-          "code": "2002",
-          "name": "中鋼",
-          "buy_lots": 2006.0,
-          "sell_lots": 112066.0,
-          "net_lots": -110060.0,
-          "days": 11
-        },
-        {
-          "code": "3231",
-          "name": "緯創",
-          "buy_lots": 22058.0,
-          "sell_lots": 96236.0,
-          "net_lots": -74178.0,
-          "days": 11
-        },
-        {
-          "code": "1303",
-          "name": "南亞",
-          "buy_lots": 27331.0,
-          "sell_lots": 89214.0,
-          "net_lots": -61883.0,
-          "days": 11
-        },
-        {
-          "code": "1815",
-          "name": "富喬",
-          "buy_lots": 11647.0,
-          "sell_lots": 70618.0,
-          "net_lots": -58971.0,
-          "days": 11
+          "code": "5347",
+          "name": "世界",
+          "buy_lots": 27330.0,
+          "sell_lots": 1383.0,
+          "net_lots": 25947.0,
+          "days": 9
         },
         {
           "code": "2344",
           "name": "華邦電",
           "buy_lots": 79156.0,
-          "sell_lots": 134410.0,
-          "net_lots": -55254.0,
-          "days": 11
+          "sell_lots": 55376.0,
+          "net_lots": 23780.0,
+          "days": 8
         },
         {
-          "code": "3481",
-          "name": "群創",
-          "buy_lots": 78843.0,
-          "sell_lots": 131785.0,
-          "net_lots": -52942.0,
-          "days": 11
+          "code": "2892",
+          "name": "第一金",
+          "buy_lots": 28182.0,
+          "sell_lots": 5558.0,
+          "net_lots": 22624.0,
+          "days": 8
         },
         {
-          "code": "2801",
-          "name": "彰銀",
-          "buy_lots": 10407.0,
-          "sell_lots": 62549.0,
-          "net_lots": -52142.0,
-          "days": 11
+          "code": "1101",
+          "name": "台泥",
+          "buy_lots": 56632.0,
+          "sell_lots": 35657.0,
+          "net_lots": 20975.0,
+          "days": 8
+        },
+        {
+          "code": "2303",
+          "name": "聯電",
+          "buy_lots": 94832.0,
+          "sell_lots": 74633.0,
+          "net_lots": 20199.0,
+          "days": 8
+        },
+        {
+          "code": "3016",
+          "name": "嘉晶",
+          "buy_lots": 23663.0,
+          "sell_lots": 4784.0,
+          "net_lots": 18879.0,
+          "days": 8
+        },
+        {
+          "code": "3264",
+          "name": "欣銓",
+          "buy_lots": 24475.0,
+          "sell_lots": 5677.0,
+          "net_lots": 18798.0,
+          "days": 9
+        },
+        {
+          "code": "3189",
+          "name": "景碩",
+          "buy_lots": 22933.0,
+          "sell_lots": 5225.0,
+          "net_lots": 17708.0,
+          "days": 8
+        },
+        {
+          "code": "2886",
+          "name": "兆豐金",
+          "buy_lots": 24500.0,
+          "sell_lots": 7821.0,
+          "net_lots": 16679.0,
+          "days": 8
+        },
+        {
+          "code": "3037",
+          "name": "欣興",
+          "buy_lots": 18205.0,
+          "sell_lots": 1690.0,
+          "net_lots": 16515.0,
+          "days": 8
+        },
+        {
+          "code": "2408",
+          "name": "南亞科",
+          "buy_lots": 68246.0,
+          "sell_lots": 53089.0,
+          "net_lots": 15157.0,
+          "days": 8
+        },
+        {
+          "code": "2891",
+          "name": "中信金",
+          "buy_lots": 28316.0,
+          "sell_lots": 14210.0,
+          "net_lots": 14106.0,
+          "days": 8
+        },
+        {
+          "code": "3045",
+          "name": "台灣大",
+          "buy_lots": 14388.0,
+          "sell_lots": 334.0,
+          "net_lots": 14054.0,
+          "days": 8
+        }
+      ],
+      "top_sell": [
+        {
+          "code": "2002",
+          "name": "中鋼",
+          "buy_lots": 0,
+          "sell_lots": 84092.0,
+          "net_lots": -84092.0,
+          "days": 8
+        },
+        {
+          "code": "1303",
+          "name": "南亞",
+          "buy_lots": 19975.0,
+          "sell_lots": 71989.0,
+          "net_lots": -52014.0,
+          "days": 8
         },
         {
           "code": "2887",
           "name": "台新新光金",
-          "buy_lots": 25870.0,
-          "sell_lots": 72967.0,
-          "net_lots": -47097.0,
-          "days": 11
+          "buy_lots": 7599.0,
+          "sell_lots": 57923.0,
+          "net_lots": -50324.0,
+          "days": 8
+        },
+        {
+          "code": "2801",
+          "name": "彰銀",
+          "buy_lots": 11.0,
+          "sell_lots": 47732.0,
+          "net_lots": -47721.0,
+          "days": 8
+        },
+        {
+          "code": "1815",
+          "name": "富喬",
+          "buy_lots": 11647.0,
+          "sell_lots": 46081.0,
+          "net_lots": -34434.0,
+          "days": 9
+        },
+        {
+          "code": "3231",
+          "name": "緯創",
+          "buy_lots": 18799.0,
+          "sell_lots": 49451.0,
+          "net_lots": -30652.0,
+          "days": 8
         },
         {
           "code": "2890",
           "name": "永豐金",
           "buy_lots": 3790.0,
-          "sell_lots": 38677.0,
-          "net_lots": -34887.0,
-          "days": 11
-        },
-        {
-          "code": "2317",
-          "name": "鴻海",
-          "buy_lots": 21731.0,
-          "sell_lots": 47502.0,
-          "net_lots": -25771.0,
-          "days": 11
-        },
-        {
-          "code": "1409",
-          "name": "新纖",
-          "buy_lots": 8503.0,
-          "sell_lots": 33022.0,
-          "net_lots": -24519.0,
-          "days": 11
+          "sell_lots": 30079.0,
+          "net_lots": -26289.0,
+          "days": 8
         },
         {
           "code": "5871",
           "name": "中租-KY",
-          "buy_lots": 2447.0,
-          "sell_lots": 26358.0,
-          "net_lots": -23911.0,
-          "days": 11
+          "buy_lots": 0,
+          "sell_lots": 24939.0,
+          "net_lots": -24939.0,
+          "days": 8
         },
         {
-          "code": "2330",
-          "name": "台積電",
-          "buy_lots": 20646.0,
-          "sell_lots": 43355.0,
-          "net_lots": -22709.0,
-          "days": 11
+          "code": "2834",
+          "name": "臺企銀",
+          "buy_lots": 38072.0,
+          "sell_lots": 57449.0,
+          "net_lots": -19377.0,
+          "days": 8
         },
         {
-          "code": "2356",
-          "name": "英業達",
-          "buy_lots": 602.0,
-          "sell_lots": 22062.0,
-          "net_lots": -21460.0,
-          "days": 11
+          "code": "2317",
+          "name": "鴻海",
+          "buy_lots": 21552.0,
+          "sell_lots": 40356.0,
+          "net_lots": -18804.0,
+          "days": 8
+        },
+        {
+          "code": "2812",
+          "name": "台中銀",
+          "buy_lots": 7098.0,
+          "sell_lots": 25637.0,
+          "net_lots": -18539.0,
+          "days": 8
         },
         {
           "code": "2884",
           "name": "玉山金",
-          "buy_lots": 27061.0,
-          "sell_lots": 46853.0,
-          "net_lots": -19792.0,
-          "days": 11
+          "buy_lots": 16478.0,
+          "sell_lots": 33816.0,
+          "net_lots": -17338.0,
+          "days": 8
         },
         {
-          "code": "3006",
-          "name": "晶豪科",
-          "buy_lots": 5456.0,
-          "sell_lots": 22873.0,
-          "net_lots": -17417.0,
-          "days": 11
+          "code": "2883",
+          "name": "凱基金",
+          "buy_lots": 39285.0,
+          "sell_lots": 55542.0,
+          "net_lots": -16257.0,
+          "days": 8
         },
         {
-          "code": "9904",
-          "name": "寶成",
-          "buy_lots": 10717.0,
-          "sell_lots": 28108.0,
-          "net_lots": -17391.0,
-          "days": 11
+          "code": "2356",
+          "name": "英業達",
+          "buy_lots": 0,
+          "sell_lots": 14961.0,
+          "net_lots": -14961.0,
+          "days": 8
+        },
+        {
+          "code": "2313",
+          "name": "華通",
+          "buy_lots": 5444.0,
+          "sell_lots": 19735.0,
+          "net_lots": -14291.0,
+          "days": 8
+        },
+        {
+          "code": "2882",
+          "name": "國泰金",
+          "buy_lots": 6797.0,
+          "sell_lots": 19093.0,
+          "net_lots": -12296.0,
+          "days": 8
+        },
+        {
+          "code": "6446",
+          "name": "藥華藥",
+          "buy_lots": 154.0,
+          "sell_lots": 11660.0,
+          "net_lots": -11506.0,
+          "days": 8
         },
         {
           "code": "2105",
           "name": "正新",
           "buy_lots": 171.0,
-          "sell_lots": 15985.0,
-          "net_lots": -15814.0,
-          "days": 11
+          "sell_lots": 11627.0,
+          "net_lots": -11456.0,
+          "days": 8
         },
         {
-          "code": "2337",
-          "name": "旺宏",
-          "buy_lots": 17651.0,
-          "sell_lots": 32389.0,
-          "net_lots": -14738.0,
-          "days": 11
+          "code": "4763",
+          "name": "材料*-KY",
+          "buy_lots": 6890.0,
+          "sell_lots": 18320.0,
+          "net_lots": -11430.0,
+          "days": 8
         },
         {
-          "code": "3376",
-          "name": "新日興",
-          "buy_lots": 0,
-          "sell_lots": 14167.0,
-          "net_lots": -14167.0,
-          "days": 11
+          "code": "2368",
+          "name": "金像電",
+          "buy_lots": 71.0,
+          "sell_lots": 11362.0,
+          "net_lots": -11291.0,
+          "days": 8
         }
       ]
     },
     "31": {
-      "from": "2026-08-24",
-      "to": "2026-09-24",
+      "from": "2026-08-29",
+      "to": "2026-09-29",
       "universe": 251,
       "top_buy": [
         {
           "code": "2409",
           "name": "友達",
-          "buy_lots": 1051366.0,
-          "sell_lots": 555165.0,
-          "net_lots": 496201.0,
-          "days": 24
+          "buy_lots": 1019371.0,
+          "sell_lots": 543093.0,
+          "net_lots": 476278.0,
+          "days": 19
         },
         {
           "code": "2892",
           "name": "第一金",
-          "buy_lots": 255653.0,
+          "buy_lots": 162426.0,
           "sell_lots": 7291.0,
-          "net_lots": 248362.0,
-          "days": 24
+          "net_lots": 155135.0,
+          "days": 19
         },
         {
           "code": "2886",
           "name": "兆豐金",
-          "buy_lots": 217068.0,
+          "buy_lots": 135386.0,
           "sell_lots": 8634.0,
-          "net_lots": 208434.0,
-          "days": 24
+          "net_lots": 126752.0,
+          "days": 19
         },
         {
           "code": "6770",
           "name": "力積電",
-          "buy_lots": 488544.0,
-          "sell_lots": 357990.0,
-          "net_lots": 130554.0,
-          "days": 24
-        },
-        {
-          "code": "2883",
-          "name": "凱基金",
-          "buy_lots": 213155.0,
-          "sell_lots": 93158.0,
-          "net_lots": 119997.0,
-          "days": 24
+          "buy_lots": 418785.0,
+          "sell_lots": 299232.0,
+          "net_lots": 119553.0,
+          "days": 19
         },
         {
           "code": "5880",
           "name": "合庫金",
-          "buy_lots": 126929.0,
+          "buy_lots": 112662.0,
           "sell_lots": 10078.0,
-          "net_lots": 116851.0,
-          "days": 24
-        },
-        {
-          "code": "2880",
-          "name": "華南金",
-          "buy_lots": 111815.0,
-          "sell_lots": 2927.0,
-          "net_lots": 108888.0,
-          "days": 24
+          "net_lots": 102584.0,
+          "days": 19
         },
         {
           "code": "2412",
           "name": "中華電",
-          "buy_lots": 97283.0,
-          "sell_lots": 8341.0,
-          "net_lots": 88942.0,
-          "days": 24
+          "buy_lots": 96402.0,
+          "sell_lots": 536.0,
+          "net_lots": 95866.0,
+          "days": 19
+        },
+        {
+          "code": "2880",
+          "name": "華南金",
+          "buy_lots": 88949.0,
+          "sell_lots": 2671.0,
+          "net_lots": 86278.0,
+          "days": 19
         },
         {
           "code": "2609",
           "name": "陽明",
-          "buy_lots": 147231.0,
-          "sell_lots": 76080.0,
-          "net_lots": 71151.0,
-          "days": 24
-        },
-        {
-          "code": "3045",
-          "name": "台灣大",
-          "buy_lots": 65020.0,
-          "sell_lots": 334.0,
-          "net_lots": 64686.0,
-          "days": 24
-        },
-        {
-          "code": "2812",
-          "name": "台中銀",
-          "buy_lots": 110997.0,
-          "sell_lots": 48617.0,
-          "net_lots": 62380.0,
-          "days": 24
+          "buy_lots": 103701.0,
+          "sell_lots": 27813.0,
+          "net_lots": 75888.0,
+          "days": 19
         },
         {
           "code": "2845",
           "name": "遠東銀",
-          "buy_lots": 76355.0,
-          "sell_lots": 23769.0,
-          "net_lots": 52586.0,
-          "days": 24
-        },
-        {
-          "code": "3711",
-          "name": "日月光投控",
-          "buy_lots": 80313.0,
-          "sell_lots": 28586.0,
-          "net_lots": 51727.0,
-          "days": 24
+          "buy_lots": 73057.0,
+          "sell_lots": 11441.0,
+          "net_lots": 61616.0,
+          "days": 19
         },
         {
           "code": "2885",
           "name": "元大金",
-          "buy_lots": 83628.0,
-          "sell_lots": 32223.0,
-          "net_lots": 51405.0,
-          "days": 24
+          "buy_lots": 78072.0,
+          "sell_lots": 20320.0,
+          "net_lots": 57752.0,
+          "days": 19
+        },
+        {
+          "code": "2812",
+          "name": "台中銀",
+          "buy_lots": 99501.0,
+          "sell_lots": 43606.0,
+          "net_lots": 55895.0,
+          "days": 19
+        },
+        {
+          "code": "2834",
+          "name": "臺企銀",
+          "buy_lots": 150275.0,
+          "sell_lots": 100011.0,
+          "net_lots": 50264.0,
+          "days": 19
+        },
+        {
+          "code": "2883",
+          "name": "凱基金",
+          "buy_lots": 137669.0,
+          "sell_lots": 87625.0,
+          "net_lots": 50044.0,
+          "days": 19
         },
         {
           "code": "5876",
           "name": "上海商銀",
-          "buy_lots": 52586.0,
-          "sell_lots": 4694.0,
-          "net_lots": 47892.0,
-          "days": 24
+          "buy_lots": 51701.0,
+          "sell_lots": 2550.0,
+          "net_lots": 49151.0,
+          "days": 19
         },
         {
-          "code": "3037",
-          "name": "欣興",
-          "buy_lots": 45926.0,
-          "sell_lots": 2496.0,
-          "net_lots": 43430.0,
-          "days": 24
+          "code": "3711",
+          "name": "日月光投控",
+          "buy_lots": 76659.0,
+          "sell_lots": 28019.0,
+          "net_lots": 48640.0,
+          "days": 19
         },
         {
-          "code": "1216",
-          "name": "統一",
-          "buy_lots": 46583.0,
-          "sell_lots": 10359.0,
-          "net_lots": 36224.0,
-          "days": 24
+          "code": "3045",
+          "name": "台灣大",
+          "buy_lots": 45421.0,
+          "sell_lots": 334.0,
+          "net_lots": 45087.0,
+          "days": 19
         },
         {
           "code": "5347",
           "name": "世界",
-          "buy_lots": 42657.0,
-          "sell_lots": 10079.0,
-          "net_lots": 32578.0,
-          "days": 24
+          "buy_lots": 41762.0,
+          "sell_lots": 6879.0,
+          "net_lots": 34883.0,
+          "days": 20
+        },
+        {
+          "code": "3037",
+          "name": "欣興",
+          "buy_lots": 35541.0,
+          "sell_lots": 2496.0,
+          "net_lots": 33045.0,
+          "days": 19
+        },
+        {
+          "code": "3702",
+          "name": "大聯大",
+          "buy_lots": 21988.0,
+          "sell_lots": 1161.0,
+          "net_lots": 20827.0,
+          "days": 19
         },
         {
           "code": "1102",
           "name": "亞泥",
-          "buy_lots": 38457.0,
-          "sell_lots": 9579.0,
-          "net_lots": 28878.0,
-          "days": 24
-        },
-        {
-          "code": "3264",
-          "name": "欣銓",
-          "buy_lots": 37495.0,
-          "sell_lots": 9353.0,
-          "net_lots": 28142.0,
-          "days": 24
+          "buy_lots": 27984.0,
+          "sell_lots": 8541.0,
+          "net_lots": 19443.0,
+          "days": 19
         }
       ],
       "top_sell": [
         {
-          "code": "3231",
-          "name": "緯創",
-          "buy_lots": 66903.0,
-          "sell_lots": 186194.0,
-          "net_lots": -119291.0,
-          "days": 24
-        },
-        {
           "code": "2002",
           "name": "中鋼",
-          "buy_lots": 38182.0,
-          "sell_lots": 152379.0,
-          "net_lots": -114197.0,
-          "days": 24
+          "buy_lots": 31170.0,
+          "sell_lots": 131268.0,
+          "net_lots": -100098.0,
+          "days": 19
+        },
+        {
+          "code": "3231",
+          "name": "緯創",
+          "buy_lots": 63489.0,
+          "sell_lots": 157566.0,
+          "net_lots": -94077.0,
+          "days": 19
         },
         {
           "code": "1303",
           "name": "南亞",
-          "buy_lots": 66888.0,
-          "sell_lots": 143671.0,
-          "net_lots": -76783.0,
-          "days": 24
+          "buy_lots": 38034.0,
+          "sell_lots": 115241.0,
+          "net_lots": -77207.0,
+          "days": 19
         },
         {
           "code": "2801",
           "name": "彰銀",
-          "buy_lots": 42621.0,
-          "sell_lots": 104771.0,
-          "net_lots": -62150.0,
-          "days": 24
+          "buy_lots": 29621.0,
+          "sell_lots": 96554.0,
+          "net_lots": -66933.0,
+          "days": 19
         },
         {
-          "code": "9904",
-          "name": "寶成",
-          "buy_lots": 21838.0,
-          "sell_lots": 72110.0,
-          "net_lots": -50272.0,
-          "days": 24
+          "code": "1815",
+          "name": "富喬",
+          "buy_lots": 53619.0,
+          "sell_lots": 106108.0,
+          "net_lots": -52489.0,
+          "days": 20
         },
         {
           "code": "6919",
           "name": "康霈*",
           "buy_lots": 420.0,
-          "sell_lots": 50444.0,
-          "net_lots": -50024.0,
-          "days": 24
-        },
-        {
-          "code": "1101",
-          "name": "台泥",
-          "buy_lots": 108207.0,
-          "sell_lots": 148890.0,
-          "net_lots": -40683.0,
-          "days": 24
+          "sell_lots": 39526.0,
+          "net_lots": -39106.0,
+          "days": 19
         },
         {
           "code": "2887",
           "name": "台新新光金",
-          "buy_lots": 108348.0,
-          "sell_lots": 147845.0,
-          "net_lots": -39497.0,
-          "days": 24
+          "buy_lots": 93206.0,
+          "sell_lots": 130368.0,
+          "net_lots": -37162.0,
+          "days": 19
         },
         {
-          "code": "3036",
-          "name": "文曄",
-          "buy_lots": 2658.0,
-          "sell_lots": 38686.0,
-          "net_lots": -36028.0,
-          "days": 24
-        },
-        {
-          "code": "2884",
-          "name": "玉山金",
-          "buy_lots": 81068.0,
-          "sell_lots": 109798.0,
-          "net_lots": -28730.0,
-          "days": 24
-        },
-        {
-          "code": "1409",
-          "name": "新纖",
-          "buy_lots": 32039.0,
-          "sell_lots": 58141.0,
-          "net_lots": -26102.0,
-          "days": 24
+          "code": "2303",
+          "name": "聯電",
+          "buy_lots": 210314.0,
+          "sell_lots": 244562.0,
+          "net_lots": -34248.0,
+          "days": 19
         },
         {
           "code": "5871",
           "name": "中租-KY",
-          "buy_lots": 17425.0,
-          "sell_lots": 42600.0,
-          "net_lots": -25175.0,
-          "days": 24
+          "buy_lots": 9671.0,
+          "sell_lots": 41065.0,
+          "net_lots": -31394.0,
+          "days": 19
         },
         {
-          "code": "2105",
-          "name": "正新",
-          "buy_lots": 2174.0,
-          "sell_lots": 26987.0,
-          "net_lots": -24813.0,
-          "days": 24
+          "code": "2408",
+          "name": "南亞科",
+          "buy_lots": 125124.0,
+          "sell_lots": 154865.0,
+          "net_lots": -29741.0,
+          "days": 19
         },
         {
-          "code": "2356",
-          "name": "英業達",
-          "buy_lots": 39187.0,
-          "sell_lots": 61611.0,
-          "net_lots": -22424.0,
-          "days": 24
-        },
-        {
-          "code": "4763",
-          "name": "材料*-KY",
-          "buy_lots": 19318.0,
-          "sell_lots": 39648.0,
-          "net_lots": -20330.0,
-          "days": 24
-        },
-        {
-          "code": "2317",
-          "name": "鴻海",
-          "buy_lots": 84187.0,
-          "sell_lots": 103137.0,
-          "net_lots": -18950.0,
-          "days": 24
+          "code": "3036",
+          "name": "文曄",
+          "buy_lots": 2630.0,
+          "sell_lots": 29185.0,
+          "net_lots": -26555.0,
+          "days": 19
         },
         {
           "code": "2301",
           "name": "光寶科",
-          "buy_lots": 25630.0,
-          "sell_lots": 44290.0,
-          "net_lots": -18660.0,
-          "days": 24
+          "buy_lots": 12760.0,
+          "sell_lots": 38489.0,
+          "net_lots": -25729.0,
+          "days": 19
         },
         {
-          "code": "6488",
-          "name": "環球晶",
-          "buy_lots": 8602.0,
-          "sell_lots": 26555.0,
-          "net_lots": -17953.0,
-          "days": 24
+          "code": "1409",
+          "name": "新纖",
+          "buy_lots": 28124.0,
+          "sell_lots": 53527.0,
+          "net_lots": -25403.0,
+          "days": 19
         },
         {
-          "code": "2201",
-          "name": "裕隆",
-          "buy_lots": 3593.0,
-          "sell_lots": 21346.0,
-          "net_lots": -17753.0,
-          "days": 24
+          "code": "9904",
+          "name": "寶成",
+          "buy_lots": 19128.0,
+          "sell_lots": 44425.0,
+          "net_lots": -25297.0,
+          "days": 19
         },
         {
-          "code": "8069",
-          "name": "元太",
-          "buy_lots": 3161.0,
-          "sell_lots": 20805.0,
-          "net_lots": -17644.0,
-          "days": 24
+          "code": "2313",
+          "name": "華通",
+          "buy_lots": 20340.0,
+          "sell_lots": 43583.0,
+          "net_lots": -23243.0,
+          "days": 19
+        },
+        {
+          "code": "2344",
+          "name": "華邦電",
+          "buy_lots": 252917.0,
+          "sell_lots": 275369.0,
+          "net_lots": -22452.0,
+          "days": 19
+        },
+        {
+          "code": "2356",
+          "name": "英業達",
+          "buy_lots": 30797.0,
+          "sell_lots": 51494.0,
+          "net_lots": -20697.0,
+          "days": 19
+        },
+        {
+          "code": "2105",
+          "name": "正新",
+          "buy_lots": 1829.0,
+          "sell_lots": 20626.0,
+          "net_lots": -18797.0,
+          "days": 19
+        },
+        {
+          "code": "3376",
+          "name": "新日興",
+          "buy_lots": 804.0,
+          "sell_lots": 18216.0,
+          "net_lots": -17412.0,
+          "days": 19
+        },
+        {
+          "code": "2368",
+          "name": "金像電",
+          "buy_lots": 4701.0,
+          "sell_lots": 21934.0,
+          "net_lots": -17233.0,
+          "days": 19
         }
       ]
     },
     "62": {
-      "from": "2026-07-24",
-      "to": "2026-09-24",
+      "from": "2026-07-29",
+      "to": "2026-09-29",
       "universe": 251,
       "top_buy": [
         {
           "code": "2409",
           "name": "友達",
-          "buy_lots": 1208421.0,
-          "sell_lots": 773263.0,
-          "net_lots": 435158.0,
-          "days": 45
+          "buy_lots": 1164297.0,
+          "sell_lots": 765319.0,
+          "net_lots": 398978.0,
+          "days": 42
         },
         {
           "code": "2609",
           "name": "陽明",
-          "buy_lots": 360231.0,
-          "sell_lots": 91519.0,
-          "net_lots": 268712.0,
-          "days": 45
-        },
-        {
-          "code": "2618",
-          "name": "長榮航",
-          "buy_lots": 348379.0,
-          "sell_lots": 87610.0,
-          "net_lots": 260769.0,
-          "days": 45
+          "buy_lots": 346011.0,
+          "sell_lots": 89813.0,
+          "net_lots": 256198.0,
+          "days": 42
         },
         {
           "code": "2892",
           "name": "第一金",
-          "buy_lots": 375995.0,
-          "sell_lots": 132414.0,
-          "net_lots": 243581.0,
-          "days": 45
+          "buy_lots": 370428.0,
+          "sell_lots": 125126.0,
+          "net_lots": 245302.0,
+          "days": 42
+        },
+        {
+          "code": "6770",
+          "name": "力積電",
+          "buy_lots": 861660.0,
+          "sell_lots": 621674.0,
+          "net_lots": 239986.0,
+          "days": 42
         },
         {
           "code": "2886",
           "name": "兆豐金",
           "buy_lots": 348529.0,
-          "sell_lots": 112907.0,
-          "net_lots": 235622.0,
-          "days": 45
+          "sell_lots": 108818.0,
+          "net_lots": 239711.0,
+          "days": 42
         },
         {
           "code": "1216",
           "name": "統一",
-          "buy_lots": 212347.0,
-          "sell_lots": 11090.0,
-          "net_lots": 201257.0,
-          "days": 45
+          "buy_lots": 210401.0,
+          "sell_lots": 10359.0,
+          "net_lots": 200042.0,
+          "days": 42
+        },
+        {
+          "code": "2618",
+          "name": "長榮航",
+          "buy_lots": 278775.0,
+          "sell_lots": 87610.0,
+          "net_lots": 191165.0,
+          "days": 42
         },
         {
           "code": "2883",
           "name": "凱基金",
-          "buy_lots": 398222.0,
-          "sell_lots": 226562.0,
-          "net_lots": 171660.0,
-          "days": 45
-        },
-        {
-          "code": "6770",
-          "name": "力積電",
-          "buy_lots": 862392.0,
-          "sell_lots": 692999.0,
-          "net_lots": 169393.0,
-          "days": 45
-        },
-        {
-          "code": "5880",
-          "name": "合庫金",
-          "buy_lots": 246879.0,
-          "sell_lots": 100221.0,
-          "net_lots": 146658.0,
-          "days": 45
+          "buy_lots": 376110.0,
+          "sell_lots": 205566.0,
+          "net_lots": 170544.0,
+          "days": 42
         },
         {
           "code": "1605",
           "name": "華新",
           "buy_lots": 207004.0,
-          "sell_lots": 62494.0,
-          "net_lots": 144510.0,
-          "days": 45
-        },
-        {
-          "code": "3045",
-          "name": "台灣大",
-          "buy_lots": 149216.0,
-          "sell_lots": 16450.0,
-          "net_lots": 132766.0,
-          "days": 45
-        },
-        {
-          "code": "2412",
-          "name": "中華電",
-          "buy_lots": 159155.0,
-          "sell_lots": 28906.0,
-          "net_lots": 130249.0,
-          "days": 45
-        },
-        {
-          "code": "2603",
-          "name": "長榮",
-          "buy_lots": 156196.0,
-          "sell_lots": 28737.0,
-          "net_lots": 127459.0,
-          "days": 45
+          "sell_lots": 44172.0,
+          "net_lots": 162832.0,
+          "days": 42
         },
         {
           "code": "2408",
           "name": "南亞科",
-          "buy_lots": 349813.0,
-          "sell_lots": 232551.0,
-          "net_lots": 117262.0,
-          "days": 45
+          "buy_lots": 349738.0,
+          "sell_lots": 213631.0,
+          "net_lots": 136107.0,
+          "days": 42
         },
         {
-          "code": "5876",
-          "name": "上海商銀",
-          "buy_lots": 111571.0,
-          "sell_lots": 9166.0,
-          "net_lots": 102405.0,
-          "days": 45
+          "code": "5880",
+          "name": "合庫金",
+          "buy_lots": 224326.0,
+          "sell_lots": 100221.0,
+          "net_lots": 124105.0,
+          "days": 42
         },
         {
-          "code": "2002",
-          "name": "中鋼",
-          "buy_lots": 321398.0,
-          "sell_lots": 224722.0,
-          "net_lots": 96676.0,
-          "days": 45
+          "code": "2603",
+          "name": "長榮",
+          "buy_lots": 151033.0,
+          "sell_lots": 28737.0,
+          "net_lots": 122296.0,
+          "days": 42
         },
         {
-          "code": "2845",
-          "name": "遠東銀",
-          "buy_lots": 132868.0,
-          "sell_lots": 37890.0,
-          "net_lots": 94978.0,
-          "days": 45
+          "code": "3045",
+          "name": "台灣大",
+          "buy_lots": 127769.0,
+          "sell_lots": 16450.0,
+          "net_lots": 111319.0,
+          "days": 42
         },
         {
-          "code": "2027",
-          "name": "大成鋼",
-          "buy_lots": 146831.0,
-          "sell_lots": 52087.0,
-          "net_lots": 94744.0,
-          "days": 45
+          "code": "2412",
+          "name": "中華電",
+          "buy_lots": 129095.0,
+          "sell_lots": 28906.0,
+          "net_lots": 100189.0,
+          "days": 42
+        },
+        {
+          "code": "2344",
+          "name": "華邦電",
+          "buy_lots": 537806.0,
+          "sell_lots": 440963.0,
+          "net_lots": 96843.0,
+          "days": 42
         },
         {
           "code": "3037",
           "name": "欣興",
           "buy_lots": 105720.0,
-          "sell_lots": 19389.0,
-          "net_lots": 86331.0,
-          "days": 45
+          "sell_lots": 12600.0,
+          "net_lots": 93120.0,
+          "days": 42
         },
         {
-          "code": "2344",
-          "name": "華邦電",
-          "buy_lots": 540136.0,
-          "sell_lots": 469594.0,
-          "net_lots": 70542.0,
-          "days": 45
+          "code": "2027",
+          "name": "大成鋼",
+          "buy_lots": 141623.0,
+          "sell_lots": 51215.0,
+          "net_lots": 90408.0,
+          "days": 42
+        },
+        {
+          "code": "5876",
+          "name": "上海商銀",
+          "buy_lots": 94884.0,
+          "sell_lots": 9166.0,
+          "net_lots": 85718.0,
+          "days": 42
+        },
+        {
+          "code": "2845",
+          "name": "遠東銀",
+          "buy_lots": 122149.0,
+          "sell_lots": 37890.0,
+          "net_lots": 84259.0,
+          "days": 42
+        },
+        {
+          "code": "1102",
+          "name": "亞泥",
+          "buy_lots": 97048.0,
+          "sell_lots": 34558.0,
+          "net_lots": 62490.0,
+          "days": 42
         }
       ],
       "top_sell": [
         {
           "code": "1303",
           "name": "南亞",
-          "buy_lots": 138339.0,
+          "buy_lots": 114947.0,
           "sell_lots": 284136.0,
-          "net_lots": -145797.0,
-          "days": 45
-        },
-        {
-          "code": "2801",
-          "name": "彰銀",
-          "buy_lots": 84587.0,
-          "sell_lots": 216252.0,
-          "net_lots": -131665.0,
-          "days": 45
+          "net_lots": -169189.0,
+          "days": 42
         },
         {
           "code": "2834",
           "name": "臺企銀",
-          "buy_lots": 252342.0,
-          "sell_lots": 362561.0,
-          "net_lots": -110219.0,
-          "days": 45
+          "buy_lots": 220427.0,
+          "sell_lots": 355455.0,
+          "net_lots": -135028.0,
+          "days": 42
         },
         {
-          "code": "2884",
-          "name": "玉山金",
-          "buy_lots": 146187.0,
-          "sell_lots": 244878.0,
-          "net_lots": -98691.0,
-          "days": 45
-        },
-        {
-          "code": "2327",
-          "name": "國巨*",
-          "buy_lots": 78348.0,
-          "sell_lots": 149281.0,
-          "net_lots": -70933.0,
-          "days": 45
-        },
-        {
-          "code": "2492",
-          "name": "華新科",
-          "buy_lots": 39949.0,
-          "sell_lots": 104230.0,
-          "net_lots": -64281.0,
-          "days": 45
-        },
-        {
-          "code": "9904",
-          "name": "寶成",
-          "buy_lots": 81778.0,
-          "sell_lots": 143785.0,
-          "net_lots": -62007.0,
-          "days": 45
-        },
-        {
-          "code": "6005",
-          "name": "群益證",
-          "buy_lots": 17201.0,
-          "sell_lots": 77655.0,
-          "net_lots": -60454.0,
-          "days": 45
-        },
-        {
-          "code": "3036",
-          "name": "文曄",
-          "buy_lots": 16938.0,
-          "sell_lots": 69692.0,
-          "net_lots": -52754.0,
-          "days": 45
-        },
-        {
-          "code": "8069",
-          "name": "元太",
-          "buy_lots": 8715.0,
-          "sell_lots": 60009.0,
-          "net_lots": -51294.0,
-          "days": 45
+          "code": "2801",
+          "name": "彰銀",
+          "buy_lots": 79674.0,
+          "sell_lots": 212079.0,
+          "net_lots": -132405.0,
+          "days": 42
         },
         {
           "code": "3481",
           "name": "群創",
-          "buy_lots": 498435.0,
-          "sell_lots": 540024.0,
-          "net_lots": -41589.0,
-          "days": 45
+          "buy_lots": 399843.0,
+          "sell_lots": 521937.0,
+          "net_lots": -122094.0,
+          "days": 42
         },
         {
-          "code": "2337",
-          "name": "旺宏",
-          "buy_lots": 129866.0,
-          "sell_lots": 170781.0,
-          "net_lots": -40915.0,
-          "days": 45
+          "code": "2884",
+          "name": "玉山金",
+          "buy_lots": 127580.0,
+          "sell_lots": 244878.0,
+          "net_lots": -117298.0,
+          "days": 42
+        },
+        {
+          "code": "2327",
+          "name": "國巨*",
+          "buy_lots": 72198.0,
+          "sell_lots": 148327.0,
+          "net_lots": -76129.0,
+          "days": 42
+        },
+        {
+          "code": "2492",
+          "name": "華新科",
+          "buy_lots": 39290.0,
+          "sell_lots": 104230.0,
+          "net_lots": -64940.0,
+          "days": 42
+        },
+        {
+          "code": "9904",
+          "name": "寶成",
+          "buy_lots": 81664.0,
+          "sell_lots": 138022.0,
+          "net_lots": -56358.0,
+          "days": 42
+        },
+        {
+          "code": "6005",
+          "name": "群益證",
+          "buy_lots": 15862.0,
+          "sell_lots": 70585.0,
+          "net_lots": -54723.0,
+          "days": 42
+        },
+        {
+          "code": "2610",
+          "name": "華航",
+          "buy_lots": 188974.0,
+          "sell_lots": 242905.0,
+          "net_lots": -53931.0,
+          "days": 42
+        },
+        {
+          "code": "3036",
+          "name": "文曄",
+          "buy_lots": 15920.0,
+          "sell_lots": 68665.0,
+          "net_lots": -52745.0,
+          "days": 42
+        },
+        {
+          "code": "2303",
+          "name": "聯電",
+          "buy_lots": 458764.0,
+          "sell_lots": 511411.0,
+          "net_lots": -52647.0,
+          "days": 42
+        },
+        {
+          "code": "8069",
+          "name": "元太",
+          "buy_lots": 7661.0,
+          "sell_lots": 59473.0,
+          "net_lots": -51812.0,
+          "days": 43
         },
         {
           "code": "1409",
           "name": "新纖",
-          "buy_lots": 41166.0,
+          "buy_lots": 38703.0,
           "sell_lots": 81015.0,
-          "net_lots": -39849.0,
-          "days": 45
-        },
-        {
-          "code": "2449",
-          "name": "京元電子",
-          "buy_lots": 87070.0,
-          "sell_lots": 125723.0,
-          "net_lots": -38653.0,
-          "days": 45
-        },
-        {
-          "code": "2330",
-          "name": "台積電",
-          "buy_lots": 110491.0,
-          "sell_lots": 148159.0,
-          "net_lots": -37668.0,
-          "days": 45
+          "net_lots": -42312.0,
+          "days": 42
         },
         {
           "code": "6919",
           "name": "康霈*",
-          "buy_lots": 20471.0,
-          "sell_lots": 56518.0,
-          "net_lots": -36047.0,
-          "days": 45
+          "buy_lots": 18135.0,
+          "sell_lots": 55830.0,
+          "net_lots": -37695.0,
+          "days": 42
+        },
+        {
+          "code": "8358",
+          "name": "金居",
+          "buy_lots": 29923.0,
+          "sell_lots": 67008.0,
+          "net_lots": -37085.0,
+          "days": 43
+        },
+        {
+          "code": "2368",
+          "name": "金像電",
+          "buy_lots": 9360.0,
+          "sell_lots": 39939.0,
+          "net_lots": -30579.0,
+          "days": 42
+        },
+        {
+          "code": "1101",
+          "name": "台泥",
+          "buy_lots": 168773.0,
+          "sell_lots": 197768.0,
+          "net_lots": -28995.0,
+          "days": 42
         },
         {
           "code": "6239",
           "name": "力成",
           "buy_lots": 43837.0,
-          "sell_lots": 77396.0,
-          "net_lots": -33559.0,
-          "days": 45
+          "sell_lots": 72467.0,
+          "net_lots": -28630.0,
+          "days": 42
         },
         {
-          "code": "8358",
-          "name": "金居",
-          "buy_lots": 31117.0,
-          "sell_lots": 64503.0,
-          "net_lots": -33386.0,
-          "days": 45
-        },
-        {
-          "code": "2308",
-          "name": "台達電",
-          "buy_lots": 23434.0,
-          "sell_lots": 56315.0,
-          "net_lots": -32881.0,
-          "days": 45
-        },
-        {
-          "code": "2368",
-          "name": "金像電",
-          "buy_lots": 12138.0,
-          "sell_lots": 39939.0,
-          "net_lots": -27801.0,
-          "days": 45
+          "code": "6488",
+          "name": "環球晶",
+          "buy_lots": 15079.0,
+          "sell_lots": 43651.0,
+          "net_lots": -28572.0,
+          "days": 43
         }
       ]
     },
     "93": {
-      "from": "2026-06-23",
-      "to": "2026-09-24",
+      "from": "2026-06-28",
+      "to": "2026-09-29",
       "universe": 251,
       "top_buy": [
         {
           "code": "2618",
           "name": "長榮航",
-          "buy_lots": 713894.0,
+          "buy_lots": 661248.0,
           "sell_lots": 142507.0,
-          "net_lots": 571387.0,
-          "days": 67
-        },
-        {
-          "code": "2883",
-          "name": "凱基金",
-          "buy_lots": 683343.0,
-          "sell_lots": 260591.0,
-          "net_lots": 422752.0,
-          "days": 67
+          "net_lots": 518741.0,
+          "days": 63
         },
         {
           "code": "2409",
           "name": "友達",
-          "buy_lots": 1779670.0,
-          "sell_lots": 1431417.0,
-          "net_lots": 348253.0,
-          "days": 67
+          "buy_lots": 1777479.0,
+          "sell_lots": 1298672.0,
+          "net_lots": 478807.0,
+          "days": 63
         },
         {
-          "code": "5880",
-          "name": "合庫金",
-          "buy_lots": 383299.0,
-          "sell_lots": 107808.0,
-          "net_lots": 275491.0,
-          "days": 67
+          "code": "2883",
+          "name": "凱基金",
+          "buy_lots": 653726.0,
+          "sell_lots": 234622.0,
+          "net_lots": 419104.0,
+          "days": 63
         },
         {
           "code": "2609",
           "name": "陽明",
-          "buy_lots": 425771.0,
-          "sell_lots": 157726.0,
-          "net_lots": 268045.0,
-          "days": 67
+          "buy_lots": 423019.0,
+          "sell_lots": 143793.0,
+          "net_lots": 279226.0,
+          "days": 63
         },
         {
-          "code": "2603",
-          "name": "長榮",
-          "buy_lots": 238376.0,
-          "sell_lots": 42123.0,
-          "net_lots": 196253.0,
-          "days": 67
-        },
-        {
-          "code": "2353",
-          "name": "宏碁",
-          "buy_lots": 279913.0,
-          "sell_lots": 103590.0,
-          "net_lots": 176323.0,
-          "days": 67
+          "code": "5880",
+          "name": "合庫金",
+          "buy_lots": 345362.0,
+          "sell_lots": 107808.0,
+          "net_lots": 237554.0,
+          "days": 63
         },
         {
           "code": "1216",
           "name": "統一",
           "buy_lots": 252423.0,
-          "sell_lots": 80807.0,
-          "net_lots": 171616.0,
-          "days": 67
+          "sell_lots": 56911.0,
+          "net_lots": 195512.0,
+          "days": 63
         },
         {
-          "code": "3045",
-          "name": "台灣大",
-          "buy_lots": 254682.0,
-          "sell_lots": 83070.0,
-          "net_lots": 171612.0,
-          "days": 67
+          "code": "2603",
+          "name": "長榮",
+          "buy_lots": 228559.0,
+          "sell_lots": 35818.0,
+          "net_lots": 192741.0,
+          "days": 63
         },
         {
           "code": "2882",
           "name": "國泰金",
           "buy_lots": 297759.0,
-          "sell_lots": 132897.0,
-          "net_lots": 164862.0,
-          "days": 67
+          "sell_lots": 111553.0,
+          "net_lots": 186206.0,
+          "days": 63
+        },
+        {
+          "code": "3045",
+          "name": "台灣大",
+          "buy_lots": 245203.0,
+          "sell_lots": 80035.0,
+          "net_lots": 165168.0,
+          "days": 63
+        },
+        {
+          "code": "2353",
+          "name": "宏碁",
+          "buy_lots": 258064.0,
+          "sell_lots": 103178.0,
+          "net_lots": 154886.0,
+          "days": 63
         },
         {
           "code": "2881",
           "name": "富邦金",
-          "buy_lots": 215675.0,
-          "sell_lots": 82677.0,
-          "net_lots": 132998.0,
-          "days": 67
+          "buy_lots": 215528.0,
+          "sell_lots": 72423.0,
+          "net_lots": 143105.0,
+          "days": 63
         },
         {
           "code": "2002",
           "name": "中鋼",
-          "buy_lots": 506253.0,
-          "sell_lots": 384069.0,
-          "net_lots": 122184.0,
-          "days": 67
-        },
-        {
-          "code": "2610",
-          "name": "華航",
-          "buy_lots": 487113.0,
-          "sell_lots": 369057.0,
-          "net_lots": 118056.0,
-          "days": 67
-        },
-        {
-          "code": "2812",
-          "name": "台中銀",
-          "buy_lots": 268124.0,
-          "sell_lots": 153553.0,
-          "net_lots": 114571.0,
-          "days": 67
+          "buy_lots": 489575.0,
+          "sell_lots": 354795.0,
+          "net_lots": 134780.0,
+          "days": 63
         },
         {
           "code": "5876",
           "name": "上海商銀",
           "buy_lots": 167392.0,
-          "sell_lots": 58274.0,
-          "net_lots": 109118.0,
-          "days": 67
-        },
-        {
-          "code": "2303",
-          "name": "聯電",
-          "buy_lots": 761610.0,
-          "sell_lots": 657107.0,
-          "net_lots": 104503.0,
-          "days": 67
-        },
-        {
-          "code": "2027",
-          "name": "大成鋼",
-          "buy_lots": 204595.0,
-          "sell_lots": 106307.0,
-          "net_lots": 98288.0,
-          "days": 67
-        },
-        {
-          "code": "2412",
-          "name": "中華電",
-          "buy_lots": 220115.0,
-          "sell_lots": 125972.0,
-          "net_lots": 94143.0,
-          "days": 67
+          "sell_lots": 33650.0,
+          "net_lots": 133742.0,
+          "days": 63
         },
         {
           "code": "2892",
           "name": "第一金",
-          "buy_lots": 460046.0,
-          "sell_lots": 367861.0,
-          "net_lots": 92185.0,
-          "days": 67
+          "buy_lots": 454023.0,
+          "sell_lots": 328527.0,
+          "net_lots": 125496.0,
+          "days": 63
         },
         {
-          "code": "2891",
-          "name": "中信金",
-          "buy_lots": 282635.0,
-          "sell_lots": 195031.0,
-          "net_lots": 87604.0,
-          "days": 67
+          "code": "1605",
+          "name": "華新",
+          "buy_lots": 227384.0,
+          "sell_lots": 116432.0,
+          "net_lots": 110952.0,
+          "days": 63
+        },
+        {
+          "code": "2845",
+          "name": "遠東銀",
+          "buy_lots": 173816.0,
+          "sell_lots": 64103.0,
+          "net_lots": 109713.0,
+          "days": 63
+        },
+        {
+          "code": "2412",
+          "name": "中華電",
+          "buy_lots": 220019.0,
+          "sell_lots": 110427.0,
+          "net_lots": 109592.0,
+          "days": 63
+        },
+        {
+          "code": "2886",
+          "name": "兆豐金",
+          "buy_lots": 389696.0,
+          "sell_lots": 286809.0,
+          "net_lots": 102887.0,
+          "days": 63
+        },
+        {
+          "code": "2027",
+          "name": "大成鋼",
+          "buy_lots": 202311.0,
+          "sell_lots": 102020.0,
+          "net_lots": 100291.0,
+          "days": 63
+        },
+        {
+          "code": "2812",
+          "name": "台中銀",
+          "buy_lots": 247296.0,
+          "sell_lots": 153553.0,
+          "net_lots": 93743.0,
+          "days": 63
         }
       ],
       "top_sell": [
@@ -1492,161 +1492,161 @@
           "code": "1303",
           "name": "南亞",
           "buy_lots": 158674.0,
-          "sell_lots": 568419.0,
-          "net_lots": -409745.0,
-          "days": 67
-        },
-        {
-          "code": "3481",
-          "name": "群創",
-          "buy_lots": 793726.0,
-          "sell_lots": 1049833.0,
-          "net_lots": -256107.0,
-          "days": 67
+          "sell_lots": 524806.0,
+          "net_lots": -366132.0,
+          "days": 63
         },
         {
           "code": "2801",
           "name": "彰銀",
-          "buy_lots": 155155.0,
+          "buy_lots": 114804.0,
           "sell_lots": 393420.0,
-          "net_lots": -238265.0,
-          "days": 67
+          "net_lots": -278616.0,
+          "days": 63
+        },
+        {
+          "code": "2337",
+          "name": "旺宏",
+          "buy_lots": 165812.0,
+          "sell_lots": 338435.0,
+          "net_lots": -172623.0,
+          "days": 63
         },
         {
           "code": "2330",
           "name": "台積電",
           "buy_lots": 122950.0,
-          "sell_lots": 331106.0,
-          "net_lots": -208156.0,
-          "days": 67
+          "sell_lots": 269545.0,
+          "net_lots": -146595.0,
+          "days": 63
         },
         {
-          "code": "2337",
-          "name": "旺宏",
-          "buy_lots": 224834.0,
-          "sell_lots": 394727.0,
-          "net_lots": -169893.0,
-          "days": 67
+          "code": "2834",
+          "name": "臺企銀",
+          "buy_lots": 364452.0,
+          "sell_lots": 482478.0,
+          "net_lots": -118026.0,
+          "days": 63
         },
         {
-          "code": "2344",
-          "name": "華邦電",
-          "buy_lots": 629680.0,
-          "sell_lots": 757104.0,
-          "net_lots": -127424.0,
-          "days": 67
+          "code": "2887",
+          "name": "台新新光金",
+          "buy_lots": 400871.0,
+          "sell_lots": 500256.0,
+          "net_lots": -99385.0,
+          "days": 63
+        },
+        {
+          "code": "3702",
+          "name": "大聯大",
+          "buy_lots": 36224.0,
+          "sell_lots": 121947.0,
+          "net_lots": -85723.0,
+          "days": 63
+        },
+        {
+          "code": "8069",
+          "name": "元太",
+          "buy_lots": 10698.0,
+          "sell_lots": 85951.0,
+          "net_lots": -75253.0,
+          "days": 64
+        },
+        {
+          "code": "1101",
+          "name": "台泥",
+          "buy_lots": 265273.0,
+          "sell_lots": 338754.0,
+          "net_lots": -73481.0,
+          "days": 63
+        },
+        {
+          "code": "2449",
+          "name": "京元電子",
+          "buy_lots": 132152.0,
+          "sell_lots": 203199.0,
+          "net_lots": -71047.0,
+          "days": 63
+        },
+        {
+          "code": "1409",
+          "name": "新纖",
+          "buy_lots": 69932.0,
+          "sell_lots": 140498.0,
+          "net_lots": -70566.0,
+          "days": 63
+        },
+        {
+          "code": "2327",
+          "name": "國巨*",
+          "buy_lots": 119101.0,
+          "sell_lots": 185511.0,
+          "net_lots": -66410.0,
+          "days": 63
+        },
+        {
+          "code": "3481",
+          "name": "群創",
+          "buy_lots": 783482.0,
+          "sell_lots": 847934.0,
+          "net_lots": -64452.0,
+          "days": 63
+        },
+        {
+          "code": "2492",
+          "name": "華新科",
+          "buy_lots": 50662.0,
+          "sell_lots": 109837.0,
+          "net_lots": -59175.0,
+          "days": 63
         },
         {
           "code": "9904",
           "name": "寶成",
           "buy_lots": 132141.0,
-          "sell_lots": 239254.0,
-          "net_lots": -107113.0,
-          "days": 67
-        },
-        {
-          "code": "2317",
-          "name": "鴻海",
-          "buy_lots": 329919.0,
-          "sell_lots": 423914.0,
-          "net_lots": -93995.0,
-          "days": 67
+          "sell_lots": 191208.0,
+          "net_lots": -59067.0,
+          "days": 63
         },
         {
           "code": "6770",
           "name": "力積電",
-          "buy_lots": 1053710.0,
-          "sell_lots": 1140959.0,
-          "net_lots": -87249.0,
-          "days": 67
+          "buy_lots": 970414.0,
+          "sell_lots": 1028579.0,
+          "net_lots": -58165.0,
+          "days": 63
         },
         {
-          "code": "3702",
-          "name": "大聯大",
-          "buy_lots": 38513.0,
-          "sell_lots": 124519.0,
-          "net_lots": -86006.0,
-          "days": 67
+          "code": "6005",
+          "name": "群益證",
+          "buy_lots": 49556.0,
+          "sell_lots": 99655.0,
+          "net_lots": -50099.0,
+          "days": 63
         },
         {
-          "code": "2880",
-          "name": "華南金",
-          "buy_lots": 168509.0,
-          "sell_lots": 252817.0,
-          "net_lots": -84308.0,
-          "days": 67
+          "code": "2308",
+          "name": "台達電",
+          "buy_lots": 25290.0,
+          "sell_lots": 75276.0,
+          "net_lots": -49986.0,
+          "days": 63
         },
         {
-          "code": "1101",
-          "name": "台泥",
-          "buy_lots": 277973.0,
-          "sell_lots": 361954.0,
-          "net_lots": -83981.0,
-          "days": 67
+          "code": "8358",
+          "name": "金居",
+          "buy_lots": 36868.0,
+          "sell_lots": 78818.0,
+          "net_lots": -41950.0,
+          "days": 64
         },
         {
-          "code": "2890",
-          "name": "永豐金",
-          "buy_lots": 232679.0,
-          "sell_lots": 315807.0,
-          "net_lots": -83128.0,
-          "days": 67
-        },
-        {
-          "code": "1409",
-          "name": "新纖",
-          "buy_lots": 72700.0,
-          "sell_lots": 154972.0,
-          "net_lots": -82272.0,
-          "days": 67
-        },
-        {
-          "code": "2327",
-          "name": "國巨*",
-          "buy_lots": 123478.0,
-          "sell_lots": 198718.0,
-          "net_lots": -75240.0,
-          "days": 67
-        },
-        {
-          "code": "8069",
-          "name": "元太",
-          "buy_lots": 11314.0,
-          "sell_lots": 84909.0,
-          "net_lots": -73595.0,
-          "days": 67
-        },
-        {
-          "code": "2834",
-          "name": "臺企銀",
-          "buy_lots": 415621.0,
-          "sell_lots": 488294.0,
-          "net_lots": -72673.0,
-          "days": 67
-        },
-        {
-          "code": "2887",
-          "name": "台新新光金",
-          "buy_lots": 439543.0,
-          "sell_lots": 511774.0,
-          "net_lots": -72231.0,
-          "days": 67
-        },
-        {
-          "code": "1802",
-          "name": "台玻",
-          "buy_lots": 151333.0,
-          "sell_lots": 217093.0,
-          "net_lots": -65760.0,
-          "days": 67
-        },
-        {
-          "code": "2492",
-          "name": "華新科",
-          "buy_lots": 54035.0,
-          "sell_lots": 118853.0,
-          "net_lots": -64818.0,
-          "days": 67
+          "code": "3036",
+          "name": "文曄",
+          "buy_lots": 40998.0,
+          "sell_lots": 75159.0,
+          "net_lots": -34161.0,
+          "days": 63
         }
       ]
     }
@@ -1656,162 +1656,162 @@
     {
       "code": "2618",
       "name": "長榮航",
-      "buy_lots": 713894.0,
+      "buy_lots": 661248.0,
       "sell_lots": 142507.0,
-      "net_lots": 571387.0,
-      "days": 67
-    },
-    {
-      "code": "2883",
-      "name": "凱基金",
-      "buy_lots": 683343.0,
-      "sell_lots": 260591.0,
-      "net_lots": 422752.0,
-      "days": 67
+      "net_lots": 518741.0,
+      "days": 63
     },
     {
       "code": "2409",
       "name": "友達",
-      "buy_lots": 1779670.0,
-      "sell_lots": 1431417.0,
-      "net_lots": 348253.0,
-      "days": 67
+      "buy_lots": 1777479.0,
+      "sell_lots": 1298672.0,
+      "net_lots": 478807.0,
+      "days": 63
     },
     {
-      "code": "5880",
-      "name": "合庫金",
-      "buy_lots": 383299.0,
-      "sell_lots": 107808.0,
-      "net_lots": 275491.0,
-      "days": 67
+      "code": "2883",
+      "name": "凱基金",
+      "buy_lots": 653726.0,
+      "sell_lots": 234622.0,
+      "net_lots": 419104.0,
+      "days": 63
     },
     {
       "code": "2609",
       "name": "陽明",
-      "buy_lots": 425771.0,
-      "sell_lots": 157726.0,
-      "net_lots": 268045.0,
-      "days": 67
+      "buy_lots": 423019.0,
+      "sell_lots": 143793.0,
+      "net_lots": 279226.0,
+      "days": 63
     },
     {
-      "code": "2603",
-      "name": "長榮",
-      "buy_lots": 238376.0,
-      "sell_lots": 42123.0,
-      "net_lots": 196253.0,
-      "days": 67
-    },
-    {
-      "code": "2353",
-      "name": "宏碁",
-      "buy_lots": 279913.0,
-      "sell_lots": 103590.0,
-      "net_lots": 176323.0,
-      "days": 67
+      "code": "5880",
+      "name": "合庫金",
+      "buy_lots": 345362.0,
+      "sell_lots": 107808.0,
+      "net_lots": 237554.0,
+      "days": 63
     },
     {
       "code": "1216",
       "name": "統一",
       "buy_lots": 252423.0,
-      "sell_lots": 80807.0,
-      "net_lots": 171616.0,
-      "days": 67
+      "sell_lots": 56911.0,
+      "net_lots": 195512.0,
+      "days": 63
     },
     {
-      "code": "3045",
-      "name": "台灣大",
-      "buy_lots": 254682.0,
-      "sell_lots": 83070.0,
-      "net_lots": 171612.0,
-      "days": 67
+      "code": "2603",
+      "name": "長榮",
+      "buy_lots": 228559.0,
+      "sell_lots": 35818.0,
+      "net_lots": 192741.0,
+      "days": 63
     },
     {
       "code": "2882",
       "name": "國泰金",
       "buy_lots": 297759.0,
-      "sell_lots": 132897.0,
-      "net_lots": 164862.0,
-      "days": 67
+      "sell_lots": 111553.0,
+      "net_lots": 186206.0,
+      "days": 63
+    },
+    {
+      "code": "3045",
+      "name": "台灣大",
+      "buy_lots": 245203.0,
+      "sell_lots": 80035.0,
+      "net_lots": 165168.0,
+      "days": 63
+    },
+    {
+      "code": "2353",
+      "name": "宏碁",
+      "buy_lots": 258064.0,
+      "sell_lots": 103178.0,
+      "net_lots": 154886.0,
+      "days": 63
     },
     {
       "code": "2881",
       "name": "富邦金",
-      "buy_lots": 215675.0,
-      "sell_lots": 82677.0,
-      "net_lots": 132998.0,
-      "days": 67
+      "buy_lots": 215528.0,
+      "sell_lots": 72423.0,
+      "net_lots": 143105.0,
+      "days": 63
     },
     {
       "code": "2002",
       "name": "中鋼",
-      "buy_lots": 506253.0,
-      "sell_lots": 384069.0,
-      "net_lots": 122184.0,
-      "days": 67
-    },
-    {
-      "code": "2610",
-      "name": "華航",
-      "buy_lots": 487113.0,
-      "sell_lots": 369057.0,
-      "net_lots": 118056.0,
-      "days": 67
-    },
-    {
-      "code": "2812",
-      "name": "台中銀",
-      "buy_lots": 268124.0,
-      "sell_lots": 153553.0,
-      "net_lots": 114571.0,
-      "days": 67
+      "buy_lots": 489575.0,
+      "sell_lots": 354795.0,
+      "net_lots": 134780.0,
+      "days": 63
     },
     {
       "code": "5876",
       "name": "上海商銀",
       "buy_lots": 167392.0,
-      "sell_lots": 58274.0,
-      "net_lots": 109118.0,
-      "days": 67
-    },
-    {
-      "code": "2303",
-      "name": "聯電",
-      "buy_lots": 761610.0,
-      "sell_lots": 657107.0,
-      "net_lots": 104503.0,
-      "days": 67
-    },
-    {
-      "code": "2027",
-      "name": "大成鋼",
-      "buy_lots": 204595.0,
-      "sell_lots": 106307.0,
-      "net_lots": 98288.0,
-      "days": 67
-    },
-    {
-      "code": "2412",
-      "name": "中華電",
-      "buy_lots": 220115.0,
-      "sell_lots": 125972.0,
-      "net_lots": 94143.0,
-      "days": 67
+      "sell_lots": 33650.0,
+      "net_lots": 133742.0,
+      "days": 63
     },
     {
       "code": "2892",
       "name": "第一金",
-      "buy_lots": 460046.0,
-      "sell_lots": 367861.0,
-      "net_lots": 92185.0,
-      "days": 67
+      "buy_lots": 454023.0,
+      "sell_lots": 328527.0,
+      "net_lots": 125496.0,
+      "days": 63
     },
     {
-      "code": "2891",
-      "name": "中信金",
-      "buy_lots": 282635.0,
-      "sell_lots": 195031.0,
-      "net_lots": 87604.0,
-      "days": 67
+      "code": "1605",
+      "name": "華新",
+      "buy_lots": 227384.0,
+      "sell_lots": 116432.0,
+      "net_lots": 110952.0,
+      "days": 63
+    },
+    {
+      "code": "2845",
+      "name": "遠東銀",
+      "buy_lots": 173816.0,
+      "sell_lots": 64103.0,
+      "net_lots": 109713.0,
+      "days": 63
+    },
+    {
+      "code": "2412",
+      "name": "中華電",
+      "buy_lots": 220019.0,
+      "sell_lots": 110427.0,
+      "net_lots": 109592.0,
+      "days": 63
+    },
+    {
+      "code": "2886",
+      "name": "兆豐金",
+      "buy_lots": 389696.0,
+      "sell_lots": 286809.0,
+      "net_lots": 102887.0,
+      "days": 63
+    },
+    {
+      "code": "2027",
+      "name": "大成鋼",
+      "buy_lots": 202311.0,
+      "sell_lots": 102020.0,
+      "net_lots": 100291.0,
+      "days": 63
+    },
+    {
+      "code": "2812",
+      "name": "台中銀",
+      "buy_lots": 247296.0,
+      "sell_lots": 153553.0,
+      "net_lots": 93743.0,
+      "days": 63
     }
   ],
   "top_sell": [
@@ -1819,161 +1819,161 @@
       "code": "1303",
       "name": "南亞",
       "buy_lots": 158674.0,
-      "sell_lots": 568419.0,
-      "net_lots": -409745.0,
-      "days": 67
-    },
-    {
-      "code": "3481",
-      "name": "群創",
-      "buy_lots": 793726.0,
-      "sell_lots": 1049833.0,
-      "net_lots": -256107.0,
-      "days": 67
+      "sell_lots": 524806.0,
+      "net_lots": -366132.0,
+      "days": 63
     },
     {
       "code": "2801",
       "name": "彰銀",
-      "buy_lots": 155155.0,
+      "buy_lots": 114804.0,
       "sell_lots": 393420.0,
-      "net_lots": -238265.0,
-      "days": 67
+      "net_lots": -278616.0,
+      "days": 63
+    },
+    {
+      "code": "2337",
+      "name": "旺宏",
+      "buy_lots": 165812.0,
+      "sell_lots": 338435.0,
+      "net_lots": -172623.0,
+      "days": 63
     },
     {
       "code": "2330",
       "name": "台積電",
       "buy_lots": 122950.0,
-      "sell_lots": 331106.0,
-      "net_lots": -208156.0,
-      "days": 67
+      "sell_lots": 269545.0,
+      "net_lots": -146595.0,
+      "days": 63
     },
     {
-      "code": "2337",
-      "name": "旺宏",
-      "buy_lots": 224834.0,
-      "sell_lots": 394727.0,
-      "net_lots": -169893.0,
-      "days": 67
+      "code": "2834",
+      "name": "臺企銀",
+      "buy_lots": 364452.0,
+      "sell_lots": 482478.0,
+      "net_lots": -118026.0,
+      "days": 63
     },
     {
-      "code": "2344",
-      "name": "華邦電",
-      "buy_lots": 629680.0,
-      "sell_lots": 757104.0,
-      "net_lots": -127424.0,
-      "days": 67
+      "code": "2887",
+      "name": "台新新光金",
+      "buy_lots": 400871.0,
+      "sell_lots": 500256.0,
+      "net_lots": -99385.0,
+      "days": 63
+    },
+    {
+      "code": "3702",
+      "name": "大聯大",
+      "buy_lots": 36224.0,
+      "sell_lots": 121947.0,
+      "net_lots": -85723.0,
+      "days": 63
+    },
+    {
+      "code": "8069",
+      "name": "元太",
+      "buy_lots": 10698.0,
+      "sell_lots": 85951.0,
+      "net_lots": -75253.0,
+      "days": 64
+    },
+    {
+      "code": "1101",
+      "name": "台泥",
+      "buy_lots": 265273.0,
+      "sell_lots": 338754.0,
+      "net_lots": -73481.0,
+      "days": 63
+    },
+    {
+      "code": "2449",
+      "name": "京元電子",
+      "buy_lots": 132152.0,
+      "sell_lots": 203199.0,
+      "net_lots": -71047.0,
+      "days": 63
+    },
+    {
+      "code": "1409",
+      "name": "新纖",
+      "buy_lots": 69932.0,
+      "sell_lots": 140498.0,
+      "net_lots": -70566.0,
+      "days": 63
+    },
+    {
+      "code": "2327",
+      "name": "國巨*",
+      "buy_lots": 119101.0,
+      "sell_lots": 185511.0,
+      "net_lots": -66410.0,
+      "days": 63
+    },
+    {
+      "code": "3481",
+      "name": "群創",
+      "buy_lots": 783482.0,
+      "sell_lots": 847934.0,
+      "net_lots": -64452.0,
+      "days": 63
+    },
+    {
+      "code": "2492",
+      "name": "華新科",
+      "buy_lots": 50662.0,
+      "sell_lots": 109837.0,
+      "net_lots": -59175.0,
+      "days": 63
     },
     {
       "code": "9904",
       "name": "寶成",
       "buy_lots": 132141.0,
-      "sell_lots": 239254.0,
-      "net_lots": -107113.0,
-      "days": 67
-    },
-    {
-      "code": "2317",
-      "name": "鴻海",
-      "buy_lots": 329919.0,
-      "sell_lots": 423914.0,
-      "net_lots": -93995.0,
-      "days": 67
+      "sell_lots": 191208.0,
+      "net_lots": -59067.0,
+      "days": 63
     },
     {
       "code": "6770",
       "name": "力積電",
-      "buy_lots": 1053710.0,
-      "sell_lots": 1140959.0,
-      "net_lots": -87249.0,
-      "days": 67
+      "buy_lots": 970414.0,
+      "sell_lots": 1028579.0,
+      "net_lots": -58165.0,
+      "days": 63
     },
     {
-      "code": "3702",
-      "name": "大聯大",
-      "buy_lots": 38513.0,
-      "sell_lots": 124519.0,
-      "net_lots": -86006.0,
-      "days": 67
+      "code": "6005",
+      "name": "群益證",
+      "buy_lots": 49556.0,
+      "sell_lots": 99655.0,
+      "net_lots": -50099.0,
+      "days": 63
     },
     {
-      "code": "2880",
-      "name": "華南金",
-      "buy_lots": 168509.0,
-      "sell_lots": 252817.0,
-      "net_lots": -84308.0,
-      "days": 67
+      "code": "2308",
+      "name": "台達電",
+      "buy_lots": 25290.0,
+      "sell_lots": 75276.0,
+      "net_lots": -49986.0,
+      "days": 63
     },
     {
-      "code": "1101",
-      "name": "台泥",
-      "buy_lots": 277973.0,
-      "sell_lots": 361954.0,
-      "net_lots": -83981.0,
-      "days": 67
+      "code": "8358",
+      "name": "金居",
+      "buy_lots": 36868.0,
+      "sell_lots": 78818.0,
+      "net_lots": -41950.0,
+      "days": 64
     },
     {
-      "code": "2890",
-      "name": "永豐金",
-      "buy_lots": 232679.0,
-      "sell_lots": 315807.0,
-      "net_lots": -83128.0,
-      "days": 67
-    },
-    {
-      "code": "1409",
-      "name": "新纖",
-      "buy_lots": 72700.0,
-      "sell_lots": 154972.0,
-      "net_lots": -82272.0,
-      "days": 67
-    },
-    {
-      "code": "2327",
-      "name": "國巨*",
-      "buy_lots": 123478.0,
-      "sell_lots": 198718.0,
-      "net_lots": -75240.0,
-      "days": 67
-    },
-    {
-      "code": "8069",
-      "name": "元太",
-      "buy_lots": 11314.0,
-      "sell_lots": 84909.0,
-      "net_lots": -73595.0,
-      "days": 67
-    },
-    {
-      "code": "2834",
-      "name": "臺企銀",
-      "buy_lots": 415621.0,
-      "sell_lots": 488294.0,
-      "net_lots": -72673.0,
-      "days": 67
-    },
-    {
-      "code": "2887",
-      "name": "台新新光金",
-      "buy_lots": 439543.0,
-      "sell_lots": 511774.0,
-      "net_lots": -72231.0,
-      "days": 67
-    },
-    {
-      "code": "1802",
-      "name": "台玻",
-      "buy_lots": 151333.0,
-      "sell_lots": 217093.0,
-      "net_lots": -65760.0,
-      "days": 67
-    },
-    {
-      "code": "2492",
-      "name": "華新科",
-      "buy_lots": 54035.0,
-      "sell_lots": 118853.0,
-      "net_lots": -64818.0,
-      "days": 67
+      "code": "3036",
+      "name": "文曄",
+      "buy_lots": 40998.0,
+      "sell_lots": 75159.0,
+      "net_lots": -34161.0,
+      "days": 63
     }
   ]
 }

@@ -13,6 +13,7 @@ let FOREIGN_FLOW = null;
 let DIVIDEND_ETF_FLOW = null;
 let MACRO = null;
 let CURRENT_TAB = "stocks";
+let CURRENT_DETAIL = null;
 const CACHE = {}; // code -> stock json
 
 const MACRO_LABELS = {
@@ -41,6 +42,14 @@ async function loadStock(code) {
   const data = await loadJSON(`data/stocks/${code}.json`);
   CACHE[code] = data;
   return data;
+}
+
+function isTrackedCode(code) {
+  return (TICKERS?.stocks || []).includes(code) || (TICKERS?.etfs || []).includes(code);
+}
+
+function emptyStockRecord(code, kind) {
+  return { code, kind, price: [], dividends: [], adjustments: [], retail_flow: [], eps: [], revenue: [], pe: [] };
 }
 
 function pctChange(series) {
@@ -743,8 +752,30 @@ async function openDetail(code, kind, name) {
   const modal = document.getElementById("detail-modal");
   modal.classList.remove("hidden");
   document.getElementById("modal-title").textContent = `${code}　${name}`;
-
-  const s = await loadStock(code);
+  CURRENT_DETAIL = { code, kind, name };
+  const trackButton = document.getElementById("detail-track-update");
+  const trackStatus = document.getElementById("detail-track-status");
+  const tracked = isTrackedCode(code);
+  let s = emptyStockRecord(code, kind);
+  let loadError = null;
+  if (tracked) {
+    try {
+      s = await loadStock(code);
+    } catch (error) {
+      loadError = error;
+    }
+  }
+  if (trackButton) {
+    trackButton.classList.toggle("hidden", tracked && !loadError);
+    trackButton.disabled = false;
+    trackButton.textContent = tracked ? "重新抓取完整資料" : "加入追蹤並抓取完整資料";
+  }
+  if (trackStatus) {
+    trackStatus.classList.toggle("hidden", tracked && !loadError);
+    trackStatus.textContent = !tracked
+      ? "此標的尚未追蹤；不讀取本機舊快取。加入後會抓取最新 K 線、法人、營收、EPS、配息與還原資料。"
+      : loadError ? `讀取最新資料失敗：${loadError.message}。不顯示舊快取，請重新抓取。` : "";
+  }
 
   // K線（含「還原K線」開關；開關切換時就重畫一次）
   CURRENT_STOCK = s;
@@ -1026,6 +1057,9 @@ function renderManagerTopMovers() {
     "00981A": "00981A",
     "00991A": "00991A",
     "00990A": "00990A",
+    "00992A": "00992A",
+    "00982A": "00982A",
+    "00403A": "00403A",
   };
   tbody.innerHTML = "";
   (MANAGER_CHANGES.top_movers || []).forEach((row, index) => {
@@ -1047,8 +1081,8 @@ function renderManagerTopMoversByPeriod() {
   const title = document.querySelector(".manager-top-movers-header h3");
   if (title) title.textContent = "主動式 ETF 合計進出最多 60 檔";
   const header = document.querySelector("#manager-top-movers-table thead tr");
-  if (header && header.children.length < 12) {
-    ["00981A 淨張數", "00991A 淨張數", "00990A 淨張數", "三檔合計"].forEach((label) => {
+  if (header && header.children.length < 15) {
+    ["00981A 淨張數", "00991A 淨張數", "00990A 淨張數", "00992A 淨張數", "00982A 淨張數", "00403A 淨張數", "六檔合計"].forEach((label) => {
       const th = document.createElement("th");
       th.textContent = label;
       header.appendChild(th);
@@ -1085,7 +1119,7 @@ function renderManagerTopMoversByPeriod() {
     });
   });
   const rows = [...aggregate.values()]
-    .map((row) => ({ ...row, etfs: [...row.etfs], turnover_lots: row.buy_lots + row.sell_lots, net_lots: row.buy_lots - row.sell_lots, holdings_total: Object.values(row.holdings).reduce((sum, item) => sum + item.lots, 0) }))
+    .map((row) => ({ ...row, etfs: [...row.etfs], turnover_lots: row.buy_lots + row.sell_lots, net_lots: row.buy_lots - row.sell_lots, holdings_total: ["00981A", "00991A", "00990A", "00992A", "00982A", "00403A"].reduce((sum, code) => sum + Number(row.holdings[code]?.lots || 0), 0) }))
     .sort((a, b) => b.turnover_lots - a.turnover_lots)
     .slice(0, 60);
   const periodNote = document.getElementById("manager-top-movers-period");
@@ -1103,6 +1137,9 @@ function renderManagerTopMoversByPeriod() {
       `<td>${Number(row.holdings["00981A"]?.lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
       `<td>${Number(row.holdings["00991A"]?.lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
       `<td>${Number(row.holdings["00990A"]?.lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td>${Number(row.holdings["00992A"]?.lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td>${Number(row.holdings["00982A"]?.lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
+      `<td>${Number(row.holdings["00403A"]?.lots || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</td>` +
       `<td><b>${Number(row.holdings_total || 0).toLocaleString("zh-TW", { maximumFractionDigits: 2 })} 張</b></td>`;
     tr.children[1].classList.add("link-cell");
     tr.children[1].addEventListener("click", () => openDetail(row.code, "stock", row.name));
@@ -1318,7 +1355,34 @@ function renderHighDividendInstitutional() {
   }
 }
 
+async function addAndUpdateDetail() {
+  const current = CURRENT_DETAIL;
+  if (!current) return;
+  const button = document.getElementById("detail-track-update");
+  const status = document.getElementById("detail-track-status");
+  if (!button || !status) return;
+  button.disabled = true;
+  status.classList.remove("hidden");
+  status.textContent = `${current.code} 正在寫入追蹤清單並抓取完整新資料…`;
+  try {
+    const response = await fetch("api/watchlist/add-and-update", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(current),
+    });
+    const result = await response.json();
+    if (!response.ok || !result.ok) throw new Error(result.error || "加入追蹤或更新失敗");
+    status.textContent = `${current.code} 已加入追蹤，完整資料更新成功；正在重新整理清單…`;
+    // Keep the stock detail available after reloading the watchlist/data files.
+    sessionStorage.setItem("detail-after-watchlist-update", JSON.stringify(current));
+    setTimeout(() => location.reload(), 900);
+  } catch (error) {
+    status.textContent = `更新失敗，未顯示舊快取：${error.message}`;
+    button.disabled = false;
+  }
+}
+
 function setupWatchlistManager() {
+  document.getElementById("detail-track-update")?.addEventListener("click", addAndUpdateDetail);
   const form = document.getElementById("watchlist-form");
   const status = document.getElementById("watchlist-status");
   if (!form || !status) return;
@@ -1331,19 +1395,12 @@ function setupWatchlistManager() {
     button.disabled = true;
     status.textContent = `${code} 已送出，正在加入追蹤清單並抓取資料，請稍候…`;
     try {
-      const addResponse = await fetch("api/watchlist/add", {
+      const response = await fetch("api/watchlist/add-and-update", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code, kind, name }),
       });
-      const add = await addResponse.json();
-      if (!addResponse.ok || !add.ok) throw new Error(add.error || "加入追蹤清單失敗");
-      status.textContent = `${code} 已加入，正在更新行情資料…`;
-      const updateResponse = await fetch("api/watchlist/update", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code, kind }),
-      });
-      const update = await updateResponse.json();
-      if (!updateResponse.ok || !update.ok) throw new Error(update.error || "資料更新失敗，但標的已加入清單");
+      const update = await response.json();
+      if (!response.ok || !update.ok) throw new Error(update.error || "加入追蹤或資料更新失敗");
       status.textContent = `${code} 更新完成，頁面即將重新整理。`;
       setTimeout(() => location.reload(), 700);
     } catch (error) {
@@ -1430,6 +1487,17 @@ async function init() {
   document.getElementById("detail-modal").addEventListener("click", (e) => {
     if (e.target.id === "detail-modal") closeDetail();
   });
+
+  const reopenDetail = sessionStorage.getItem("detail-after-watchlist-update");
+  if (reopenDetail) {
+    sessionStorage.removeItem("detail-after-watchlist-update");
+    try {
+      const detail = JSON.parse(reopenDetail);
+      if (detail?.code) await openDetail(detail.code, detail.kind || "stock", detail.name || detail.code);
+    } catch (error) {
+      console.warn("無法在資料更新後重新開啟個股視窗：", error);
+    }
+  }
 }
 
 init().catch((e) => {

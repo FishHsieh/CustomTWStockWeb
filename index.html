@@ -62,10 +62,13 @@
   <h2>主動式 ETF 經理人調整追蹤</h2>
   <div class="manager-toolbar">
     <label>ETF <select id="manager-etf-select">
-      <option value="all">00981A＋00991A＋00990A</option>
+      <option value="all">00981A＋00991A＋00990A＋00992A＋00982A＋00403A</option>
       <option value="00981A">00981A 主動統一台股增長</option>
       <option value="00991A">00991A 主動復華未來50</option>
       <option value="00990A">00990A 主動元大AI新經濟</option>
+      <option value="00992A">00992A</option>
+      <option value="00982A">00982A</option>
+      <option value="00403A">00403A</option>
     </select></label>
     <label>動作 <select id="manager-action-select">
       <option value="all">全部異動</option>
@@ -230,8 +233,10 @@
         <h3>K線圖 (含均線)
           <button type="button" id="adj-toggle" class="toggle-btn"
                   title="把除權息、股票分割造成的價格斷層還原，讓歷史價可以直接比較">還原K線</button>
+          <button type="button" id="detail-track-update" class="toggle-btn hidden">加入追蹤並抓取完整資料</button>
           <span id="adj-note" class="toggle-note"></span>
         </h3>
+        <p id="detail-track-status" class="manager-note hidden"></p>
         <div class="ohlc-readout" id="ohlc-readout"></div>
         <div class="ma-legend" id="ma-legend"></div>
         <div id="candle-chart" class="candle-chart"></div>
