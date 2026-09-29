@@ -50,7 +50,7 @@ async function loadJSON(path) {
 async function loadStock(code) {
   if (CACHE[code]) return CACHE[code];
   const rawCode = String(code);
-  const normalizedCode = rawCode.replace(/\s+(US|JP|KS)$/i, ".$1");
+  const normalizedCode = rawCode.replace(/[\s_]+(US|JP|KS|UQ|UN|NA|JT)$/i, ".$1");
   const data = await loadJSON(`data/stocks/${normalizedCode}.json`);
   CACHE[code] = data;
   return data;

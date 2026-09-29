@@ -1613,14 +1613,14 @@ def yahoo_chart(symbol, cache_key, rng="1y"):
 
 
 def foreign_component_identity(raw_code):
-    code = str(raw_code or "").strip().upper()
+    code = str(raw_code or "").strip().upper().replace("_", ".")
     if "." in code:
         ticker, market = code.rsplit(".", 1)
     elif " " in code:
         ticker, market = code.rsplit(None, 1)
     else:
         return None
-    if market not in {"US", "JP", "KS"} or not ticker:
+    if market not in {"US", "JP", "KS", "UQ", "UN", "NA", "JT"} or not ticker:
         return None
     return ticker, market, f"{ticker}.{market}"
 
@@ -1637,7 +1637,14 @@ def fetch_foreign_etf_component_prices(holdings_db):
     failed = 0
     for code in codes:
         ticker, market, _ = foreign_component_identity(code)
-        symbol = ticker if market == "US" else f"{ticker}.T" if market == "JP" else f"{ticker}.KS"
+        if market in {"US", "UQ", "UN"}:
+            symbol = ticker
+        elif market in {"JP", "JT"}:
+            symbol = f"{ticker}.T"
+        elif market == "NA":
+            symbol = f"{ticker}.AS"
+        else:
+            symbol = f"{ticker}.KS"
         rows = yahoo_chart(symbol, f"foreign_component_{market}_{ticker}", rng="2y")
         if not rows:
             failed += 1
