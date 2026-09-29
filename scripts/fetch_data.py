@@ -1612,19 +1612,31 @@ def yahoo_chart(symbol, cache_key, rng="1y"):
         return []
 
 
+def foreign_component_identity(raw_code):
+    code = str(raw_code or "").strip().upper()
+    if "." in code:
+        ticker, market = code.rsplit(".", 1)
+    elif " " in code:
+        ticker, market = code.rsplit(None, 1)
+    else:
+        return None
+    if market not in {"US", "JP", "KS"} or not ticker:
+        return None
+    return ticker, market, f"{ticker}.{market}"
+
+
 def fetch_foreign_etf_component_prices(holdings_db):
     """為 ETF 成分股中的海外代號建立可供前端查價的價格檔。"""
-    codes = sorted({
-        str(holding.get("code"))
+    codes = sorted({identity[2]
         for item in (holdings_db.get("items") or {}).values()
         for holding in (item.get("holdings") or [])
-        if str(holding.get("code") or "").rsplit(".", 1)[-1] in {"US", "JP", "KS"}
+        for identity in [foreign_component_identity(holding.get("code"))]
+        if identity
     })
     refreshed = 0
     failed = 0
     for code in codes:
-        market = code.rsplit(".", 1)[-1]
-        ticker = code.rsplit(".", 1)[0]
+        ticker, market, _ = foreign_component_identity(code)
         symbol = ticker if market == "US" else f"{ticker}.T" if market == "JP" else f"{ticker}.KS"
         rows = yahoo_chart(symbol, f"foreign_component_{market}_{ticker}", rng="2y")
         if not rows:
