@@ -48,7 +48,9 @@ async function loadJSON(path) {
 }
 
 function normalizeStockFileCode(code) {
-  return String(code).trim().replace(/[\s_]+(US|JP|KS|UQ|UN|NA|JT|HK|VN|LN|KP|GA|GY|CT|UR|CH|CS\(HK\)|CG\(HK\))$/i, ".$1");
+  // Bloomberg 代碼用 "/" 表示股票代碼裡的 "."（例如 AV/ LN = Aviva 的 AV.L），
+  // 但 "/" 不能出現在檔名或 URL path，這裡要跟 scripts/fetch_data.py 的檔案命名規則一致，一律改用 "-"。
+  return String(code).trim().replace(/[\s_]+(US|JP|KS|UQ|UN|NA|JT|HK|VN|LN|KP|GA|GY|CT|UR|CH|CS\(HK\)|CG\(HK\))$/i, ".$1").replace(/\//g, "-");
 }
 
 function isForeignComponentCode(code) {
@@ -244,9 +246,10 @@ function renderIndexCharts() {
   ];
   const maLines = [
     { key: "ma10", label: "10日", color: "#f59e0b" },
-    { key: "ma20", label: "20日", color: "#a78bfa" },
-    { key: "ma60", label: "60日", color: "#38bdf8" },
-    { key: "ma240", label: "240日", color: "#f472b6" },
+    { key: "ma20", label: "20日", color: "#a855f7" },
+    { key: "ma60", label: "60日", color: "#2563eb" },
+    { key: "ma120", label: "半年線(120日)", color: "#22c55e" },
+    { key: "ma240", label: "240日", color: "#ef4444" },
   ];
   configs.forEach(({ key, host: hostId, label }) => {
     const host = document.getElementById(hostId);
@@ -372,6 +375,48 @@ function renderMarketFlowChart() {
       plugins: { legend: { display: true, labels: { color: "#9aa1ac", boxWidth: 14 } },
         tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)} 億元` } } },
       scales: { x: { ticks: { color: "#9aa1ac", maxTicksLimit: 10 } }, y: { ticks: { color: "#9aa1ac" } } } },
+  });
+}
+
+let marginBalanceChart = null;
+
+function renderMarginBalanceChart() {
+  const canvas = document.getElementById("margin-balance-chart");
+  const empty = document.getElementById("margin-balance-empty");
+  const note = document.getElementById("margin-balance-note");
+  if (!canvas) return;
+  if (marginBalanceChart) { marginBalanceChart.destroy(); marginBalanceChart = null; }
+  const rows = (MACRO.margin_balance || []).filter((row) => row.financing != null || row.short != null).slice(-120);
+  if (!rows.length) {
+    canvas.classList.add("hidden");
+    empty?.classList.remove("hidden");
+    if (note) note.textContent = "";
+    return;
+  }
+  canvas.classList.remove("hidden");
+  empty?.classList.add("hidden");
+  const latest = rows[rows.length - 1];
+  if (note) note.textContent = `資料日期：${latest.t}｜近 120 個交易日`;
+  const fmt = (value) => value == null ? "—" : Number(value).toLocaleString("zh-TW");
+  marginBalanceChart = new Chart(canvas, {
+    type: "line",
+    data: {
+      labels: rows.map((row) => row.t.slice(5)),
+      datasets: [
+        { label: "融資餘額（億元）", data: rows.map((row) => row.financing), yAxisID: "y", borderColor: "#f59e0b", backgroundColor: "transparent", tension: 0.15, pointRadius: 0, borderWidth: 2, spanGaps: true },
+        { label: "融券餘額", data: rows.map((row) => row.short), yAxisID: "y1", borderColor: "#22c55e", backgroundColor: "transparent", tension: 0.15, pointRadius: 0, borderWidth: 2, spanGaps: true },
+      ],
+    },
+    options: {
+      responsive: true,
+      interaction: { mode: "index", intersect: false },
+      plugins: { legend: { labels: { color: "#e8eaed" } }, tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${fmt(ctx.parsed.y)}` } } },
+      scales: {
+        x: { ticks: { color: "#9aa3b2", maxTicksLimit: 12 }, grid: { color: "#2a2f3a" } },
+        y: { position: "left", ticks: { color: "#f59e0b", callback: (value) => Number(value).toLocaleString("zh-TW") }, grid: { color: "#2a2f3a" }, title: { display: true, text: "融資餘額（億元）", color: "#f59e0b" } },
+        y1: { position: "right", grid: { drawOnChartArea: false }, ticks: { color: "#22c55e", callback: (value) => Number(value).toLocaleString("zh-TW") }, title: { display: true, text: "融券餘額", color: "#22c55e" } },
+      },
+    },
   });
 }
 
@@ -518,7 +563,7 @@ let ADJUSTED = false;
 try { ADJUSTED = localStorage.getItem("kline-adjusted") === "1"; } catch (e) {}
 let CURRENT_STOCK = null;
 
-const MA_WINDOWS = { ma5: 5, ma10: 10, ma20: 20, ma60: 60, ma240: 240 };
+const MA_WINDOWS = { ma5: 5, ma10: 10, ma20: 20, ma60: 60, ma120: 120, ma240: 240 };
 
 // 每根K棒要乘的比例 = 它「之後」所有調整事件 factor 的連乘積
 function cumAdjFactors(price, events) {
@@ -554,7 +599,7 @@ function adjustedTechnicalRows(stock) {
     return { ...point, o: scale(point.o), h: scale(point.h), l: scale(point.l), c: scale(point.c) };
   });
   const closes = rows.map((point) => point.c);
-  [5, 10, 20, 60].forEach((window) => {
+  [5, 10, 20, 60, 120].forEach((window) => {
     const values = movingAverage(closes, window);
     rows.forEach((point, index) => { point[`ma${window}`] = values[index]; });
   });
@@ -678,8 +723,10 @@ function chartRows(s) {
   if (!ADJUSTED || !events.length || !price.length) {
     const rows = price.map((point) => ({ ...point }));
     const closes = rows.map((point) => point.c);
-    const ma5 = movingAverage(closes, 5);
-    rows.forEach((point, index) => { point.ma5 = ma5[index]; });
+    Object.keys(MA_WINDOWS).forEach((key) => {
+      const ma = movingAverage(closes, MA_WINDOWS[key]);
+      rows.forEach((point, index) => { point[key] = ma[index]; });
+    });
     return rows;
   }
   const f = cumAdjFactors(price, events);
@@ -789,11 +836,12 @@ function drawCandle(s) {
     }
 
     const MA_LINES = [
-      { key: "ma5", label: "5日", color: "#fb7185" },
+      { key: "ma5", label: "5日", color: "#ec4899" },
       { key: "ma10", label: "10日", color: "#f59e0b" },
-      { key: "ma20", label: "月線", color: "#a78bfa" },
-      { key: "ma60", label: "季線", color: "#38bdf8" },
-      { key: "ma240", label: "年線", color: "#f472b6" },
+      { key: "ma20", label: "月線", color: "#a855f7" },
+      { key: "ma60", label: "季線", color: "#2563eb" },
+      { key: "ma120", label: "半年線", color: "#22c55e" },
+      { key: "ma240", label: "年線", color: "#ef4444" },
     ];
     const maLegends = [];  // 記住每條均線的 series 和它的 <b>，滑到哪天就換成那天的值
     MA_LINES.forEach((ma) => {
@@ -1838,6 +1886,7 @@ async function init() {
   setupWatchlistManager();
   renderIndexCharts();
   renderMarketFlowChart();
+  renderMarginBalanceChart();
   renderFuturesFlowChart();
   await switchTab("stocks");
   renderSmartPicks();

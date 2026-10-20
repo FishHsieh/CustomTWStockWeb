@@ -1470,6 +1470,65 @@ def compute_pe(eps_list, price):
     return out
 
 
+def fetch_official_pe(code, start_date):
+    """TWSE/TPEx 官方每日本益比（FinMind TaiwanStockPER）。
+    金融/保險股的財報 XBRL 科目表沒有拆出「EPS」這個分類，我們自己用財報算的
+    compute_pe() 因此從 2026 Q1 開始就沒有新的一季可以算——但官方本益比是交易所
+    自己依公司申報的每股盈餘算出來的，不受這個分類缺欄位影響，可以拿來補後面斷掉的季度。
+    """
+    rows = finmind("TaiwanStockPER", code, start_date, f"official_pe_{code}",
+                   max_age_hours=jittered_hours(code, eps_ttl_hours()))
+    out = [{"date": r["date"], "pe": r["PER"]} for r in rows if r.get("PER")]
+    out.sort(key=lambda x: x["date"])
+    return out
+
+
+def quarter_ends_between(after, upto):
+    """列出 after(不含) 到 upto(含) 之間的季底日期 (3/31、6/30、9/30、12/31)。"""
+    quarter_month_days = ((3, 31), (6, 30), (9, 30), (12, 31))
+    out = []
+    for year in range(after.year, upto.year + 1):
+        for month, day in quarter_month_days:
+            d = datetime(year, month, day)
+            if after < d <= upto:
+                out.append(d)
+    return sorted(out)
+
+
+def backfill_pe_from_official(code, pe_list):
+    """本益比最後一筆如果已經落後超過一季，代表 compute_pe() 沒有新季可算
+    (通常是財報 EPS 分類缺欄位，例如金融/保險股)，改抓官方本益比補上缺的幾季，
+    並加一筆「今天」讓圖表接到最新，不要整條線斷在半年、一年前。
+    """
+    if not pe_list:
+        return pe_list
+    last_date = datetime.strptime(pe_list[-1]["date"], "%Y-%m-%d")
+    today = datetime.today()
+    # 正常的財報公布時間差（上一季季底到下一季公布）最長大概 4 個半月；
+    # 150 天才觸發，才不會每季報表快到但還沒公布時，對全部正常的股票白跑一次額外查詢。
+    if (today - last_date).days < 150:
+        return pe_list
+    official = fetch_official_pe(code, pe_list[-1]["date"])
+    if not official:
+        return pe_list
+    dates_sorted = [r["date"] for r in official]
+    pe_by_date = {r["date"]: r["pe"] for r in official}
+
+    out = list(pe_list)
+    seen_dates = {row["date"] for row in out}
+    targets = quarter_ends_between(last_date, today) + [today]
+    for target in targets:
+        idx = bisect.bisect_right(dates_sorted, target.strftime("%Y-%m-%d")) - 1
+        if idx < 0:
+            continue
+        found_date = dates_sorted[idx]
+        if found_date in seen_dates:
+            continue
+        out.append({"date": found_date, "pe": round(pe_by_date[found_date], 2)})
+        seen_dates.add(found_date)
+    return out
+
+
 def fetch_retail_flow(code):
     """個股三大法人「外資/投信/自營商」個別買賣超，與反推「散戶買賣超」(單位:張)。
     邏輯：外資+投信+自營商+散戶 當日買進股數合計 = 賣出股數合計 = 當日成交量，
@@ -1573,7 +1632,7 @@ def build_one(code, kind, splits=None):
     if kind == "stock":
         record["revenue"] = fetch_revenue(code)
         record["eps"] = fetch_eps(code)
-        record["pe"] = compute_pe(record["eps"], price)
+        record["pe"] = backfill_pe_from_official(code, compute_pe(record["eps"], price))
 
     # 個股與 ETF 都有三大法人買賣超資料。
     record["retail_flow"] = fetch_retail_flow(code)
@@ -1622,51 +1681,67 @@ def foreign_component_identity(raw_code):
         return None
     if market not in {"US", "JP", "KS", "UQ", "UN", "NA", "JT", "HK", "VN", "LN", "KP", "GA", "GY", "CT", "UR", "CH", "CS(HK)", "CG(HK)"} or not ticker:
         return None
-    return ticker, market, f"{ticker}.{market}"
+    # Bloomberg 代碼用 "/" 表示股票代碼裡本來的 "."（例如 AV/ LN 就是 Aviva 的 AV.L），
+    # 但 "/" 不能出現在檔名或 URL path，檔案代碼一律改用 "-"，查價時再換回 "."。
+    file_ticker = ticker.replace("/", "-")
+    return ticker, market, f"{file_ticker}.{market}"
 
 
-def fetch_foreign_etf_component_prices(holdings_db):
-    """為 ETF 成分股中的海外代號建立可供前端查價的價格檔。"""
-    codes = sorted({identity[2]
-        for item in (holdings_db.get("items") or {}).values()
-        for holding in (item.get("holdings") or [])
-        for identity in [foreign_component_identity(holding.get("code"))]
-        if identity
-    })
+def fetch_foreign_etf_component_prices(holdings_db, active_items=None):
+    """為 ETF 成分股、以及主動式 ETF 異動紀錄中出現的海外代號，建立可供前端查價的價格檔。"""
+    identities = {}
+    for item in (holdings_db.get("items") or {}).values():
+        for holding in (item.get("holdings") or []):
+            identity = foreign_component_identity(holding.get("code"))
+            if identity:
+                identities[identity[2]] = identity
+    for item in (active_items or {}).values():
+        for event in (item.get("events") or []):
+            identity = foreign_component_identity(event.get("code"))
+            if identity:
+                identities[identity[2]] = identity
     refreshed = 0
     failed = 0
-    for code in codes:
-        ticker, market, _ = foreign_component_identity(code)
+    for file_code, (ticker, market, _) in sorted(identities.items()):
+        # 結尾的 "/" 代表交易所代碼本身結尾就有一個 "."（例如 AV/ LN = Aviva 的 AV.L），
+        # Yahoo 的交易所後綴（.L、.T…）已經自帶那個 "."，所以直接去掉尾端 "/" 就好，不用再補一個 "."。
+        yahoo_ticker = ticker.rstrip("/")
         if market in {"US", "UQ", "UN", "UR"}:
-            symbol = ticker
+            symbol = yahoo_ticker
         elif market in {"JP", "JT"}:
-            symbol = f"{ticker}.T"
+            symbol = f"{yahoo_ticker}.T"
         elif market == "NA":
-            symbol = f"{ticker}.AS"
+            symbol = f"{yahoo_ticker}.AS"
         elif market in {"KS", "KP"}:
-            symbol = f"{ticker}.KS"
+            symbol = f"{yahoo_ticker}.KS"
         elif market == "HK":
-            symbol = f"{ticker.zfill(4)}.HK"
+            symbol = f"{yahoo_ticker.zfill(4)}.HK"
         elif market in {"CH", "CS(HK)", "CG(HK)"}:
-            symbol = f"{ticker}.SZ" if ticker.startswith(("0", "2", "3")) else f"{ticker}.SS"
+            symbol = f"{yahoo_ticker}.SZ" if yahoo_ticker.startswith(("0", "2", "3")) else f"{yahoo_ticker}.SS"
         elif market == "VN":
-            symbol = f"{ticker}.VN"
+            symbol = f"{yahoo_ticker}.VN"
         elif market == "LN":
-            symbol = f"{ticker}.L"
+            symbol = f"{yahoo_ticker}.L"
         elif market == "GY":
-            symbol = f"{ticker}.DE"
+            symbol = f"{yahoo_ticker}.DE"
         elif market == "GA":
-            symbol = f"{ticker}.AT"
+            symbol = f"{yahoo_ticker}.AT"
         elif market == "CT":
-            symbol = f"{ticker}.TO"
+            symbol = f"{yahoo_ticker}.TO"
         else:
-            return None
-        rows = yahoo_chart(symbol, f"foreign_component_{market}_{ticker}", rng="2y")
+            continue
+        # cache_key 會被當成快取檔名，"/" 在 Windows 檔名裡不合法，跟 file_code 一樣要清乾淨。
+        cache_ticker = ticker.replace("/", "-")
+        rows = yahoo_chart(symbol, f"foreign_component_{market}_{cache_ticker}", rng="2y")
+        if not rows and market in {"KS", "KP"}:
+            # Bloomberg 常把 KOSDAQ 個股也標成 KS/KP，Yahoo 要用 .KQ 才查得到（例如 099320 Satrec Initiative）。
+            symbol = f"{yahoo_ticker}.KQ"
+            rows = yahoo_chart(symbol, f"foreign_component_KQ_{cache_ticker}", rng="2y")
         if not rows:
             failed += 1
             continue
         record = {
-            "code": code,
+            "code": file_code,
             "kind": "foreign",
             "symbol": symbol,
             "price": rows,
@@ -1677,7 +1752,7 @@ def fetch_foreign_etf_component_prices(holdings_db):
             "revenue": [],
             "pe": [],
         }
-        with open(os.path.join(STOCKS_DIR, f"{code}.json"), "w", encoding="utf-8") as f:
+        with open(os.path.join(STOCKS_DIR, f"{file_code}.json"), "w", encoding="utf-8") as f:
             json.dump(record, f, ensure_ascii=False)
         refreshed += 1
     log(f"海外 ETF 成分股價格：更新 {refreshed} 檔、失敗 {failed} 檔")
@@ -1814,6 +1889,31 @@ def fetch_market_flow():
             series[:] = [row for row in series if row["t"] != point["t"]] + [point]
             series.sort(key=lambda row: row["t"])
     return foreign_out, trust_out, dealer_out, institutional_out, retail_out
+
+
+def fetch_margin_balance():
+    """全市場散戶融資／融券餘額，單位沿用 FinMind 回傳的張數／口數。"""
+    rows = finmind(
+        "TaiwanStockTotalMarginPurchaseShortSale", None, FIN_START,
+        "market_margin_balance", max_age_hours=MACRO_FRESH_HOURS,
+    )
+    by_date = {}
+    for row in rows:
+        date = row.get("date")
+        name = str(row.get("name") or "")
+        balance = row.get("TodayBalance")
+        if not date or balance is None:
+            continue
+        rec = by_date.setdefault(date, {})
+        if name == "MarginPurchaseMoney" or "融資金額" in name:
+            rec["financing"] = round(float(balance) / 1e8, 2)
+        elif name == "ShortSale" or "融券" in name:
+            rec["short"] = balance
+    return [
+        {"t": date, "financing": rec.get("financing"), "short": rec.get("short")}
+        for date, rec in sorted(by_date.items())
+        if rec.get("financing") is not None or rec.get("short") is not None
+    ]
 
 
 def fetch_futures_flow():
@@ -1956,6 +2056,7 @@ def fetch_vietnam_index():
 
 def build_macro():
     foreign_net, trust_net, dealer_net, institutional_net, retail_net = fetch_market_flow()
+    margin_balance = fetch_margin_balance()
     foreign_futures_net, trust_futures_net = fetch_futures_flow()
     macro = {
         "gold": yahoo_chart("GC=F", "macro_gold"),
@@ -1977,6 +2078,7 @@ def build_macro():
         "dealer_net": dealer_net,
         "institutional_net": institutional_net,
         "retail_net": retail_net,
+        "margin_balance": margin_balance,
         "foreign_futures_net": foreign_futures_net,
         "trust_futures_net": trust_futures_net,
     }
@@ -2092,7 +2194,6 @@ def main():
 
     log("更新 ETF 前十大成分股（5 天內沿用快取）...")
     holdings_db = fetch_etf_holdings(etfs)
-    fetch_foreign_etf_component_prices(holdings_db)
 
     results = {"stocks": [], "etfs": []}
     try:
@@ -2120,9 +2221,10 @@ def main():
         log("之前抓過的會直接用快取跳過，只會繼續抓還沒抓到的部分。")
         log("=" * 60)
 
+    active_changes = None
     if not only:
         try:
-            fetch_active_etf_changes()
+            active_changes = fetch_active_etf_changes()
         except Exception as e:
             log(f"  !! 主動式 ETF 異動更新失敗：{e}")
         try:
@@ -2133,6 +2235,8 @@ def main():
             build_dividend_etf_flow()
         except Exception as e:
             log(f"  !! 指定 ETF 法人買賣更新失敗：{e}")
+
+    fetch_foreign_etf_component_prices(holdings_db, (active_changes or {}).get("items"))
 
     # 用實際存在的檔案算數量，這樣就算這次中途失敗，也能反映之前已經抓好、留在硬碟上的資料
     have_stocks = [c for c in tickers["stocks"] if os.path.exists(os.path.join(STOCKS_DIR, f"{c}.json"))]

@@ -209,7 +209,7 @@ header h1 { margin: 0; font-size: 22px; }
 .index-readout b.down { color: #36e58b; }
 .index-readout b.flat { color: #f4f7fb; }
 .flow-block { margin-top: 14px; }
-#market-flow-chart, #futures-flow-chart { max-height: 150px; }
+#market-flow-chart, #futures-flow-chart, #margin-balance-chart { max-height: 180px; }
 .empty-note { color: var(--text-dim); font-size: 13px; }
 .hidden { display: none !important; }
 
