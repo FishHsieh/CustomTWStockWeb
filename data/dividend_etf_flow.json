@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-29 23:36:48",
+  "updated_at": "2026-10-20 22:51:00",
   "codes": [
     "00919",
     "0056",
@@ -15,57 +15,57 @@
   ],
   "periods": {
     "7": {
-      "from": "2026-09-17",
-      "to": "2026-09-24",
+      "from": "2026-10-12",
+      "to": "2026-10-19",
       "rows": [
         {
           "code": "00919",
           "name": "群益台灣精選高息",
-          "days": 6,
+          "days": 2,
           "foreign": {
-            "buy_lots": 25241.0,
-            "sell_lots": 38814.0,
-            "net_lots": -13573.0
+            "buy_lots": 41260.0,
+            "sell_lots": 24669.0,
+            "net_lots": 16591.0
           },
           "trust": {
             "buy_lots": 0.0,
-            "sell_lots": 200.0,
-            "net_lots": -200.0
+            "sell_lots": 0.0,
+            "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 196476.0,
-            "sell_lots": 13717.0,
-            "net_lots": 182759.0
+            "buy_lots": 24147.0,
+            "sell_lots": 61159.0,
+            "net_lots": -37012.0
           }
         },
         {
           "code": "0056",
           "name": "元大高股息",
-          "days": 6,
+          "days": 2,
           "foreign": {
-            "buy_lots": 8151.0,
-            "sell_lots": 22286.0,
-            "net_lots": -14135.0
+            "buy_lots": 0,
+            "sell_lots": 13384.0,
+            "net_lots": -13384.0
           },
           "trust": {
-            "buy_lots": 6650.0,
-            "sell_lots": 0.0,
-            "net_lots": 6650.0
+            "buy_lots": 4535.0,
+            "sell_lots": 0,
+            "net_lots": 4535.0
           },
           "retail": {
-            "buy_lots": 55928.0,
-            "sell_lots": 13540.0,
-            "net_lots": 42388.0
+            "buy_lots": 120975.0,
+            "sell_lots": 0,
+            "net_lots": 120975.0
           }
         },
         {
           "code": "00878",
           "name": "國泰永續高股息",
-          "days": 6,
+          "days": 2,
           "foreign": {
-            "buy_lots": 4192.0,
-            "sell_lots": 10633.0,
-            "net_lots": -6441.0
+            "buy_lots": 2337.0,
+            "sell_lots": 3575.0,
+            "net_lots": -1238.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -73,19 +73,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 49152.0,
-            "sell_lots": 13024.0,
-            "net_lots": 36128.0
+            "buy_lots": 31151.0,
+            "sell_lots": 0,
+            "net_lots": 31151.0
           }
         },
         {
           "code": "00918",
           "name": "大華優利高填息30",
-          "days": 6,
+          "days": 2,
           "foreign": {
-            "buy_lots": 7681.0,
-            "sell_lots": 9395.0,
-            "net_lots": -1714.0
+            "buy_lots": 4298.0,
+            "sell_lots": 2238.0,
+            "net_lots": 2060.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -93,19 +93,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 378728.0,
-            "sell_lots": 0,
-            "net_lots": 378728.0
+            "buy_lots": 7175.0,
+            "sell_lots": 17449.0,
+            "net_lots": -10274.0
           }
         },
         {
           "code": "00901",
           "name": "永豐智能車供應鏈",
-          "days": 6,
+          "days": 2,
           "foreign": {
-            "buy_lots": 125.0,
-            "sell_lots": 108.0,
-            "net_lots": 17.0
+            "buy_lots": 0,
+            "sell_lots": 152.0,
+            "net_lots": -152.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -113,19 +113,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 0,
-            "sell_lots": 375.0,
-            "net_lots": -375.0
+            "buy_lots": 92.0,
+            "sell_lots": 0,
+            "net_lots": 92.0
           }
         },
         {
           "code": "00891",
           "name": "中信關鍵半導體",
-          "days": 6,
+          "days": 2,
           "foreign": {
-            "buy_lots": 18033.0,
-            "sell_lots": 482.0,
-            "net_lots": 17551.0
+            "buy_lots": 0,
+            "sell_lots": 7004.0,
+            "net_lots": -7004.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -133,19 +133,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 2452.0,
-            "sell_lots": 32603.0,
-            "net_lots": -30151.0
+            "buy_lots": 26640.0,
+            "sell_lots": 0,
+            "net_lots": 26640.0
           }
         },
         {
           "code": "00830",
           "name": "國泰費城半導體",
-          "days": 6,
+          "days": 2,
           "foreign": {
-            "buy_lots": 8500.0,
-            "sell_lots": 744.0,
-            "net_lots": 7756.0
+            "buy_lots": 0,
+            "sell_lots": 8849.0,
+            "net_lots": -8849.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -153,39 +153,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 3069.0,
-            "sell_lots": 10204.0,
-            "net_lots": -7135.0
+            "buy_lots": 17568.0,
+            "sell_lots": 0,
+            "net_lots": 17568.0
           }
         },
         {
           "code": "00947",
           "name": "台新臺灣IC設計",
-          "days": 6,
+          "days": 2,
           "foreign": {
-            "buy_lots": 3133.0,
-            "sell_lots": 2654.0,
-            "net_lots": 479.0
-          },
-          "trust": {
-            "buy_lots": 6950.0,
-            "sell_lots": 0.0,
-            "net_lots": 6950.0
-          },
-          "retail": {
-            "buy_lots": 731.0,
-            "sell_lots": 12036.0,
-            "net_lots": -11305.0
-          }
-        },
-        {
-          "code": "00735",
-          "name": "國泰臺韓科技",
-          "days": 6,
-          "foreign": {
-            "buy_lots": 705.0,
-            "sell_lots": 162.0,
-            "net_lots": 543.0
+            "buy_lots": 2441.0,
+            "sell_lots": 1609.0,
+            "net_lots": 832.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -193,105 +173,311 @@
             "net_lots": 0.0
           },
           "retail": {
+            "buy_lots": 10092.0,
+            "sell_lots": 0,
+            "net_lots": 10092.0
+          }
+        },
+        {
+          "code": "00735",
+          "name": "國泰臺韓科技",
+          "days": 2,
+          "foreign": {
             "buy_lots": 0,
-            "sell_lots": 2406.0,
-            "net_lots": -2406.0
+            "sell_lots": 121.0,
+            "net_lots": -121.0
+          },
+          "trust": {
+            "buy_lots": 0.0,
+            "sell_lots": 0.0,
+            "net_lots": 0.0
+          },
+          "retail": {
+            "buy_lots": 367.0,
+            "sell_lots": 0,
+            "net_lots": 367.0
           }
         },
         {
           "code": "0052",
           "name": "富邦科技",
-          "days": 6,
+          "days": 2,
           "foreign": {
-            "buy_lots": 3868.0,
-            "sell_lots": 2119.0,
-            "net_lots": 1749.0
+            "buy_lots": 2872.0,
+            "sell_lots": 0,
+            "net_lots": 2872.0
           },
           "trust": {
-            "buy_lots": 41.0,
-            "sell_lots": 0.0,
-            "net_lots": 41.0
+            "buy_lots": 0.0,
+            "sell_lots": 240.0,
+            "net_lots": -240.0
           },
           "retail": {
-            "buy_lots": 658.0,
-            "sell_lots": 23986.0,
-            "net_lots": -23328.0
+            "buy_lots": 23453.0,
+            "sell_lots": 0,
+            "net_lots": 23453.0
           }
         },
         {
           "code": "0050",
           "name": "元大台灣50",
-          "days": 6,
+          "days": 2,
           "foreign": {
-            "buy_lots": 15877.0,
-            "sell_lots": 74497.0,
-            "net_lots": -58620.0
+            "buy_lots": 0,
+            "sell_lots": 65215.0,
+            "net_lots": -65215.0
           },
           "trust": {
-            "buy_lots": 7811.0,
-            "sell_lots": 0.0,
-            "net_lots": 7811.0
+            "buy_lots": 9976.0,
+            "sell_lots": 0,
+            "net_lots": 9976.0
           },
           "retail": {
-            "buy_lots": 23100.0,
-            "sell_lots": 39802.0,
-            "net_lots": -16702.0
+            "buy_lots": 150350.0,
+            "sell_lots": 0,
+            "net_lots": 150350.0
           }
         }
       ]
     },
     "14": {
-      "from": "2026-09-10",
-      "to": "2026-09-24",
+      "from": "2026-10-05",
+      "to": "2026-10-19",
       "rows": [
         {
           "code": "00919",
           "name": "群益台灣精選高息",
-          "days": 11,
+          "days": 3,
           "foreign": {
-            "buy_lots": 27803.0,
-            "sell_lots": 71687.0,
-            "net_lots": -43884.0
+            "buy_lots": 41260.0,
+            "sell_lots": 47149.0,
+            "net_lots": -5889.0
           },
           "trust": {
             "buy_lots": 0.0,
-            "sell_lots": 1909.0,
-            "net_lots": -1909.0
+            "sell_lots": 0.0,
+            "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 621302.0,
-            "sell_lots": 13717.0,
-            "net_lots": 607585.0
+            "buy_lots": 92852.0,
+            "sell_lots": 61159.0,
+            "net_lots": 31693.0
           }
         },
         {
           "code": "0056",
           "name": "元大高股息",
-          "days": 11,
+          "days": 3,
           "foreign": {
-            "buy_lots": 8151.0,
-            "sell_lots": 45066.0,
-            "net_lots": -36915.0
+            "buy_lots": 0,
+            "sell_lots": 20115.0,
+            "net_lots": -20115.0
           },
           "trust": {
-            "buy_lots": 8975.0,
+            "buy_lots": 4535.0,
             "sell_lots": 0.0,
-            "net_lots": 8975.0
+            "net_lots": 4535.0
           },
           "retail": {
-            "buy_lots": 82617.0,
-            "sell_lots": 14507.0,
-            "net_lots": 68110.0
+            "buy_lots": 153096.0,
+            "sell_lots": 0,
+            "net_lots": 153096.0
           }
         },
         {
           "code": "00878",
           "name": "國泰永續高股息",
-          "days": 11,
+          "days": 3,
           "foreign": {
-            "buy_lots": 4192.0,
-            "sell_lots": 42833.0,
-            "net_lots": -38641.0
+            "buy_lots": 2337.0,
+            "sell_lots": 8171.0,
+            "net_lots": -5834.0
+          },
+          "trust": {
+            "buy_lots": 0.0,
+            "sell_lots": 0.0,
+            "net_lots": 0.0
+          },
+          "retail": {
+            "buy_lots": 63656.0,
+            "sell_lots": 0,
+            "net_lots": 63656.0
+          }
+        },
+        {
+          "code": "00918",
+          "name": "大華優利高填息30",
+          "days": 3,
+          "foreign": {
+            "buy_lots": 4298.0,
+            "sell_lots": 5468.0,
+            "net_lots": -1170.0
+          },
+          "trust": {
+            "buy_lots": 0.0,
+            "sell_lots": 0.0,
+            "net_lots": 0.0
+          },
+          "retail": {
+            "buy_lots": 15409.0,
+            "sell_lots": 17449.0,
+            "net_lots": -2040.0
+          }
+        },
+        {
+          "code": "00901",
+          "name": "永豐智能車供應鏈",
+          "days": 3,
+          "foreign": {
+            "buy_lots": 0,
+            "sell_lots": 221.0,
+            "net_lots": -221.0
+          },
+          "trust": {
+            "buy_lots": 0.0,
+            "sell_lots": 0.0,
+            "net_lots": 0.0
+          },
+          "retail": {
+            "buy_lots": 92.0,
+            "sell_lots": 2.0,
+            "net_lots": 90.0
+          }
+        },
+        {
+          "code": "00891",
+          "name": "中信關鍵半導體",
+          "days": 3,
+          "foreign": {
+            "buy_lots": 0,
+            "sell_lots": 9110.0,
+            "net_lots": -9110.0
+          },
+          "trust": {
+            "buy_lots": 0.0,
+            "sell_lots": 0.0,
+            "net_lots": 0.0
+          },
+          "retail": {
+            "buy_lots": 31211.0,
+            "sell_lots": 0,
+            "net_lots": 31211.0
+          }
+        },
+        {
+          "code": "00830",
+          "name": "國泰費城半導體",
+          "days": 3,
+          "foreign": {
+            "buy_lots": 1056.0,
+            "sell_lots": 8849.0,
+            "net_lots": -7793.0
+          },
+          "trust": {
+            "buy_lots": 0.0,
+            "sell_lots": 0.0,
+            "net_lots": 0.0
+          },
+          "retail": {
+            "buy_lots": 17568.0,
+            "sell_lots": 1564.0,
+            "net_lots": 16004.0
+          }
+        },
+        {
+          "code": "00947",
+          "name": "台新臺灣IC設計",
+          "days": 3,
+          "foreign": {
+            "buy_lots": 2441.0,
+            "sell_lots": 3073.0,
+            "net_lots": -632.0
+          },
+          "trust": {
+            "buy_lots": 0.0,
+            "sell_lots": 0.0,
+            "net_lots": 0.0
+          },
+          "retail": {
+            "buy_lots": 13692.0,
+            "sell_lots": 0,
+            "net_lots": 13692.0
+          }
+        },
+        {
+          "code": "00735",
+          "name": "國泰臺韓科技",
+          "days": 3,
+          "foreign": {
+            "buy_lots": 55.0,
+            "sell_lots": 121.0,
+            "net_lots": -66.0
+          },
+          "trust": {
+            "buy_lots": 0.0,
+            "sell_lots": 0.0,
+            "net_lots": 0.0
+          },
+          "retail": {
+            "buy_lots": 367.0,
+            "sell_lots": 1754.0,
+            "net_lots": -1387.0
+          }
+        },
+        {
+          "code": "0052",
+          "name": "富邦科技",
+          "days": 3,
+          "foreign": {
+            "buy_lots": 2872.0,
+            "sell_lots": 4182.0,
+            "net_lots": -1310.0
+          },
+          "trust": {
+            "buy_lots": 0.0,
+            "sell_lots": 240.0,
+            "net_lots": -240.0
+          },
+          "retail": {
+            "buy_lots": 36817.0,
+            "sell_lots": 0,
+            "net_lots": 36817.0
+          }
+        },
+        {
+          "code": "0050",
+          "name": "元大台灣50",
+          "days": 3,
+          "foreign": {
+            "buy_lots": 0,
+            "sell_lots": 116724.0,
+            "net_lots": -116724.0
+          },
+          "trust": {
+            "buy_lots": 9976.0,
+            "sell_lots": 0.0,
+            "net_lots": 9976.0
+          },
+          "retail": {
+            "buy_lots": 214623.0,
+            "sell_lots": 0,
+            "net_lots": 214623.0
+          }
+        }
+      ]
+    },
+    "31": {
+      "from": "2026-09-18",
+      "to": "2026-10-19",
+      "rows": [
+        {
+          "code": "00919",
+          "name": "群益台灣精選高息",
+          "days": 10,
+          "foreign": {
+            "buy_lots": 60471.0,
+            "sell_lots": 94030.0,
+            "net_lots": -33559.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -299,245 +485,59 @@
             "net_lots": -200.0
           },
           "retail": {
-            "buy_lots": 88911.0,
-            "sell_lots": 19694.0,
-            "net_lots": 69217.0
-          }
-        },
-        {
-          "code": "00918",
-          "name": "大華優利高填息30",
-          "days": 11,
-          "foreign": {
-            "buy_lots": 9768.0,
-            "sell_lots": 11948.0,
-            "net_lots": -2180.0
-          },
-          "trust": {
-            "buy_lots": 0.0,
-            "sell_lots": 0.0,
-            "net_lots": 0.0
-          },
-          "retail": {
-            "buy_lots": 714191.0,
-            "sell_lots": 0,
-            "net_lots": 714191.0
-          }
-        },
-        {
-          "code": "00901",
-          "name": "永豐智能車供應鏈",
-          "days": 11,
-          "foreign": {
-            "buy_lots": 127.0,
-            "sell_lots": 260.0,
-            "net_lots": -133.0
-          },
-          "trust": {
-            "buy_lots": 0.0,
-            "sell_lots": 0.0,
-            "net_lots": 0.0
-          },
-          "retail": {
-            "buy_lots": 3.0,
-            "sell_lots": 1130.0,
-            "net_lots": -1127.0
-          }
-        },
-        {
-          "code": "00891",
-          "name": "中信關鍵半導體",
-          "days": 11,
-          "foreign": {
-            "buy_lots": 18033.0,
-            "sell_lots": 9835.0,
-            "net_lots": 8198.0
-          },
-          "trust": {
-            "buy_lots": 0.0,
-            "sell_lots": 0.0,
-            "net_lots": 0.0
-          },
-          "retail": {
-            "buy_lots": 15857.0,
-            "sell_lots": 35649.0,
-            "net_lots": -19792.0
-          }
-        },
-        {
-          "code": "00830",
-          "name": "國泰費城半導體",
-          "days": 11,
-          "foreign": {
-            "buy_lots": 9714.0,
-            "sell_lots": 8521.0,
-            "net_lots": 1193.0
-          },
-          "trust": {
-            "buy_lots": 0.0,
-            "sell_lots": 0.0,
-            "net_lots": 0.0
-          },
-          "retail": {
-            "buy_lots": 16716.0,
-            "sell_lots": 11111.0,
-            "net_lots": 5605.0
-          }
-        },
-        {
-          "code": "00947",
-          "name": "台新臺灣IC設計",
-          "days": 11,
-          "foreign": {
-            "buy_lots": 3609.0,
-            "sell_lots": 6404.0,
-            "net_lots": -2795.0
-          },
-          "trust": {
-            "buy_lots": 6950.0,
-            "sell_lots": 0.0,
-            "net_lots": 6950.0
-          },
-          "retail": {
-            "buy_lots": 4923.0,
-            "sell_lots": 12947.0,
-            "net_lots": -8024.0
-          }
-        },
-        {
-          "code": "00735",
-          "name": "國泰臺韓科技",
-          "days": 11,
-          "foreign": {
-            "buy_lots": 724.0,
-            "sell_lots": 649.0,
-            "net_lots": 75.0
-          },
-          "trust": {
-            "buy_lots": 0.0,
-            "sell_lots": 0.0,
-            "net_lots": 0.0
-          },
-          "retail": {
-            "buy_lots": 56.0,
-            "sell_lots": 2938.0,
-            "net_lots": -2882.0
-          }
-        },
-        {
-          "code": "0052",
-          "name": "富邦科技",
-          "days": 11,
-          "foreign": {
-            "buy_lots": 3868.0,
-            "sell_lots": 12806.0,
-            "net_lots": -8938.0
-          },
-          "trust": {
-            "buy_lots": 89.0,
-            "sell_lots": 50.0,
-            "net_lots": 39.0
-          },
-          "retail": {
-            "buy_lots": 16678.0,
-            "sell_lots": 24330.0,
-            "net_lots": -7652.0
-          }
-        },
-        {
-          "code": "0050",
-          "name": "元大台灣50",
-          "days": 11,
-          "foreign": {
-            "buy_lots": 15877.0,
-            "sell_lots": 226346.0,
-            "net_lots": -210469.0
-          },
-          "trust": {
-            "buy_lots": 15249.0,
-            "sell_lots": 0.0,
-            "net_lots": 15249.0
-          },
-          "retail": {
-            "buy_lots": 204809.0,
-            "sell_lots": 39802.0,
-            "net_lots": 165007.0
-          }
-        }
-      ]
-    },
-    "31": {
-      "from": "2026-08-24",
-      "to": "2026-09-24",
-      "rows": [
-        {
-          "code": "00919",
-          "name": "群益台灣精選高息",
-          "days": 24,
-          "foreign": {
-            "buy_lots": 45665.0,
-            "sell_lots": 155292.0,
-            "net_lots": -109627.0
-          },
-          "trust": {
-            "buy_lots": 4909.0,
-            "sell_lots": 5209.0,
-            "net_lots": -300.0
-          },
-          "retail": {
-            "buy_lots": 1085634.0,
-            "sell_lots": 64575.0,
-            "net_lots": 1021059.0
+            "buy_lots": 344693.0,
+            "sell_lots": 71930.0,
+            "net_lots": 272763.0
           }
         },
         {
           "code": "0056",
           "name": "元大高股息",
-          "days": 24,
+          "days": 10,
           "foreign": {
-            "buy_lots": 47172.0,
-            "sell_lots": 57738.0,
-            "net_lots": -10566.0
+            "buy_lots": 1158.0,
+            "sell_lots": 58404.0,
+            "net_lots": -57246.0
           },
           "trust": {
-            "buy_lots": 12675.0,
+            "buy_lots": 10377.0,
             "sell_lots": 0.0,
-            "net_lots": 12675.0
+            "net_lots": 10377.0
           },
           "retail": {
-            "buy_lots": 93638.0,
-            "sell_lots": 147220.0,
-            "net_lots": -53582.0
+            "buy_lots": 287128.0,
+            "sell_lots": 0,
+            "net_lots": 287128.0
           }
         },
         {
           "code": "00878",
           "name": "國泰永續高股息",
-          "days": 24,
+          "days": 10,
           "foreign": {
-            "buy_lots": 88431.0,
-            "sell_lots": 49793.0,
-            "net_lots": 38638.0
+            "buy_lots": 3624.0,
+            "sell_lots": 18938.0,
+            "net_lots": -15314.0
           },
           "trust": {
             "buy_lots": 0.0,
-            "sell_lots": 500.0,
-            "net_lots": -500.0
+            "sell_lots": 0.0,
+            "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 102790.0,
-            "sell_lots": 207673.0,
-            "net_lots": -104883.0
+            "buy_lots": 141231.0,
+            "sell_lots": 2839.0,
+            "net_lots": 138392.0
           }
         },
         {
           "code": "00918",
           "name": "大華優利高填息30",
-          "days": 24,
+          "days": 10,
           "foreign": {
-            "buy_lots": 14613.0,
-            "sell_lots": 45489.0,
-            "net_lots": -30876.0
+            "buy_lots": 11979.0,
+            "sell_lots": 16098.0,
+            "net_lots": -4119.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -545,19 +545,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 1208593.0,
-            "sell_lots": 694.0,
-            "net_lots": 1207899.0
+            "buy_lots": 303100.0,
+            "sell_lots": 17449.0,
+            "net_lots": 285651.0
           }
         },
         {
           "code": "00901",
           "name": "永豐智能車供應鏈",
-          "days": 24,
+          "days": 10,
           "foreign": {
-            "buy_lots": 932.0,
-            "sell_lots": 1205.0,
-            "net_lots": -273.0
+            "buy_lots": 130.0,
+            "sell_lots": 331.0,
+            "net_lots": -201.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -565,19 +565,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 37.0,
-            "sell_lots": 1616.0,
-            "net_lots": -1579.0
+            "buy_lots": 111.0,
+            "sell_lots": 475.0,
+            "net_lots": -364.0
           }
         },
         {
           "code": "00891",
           "name": "中信關鍵半導體",
-          "days": 24,
+          "days": 10,
           "foreign": {
-            "buy_lots": 53152.0,
-            "sell_lots": 17584.0,
-            "net_lots": 35568.0
+            "buy_lots": 18317.0,
+            "sell_lots": 13582.0,
+            "net_lots": 4735.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -585,19 +585,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 33827.0,
-            "sell_lots": 101966.0,
-            "net_lots": -68139.0
+            "buy_lots": 43295.0,
+            "sell_lots": 31593.0,
+            "net_lots": 11702.0
           }
         },
         {
           "code": "00830",
           "name": "國泰費城半導體",
-          "days": 24,
+          "days": 10,
           "foreign": {
-            "buy_lots": 11723.0,
-            "sell_lots": 24295.0,
-            "net_lots": -12572.0
+            "buy_lots": 10430.0,
+            "sell_lots": 10261.0,
+            "net_lots": 169.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -605,19 +605,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 63503.0,
-            "sell_lots": 11111.0,
-            "net_lots": 52392.0
+            "buy_lots": 20261.0,
+            "sell_lots": 12894.0,
+            "net_lots": 7367.0
           }
         },
         {
           "code": "00947",
           "name": "台新臺灣IC設計",
-          "days": 24,
+          "days": 10,
           "foreign": {
-            "buy_lots": 11312.0,
-            "sell_lots": 8772.0,
-            "net_lots": 2540.0
+            "buy_lots": 5363.0,
+            "sell_lots": 6294.0,
+            "net_lots": -931.0
           },
           "trust": {
             "buy_lots": 6950.0,
@@ -625,19 +625,19 @@
             "net_lots": 6950.0
           },
           "retail": {
-            "buy_lots": 7904.0,
-            "sell_lots": 26382.0,
-            "net_lots": -18478.0
+            "buy_lots": 20343.0,
+            "sell_lots": 10729.0,
+            "net_lots": 9614.0
           }
         },
         {
           "code": "00735",
           "name": "國泰臺韓科技",
-          "days": 24,
+          "days": 10,
           "foreign": {
-            "buy_lots": 3549.0,
-            "sell_lots": 1354.0,
-            "net_lots": 2195.0
+            "buy_lots": 1047.0,
+            "sell_lots": 271.0,
+            "net_lots": 776.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -645,65 +645,65 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 486.0,
-            "sell_lots": 10555.0,
-            "net_lots": -10069.0
+            "buy_lots": 367.0,
+            "sell_lots": 5423.0,
+            "net_lots": -5056.0
           }
         },
         {
           "code": "0052",
           "name": "富邦科技",
-          "days": 24,
+          "days": 10,
           "foreign": {
-            "buy_lots": 35275.0,
-            "sell_lots": 16390.0,
-            "net_lots": 18885.0
+            "buy_lots": 6740.0,
+            "sell_lots": 13703.0,
+            "net_lots": -6963.0
           },
           "trust": {
-            "buy_lots": 139.0,
-            "sell_lots": 280.0,
-            "net_lots": -141.0
+            "buy_lots": 30.0,
+            "sell_lots": 240.0,
+            "net_lots": -210.0
           },
           "retail": {
-            "buy_lots": 22751.0,
-            "sell_lots": 84737.0,
-            "net_lots": -61986.0
+            "buy_lots": 53888.0,
+            "sell_lots": 20791.0,
+            "net_lots": 33097.0
           }
         },
         {
           "code": "0050",
           "name": "元大台灣50",
-          "days": 24,
+          "days": 10,
           "foreign": {
-            "buy_lots": 211196.0,
-            "sell_lots": 319407.0,
-            "net_lots": -108211.0
+            "buy_lots": 7840.0,
+            "sell_lots": 291689.0,
+            "net_lots": -283849.0
           },
           "trust": {
-            "buy_lots": 24923.0,
-            "sell_lots": 3800.0,
-            "net_lots": 21123.0
+            "buy_lots": 20787.0,
+            "sell_lots": 0.0,
+            "net_lots": 20787.0
           },
           "retail": {
-            "buy_lots": 320704.0,
-            "sell_lots": 322205.0,
-            "net_lots": -1501.0
+            "buy_lots": 333031.0,
+            "sell_lots": 23665.0,
+            "net_lots": 309366.0
           }
         }
       ]
     },
     "62": {
-      "from": "2026-07-24",
-      "to": "2026-09-24",
+      "from": "2026-08-18",
+      "to": "2026-10-19",
       "rows": [
         {
           "code": "00919",
           "name": "群益台灣精選高息",
-          "days": 45,
+          "days": 33,
           "foreign": {
-            "buy_lots": 149077.0,
-            "sell_lots": 241958.0,
-            "net_lots": -92881.0
+            "buy_lots": 94450.0,
+            "sell_lots": 225334.0,
+            "net_lots": -130884.0
           },
           "trust": {
             "buy_lots": 4909.0,
@@ -711,39 +711,39 @@
             "net_lots": -300.0
           },
           "retail": {
-            "buy_lots": 1259149.0,
-            "sell_lots": 286035.0,
-            "net_lots": 973114.0
+            "buy_lots": 1261374.0,
+            "sell_lots": 167084.0,
+            "net_lots": 1094290.0
           }
         },
         {
           "code": "0056",
           "name": "元大高股息",
-          "days": 45,
+          "days": 33,
           "foreign": {
-            "buy_lots": 181516.0,
-            "sell_lots": 125457.0,
-            "net_lots": 56059.0
+            "buy_lots": 51529.0,
+            "sell_lots": 105842.0,
+            "net_lots": -54313.0
           },
           "trust": {
-            "buy_lots": 15721.0,
-            "sell_lots": 290.0,
-            "net_lots": 15431.0
+            "buy_lots": 17792.0,
+            "sell_lots": 0.0,
+            "net_lots": 17792.0
           },
           "retail": {
-            "buy_lots": 262903.0,
-            "sell_lots": 363519.0,
-            "net_lots": -100616.0
+            "buy_lots": 341915.0,
+            "sell_lots": 152718.0,
+            "net_lots": 189197.0
           }
         },
         {
           "code": "00878",
           "name": "國泰永續高股息",
-          "days": 45,
+          "days": 33,
           "foreign": {
-            "buy_lots": 120281.0,
-            "sell_lots": 151172.0,
-            "net_lots": -30891.0
+            "buy_lots": 94878.0,
+            "sell_lots": 66928.0,
+            "net_lots": 27950.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -751,19 +751,19 @@
             "net_lots": -500.0
           },
           "retail": {
-            "buy_lots": 657166.0,
-            "sell_lots": 229474.0,
-            "net_lots": 427692.0
+            "buy_lots": 291668.0,
+            "sell_lots": 209223.0,
+            "net_lots": 82445.0
           }
         },
         {
           "code": "00918",
           "name": "大華優利高填息30",
-          "days": 45,
+          "days": 33,
           "foreign": {
-            "buy_lots": 42435.0,
-            "sell_lots": 68014.0,
-            "net_lots": -25579.0
+            "buy_lots": 18911.0,
+            "sell_lots": 60408.0,
+            "net_lots": -41497.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -771,19 +771,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 1241911.0,
-            "sell_lots": 85264.0,
-            "net_lots": 1156647.0
+            "buy_lots": 1286209.0,
+            "sell_lots": 18143.0,
+            "net_lots": 1268066.0
           }
         },
         {
           "code": "00901",
           "name": "永豐智能車供應鏈",
-          "days": 45,
+          "days": 33,
           "foreign": {
-            "buy_lots": 2967.0,
-            "sell_lots": 2891.0,
-            "net_lots": 76.0
+            "buy_lots": 973.0,
+            "sell_lots": 1455.0,
+            "net_lots": -482.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -791,19 +791,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 183.0,
-            "sell_lots": 2956.0,
-            "net_lots": -2773.0
+            "buy_lots": 200.0,
+            "sell_lots": 1741.0,
+            "net_lots": -1541.0
           }
         },
         {
           "code": "00891",
           "name": "中信關鍵半導體",
-          "days": 45,
+          "days": 33,
           "foreign": {
-            "buy_lots": 69544.0,
-            "sell_lots": 79634.0,
-            "net_lots": -10090.0
+            "buy_lots": 55641.0,
+            "sell_lots": 30791.0,
+            "net_lots": 24850.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -811,59 +811,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 243697.0,
-            "sell_lots": 105830.0,
-            "net_lots": 137867.0
+            "buy_lots": 110463.0,
+            "sell_lots": 103072.0,
+            "net_lots": 7391.0
           }
         },
         {
           "code": "00830",
           "name": "國泰費城半導體",
-          "days": 45,
+          "days": 33,
           "foreign": {
-            "buy_lots": 29633.0,
-            "sell_lots": 47376.0,
-            "net_lots": -17743.0
-          },
-          "trust": {
-            "buy_lots": 558.0,
-            "sell_lots": 0.0,
-            "net_lots": 558.0
-          },
-          "retail": {
-            "buy_lots": 92869.0,
-            "sell_lots": 26658.0,
-            "net_lots": 66211.0
-          }
-        },
-        {
-          "code": "00947",
-          "name": "台新臺灣IC設計",
-          "days": 45,
-          "foreign": {
-            "buy_lots": 36631.0,
-            "sell_lots": 20251.0,
-            "net_lots": 16380.0
-          },
-          "trust": {
-            "buy_lots": 6950.0,
-            "sell_lots": 11650.0,
-            "net_lots": -4700.0
-          },
-          "retail": {
-            "buy_lots": 26634.0,
-            "sell_lots": 41400.0,
-            "net_lots": -14766.0
-          }
-        },
-        {
-          "code": "00735",
-          "name": "國泰臺韓科技",
-          "days": 45,
-          "foreign": {
-            "buy_lots": 7299.0,
-            "sell_lots": 8254.0,
-            "net_lots": -955.0
+            "buy_lots": 14506.0,
+            "sell_lots": 39256.0,
+            "net_lots": -24750.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -871,65 +831,105 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 15241.0,
-            "sell_lots": 15033.0,
-            "net_lots": 208.0
+            "buy_lots": 88755.0,
+            "sell_lots": 14813.0,
+            "net_lots": 73942.0
+          }
+        },
+        {
+          "code": "00947",
+          "name": "台新臺灣IC設計",
+          "days": 33,
+          "foreign": {
+            "buy_lots": 14098.0,
+            "sell_lots": 13425.0,
+            "net_lots": 673.0
+          },
+          "trust": {
+            "buy_lots": 6950.0,
+            "sell_lots": 0.0,
+            "net_lots": 6950.0
+          },
+          "retail": {
+            "buy_lots": 32910.0,
+            "sell_lots": 27552.0,
+            "net_lots": 5358.0
+          }
+        },
+        {
+          "code": "00735",
+          "name": "國泰臺韓科技",
+          "days": 33,
+          "foreign": {
+            "buy_lots": 4417.0,
+            "sell_lots": 1475.0,
+            "net_lots": 2942.0
+          },
+          "trust": {
+            "buy_lots": 0.0,
+            "sell_lots": 0.0,
+            "net_lots": 0.0
+          },
+          "retail": {
+            "buy_lots": 901.0,
+            "sell_lots": 15004.0,
+            "net_lots": -14103.0
           }
         },
         {
           "code": "0052",
           "name": "富邦科技",
-          "days": 45,
+          "days": 33,
           "foreign": {
-            "buy_lots": 110088.0,
-            "sell_lots": 31018.0,
-            "net_lots": 79070.0
+            "buy_lots": 42577.0,
+            "sell_lots": 29411.0,
+            "net_lots": 13166.0
           },
           "trust": {
-            "buy_lots": 2534.0,
-            "sell_lots": 2700.0,
-            "net_lots": -166.0
+            "buy_lots": 139.0,
+            "sell_lots": 620.0,
+            "net_lots": -481.0
           },
           "retail": {
-            "buy_lots": 57430.0,
-            "sell_lots": 195884.0,
-            "net_lots": -138454.0
+            "buy_lots": 78058.0,
+            "sell_lots": 87493.0,
+            "net_lots": -9435.0
           }
         },
         {
           "code": "0050",
           "name": "元大台灣50",
-          "days": 45,
+          "days": 33,
           "foreign": {
-            "buy_lots": 551375.0,
-            "sell_lots": 770208.0,
-            "net_lots": -218833.0
+            "buy_lots": 211196.0,
+            "sell_lots": 600252.0,
+            "net_lots": -389056.0
           },
           "trust": {
-            "buy_lots": 80512.0,
-            "sell_lots": 11335.0,
-            "net_lots": 69177.0
+            "buy_lots": 46699.0,
+            "sell_lots": 4800.0,
+            "net_lots": 41899.0
           },
           "retail": {
-            "buy_lots": 1329865.0,
-            "sell_lots": 648718.0,
-            "net_lots": 681147.0
+            "buy_lots": 717565.0,
+            "sell_lots": 325227.0,
+            "net_lots": 392338.0
           }
         }
       ]
     },
     "93": {
-      "from": "2026-06-23",
-      "to": "2026-09-24",
+      "from": "2026-07-18",
+      "to": "2026-10-19",
       "rows": [
         {
           "code": "00919",
           "name": "群益台灣精選高息",
-          "days": 67,
+          "days": 54,
           "foreign": {
-            "buy_lots": 265782.0,
-            "sell_lots": 422986.0,
-            "net_lots": -157204.0
+            "buy_lots": 212220.0,
+            "sell_lots": 298966.0,
+            "net_lots": -86746.0
           },
           "trust": {
             "buy_lots": 4909.0,
@@ -937,39 +937,39 @@
             "net_lots": -300.0
           },
           "retail": {
-            "buy_lots": 1615507.0,
-            "sell_lots": 435937.0,
-            "net_lots": 1179570.0
+            "buy_lots": 1426023.0,
+            "sell_lots": 370284.0,
+            "net_lots": 1055739.0
           }
         },
         {
           "code": "0056",
           "name": "元大高股息",
-          "days": 67,
+          "days": 54,
           "foreign": {
-            "buy_lots": 239303.0,
-            "sell_lots": 260435.0,
-            "net_lots": -21132.0
+            "buy_lots": 206745.0,
+            "sell_lots": 186031.0,
+            "net_lots": 20714.0
           },
           "trust": {
-            "buy_lots": 19081.0,
-            "sell_lots": 6070.0,
-            "net_lots": 13011.0
+            "buy_lots": 20698.0,
+            "sell_lots": 290.0,
+            "net_lots": 20408.0
           },
           "retail": {
-            "buy_lots": 951963.0,
-            "sell_lots": 418402.0,
-            "net_lots": 533561.0
+            "buy_lots": 634549.0,
+            "sell_lots": 403627.0,
+            "net_lots": 230922.0
           }
         },
         {
           "code": "00878",
           "name": "國泰永續高股息",
-          "days": 67,
+          "days": 54,
           "foreign": {
-            "buy_lots": 158963.0,
-            "sell_lots": 249139.0,
-            "net_lots": -90176.0
+            "buy_lots": 136407.0,
+            "sell_lots": 159951.0,
+            "net_lots": -23544.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -977,19 +977,19 @@
             "net_lots": -600.0
           },
           "retail": {
-            "buy_lots": 789695.0,
-            "sell_lots": 294858.0,
-            "net_lots": 494837.0
+            "buy_lots": 756203.0,
+            "sell_lots": 240411.0,
+            "net_lots": 515792.0
           }
         },
         {
           "code": "00918",
           "name": "大華優利高填息30",
-          "days": 67,
+          "days": 54,
           "foreign": {
-            "buy_lots": 138076.0,
-            "sell_lots": 83211.0,
-            "net_lots": 54865.0
+            "buy_lots": 70232.0,
+            "sell_lots": 76285.0,
+            "net_lots": -6053.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -997,19 +997,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 1269893.0,
-            "sell_lots": 328472.0,
-            "net_lots": 941421.0
+            "buy_lots": 1301942.0,
+            "sell_lots": 142693.0,
+            "net_lots": 1159249.0
           }
         },
         {
           "code": "00901",
           "name": "永豐智能車供應鏈",
-          "days": 67,
+          "days": 54,
           "foreign": {
-            "buy_lots": 4077.0,
-            "sell_lots": 3997.0,
-            "net_lots": 80.0
+            "buy_lots": 3312.0,
+            "sell_lots": 3189.0,
+            "net_lots": 123.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -1017,19 +1017,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 423.0,
-            "sell_lots": 3658.0,
-            "net_lots": -3235.0
+            "buy_lots": 299.0,
+            "sell_lots": 3350.0,
+            "net_lots": -3051.0
           }
         },
         {
           "code": "00891",
           "name": "中信關鍵半導體",
-          "days": 67,
+          "days": 54,
           "foreign": {
-            "buy_lots": 92159.0,
-            "sell_lots": 137885.0,
-            "net_lots": -45726.0
+            "buy_lots": 72064.0,
+            "sell_lots": 97707.0,
+            "net_lots": -25643.0
           },
           "trust": {
             "buy_lots": 0.0,
@@ -1037,19 +1037,19 @@
             "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 348479.0,
-            "sell_lots": 125055.0,
-            "net_lots": 223424.0
+            "buy_lots": 290318.0,
+            "sell_lots": 108762.0,
+            "net_lots": 181556.0
           }
         },
         {
           "code": "00830",
           "name": "國泰費城半導體",
-          "days": 67,
+          "days": 54,
           "foreign": {
-            "buy_lots": 42272.0,
-            "sell_lots": 121077.0,
-            "net_lots": -78805.0
+            "buy_lots": 35778.0,
+            "sell_lots": 60597.0,
+            "net_lots": -24819.0
           },
           "trust": {
             "buy_lots": 558.0,
@@ -1057,89 +1057,89 @@
             "net_lots": 558.0
           },
           "retail": {
-            "buy_lots": 190463.0,
-            "sell_lots": 36259.0,
-            "net_lots": 154204.0
+            "buy_lots": 113646.0,
+            "sell_lots": 31937.0,
+            "net_lots": 81709.0
           }
         },
         {
           "code": "00947",
           "name": "台新臺灣IC設計",
-          "days": 67,
+          "days": 54,
           "foreign": {
-            "buy_lots": 40006.0,
-            "sell_lots": 36563.0,
-            "net_lots": 3443.0
+            "buy_lots": 40732.0,
+            "sell_lots": 24704.0,
+            "net_lots": 16028.0
           },
           "trust": {
-            "buy_lots": 7450.0,
+            "buy_lots": 6950.0,
             "sell_lots": 11650.0,
-            "net_lots": -4200.0
+            "net_lots": -4700.0
           },
           "retail": {
-            "buy_lots": 86903.0,
-            "sell_lots": 42258.0,
-            "net_lots": 44645.0
+            "buy_lots": 47230.0,
+            "sell_lots": 42156.0,
+            "net_lots": 5074.0
           }
         },
         {
           "code": "00735",
           "name": "國泰臺韓科技",
-          "days": 67,
+          "days": 54,
           "foreign": {
-            "buy_lots": 9921.0,
-            "sell_lots": 17190.0,
-            "net_lots": -7269.0
+            "buy_lots": 8519.0,
+            "sell_lots": 8510.0,
+            "net_lots": 9.0
           },
           "trust": {
             "buy_lots": 0.0,
-            "sell_lots": 239.0,
-            "net_lots": -239.0
+            "sell_lots": 0.0,
+            "net_lots": 0.0
           },
           "retail": {
-            "buy_lots": 33247.0,
-            "sell_lots": 17849.0,
-            "net_lots": 15398.0
+            "buy_lots": 15903.0,
+            "sell_lots": 18714.0,
+            "net_lots": -2811.0
           }
         },
         {
           "code": "0052",
           "name": "富邦科技",
-          "days": 67,
+          "days": 54,
           "foreign": {
-            "buy_lots": 127941.0,
-            "sell_lots": 80737.0,
-            "net_lots": 47204.0
+            "buy_lots": 122639.0,
+            "sell_lots": 42843.0,
+            "net_lots": 79796.0
           },
           "trust": {
-            "buy_lots": 3925.0,
-            "sell_lots": 4610.0,
-            "net_lots": -685.0
+            "buy_lots": 3575.0,
+            "sell_lots": 2940.0,
+            "net_lots": 635.0
           },
           "retail": {
-            "buy_lots": 215071.0,
-            "sell_lots": 220244.0,
-            "net_lots": -5173.0
+            "buy_lots": 117225.0,
+            "sell_lots": 207273.0,
+            "net_lots": -90048.0
           }
         },
         {
           "code": "0050",
           "name": "元大台灣50",
-          "days": 67,
+          "days": 54,
           "foreign": {
-            "buy_lots": 638754.0,
-            "sell_lots": 1699064.0,
-            "net_lots": -1060310.0
+            "buy_lots": 575000.0,
+            "sell_lots": 1102970.0,
+            "net_lots": -527970.0
           },
           "trust": {
-            "buy_lots": 152051.0,
+            "buy_lots": 105551.0,
             "sell_lots": 11335.0,
-            "net_lots": 140716.0
+            "net_lots": 94216.0
           },
           "retail": {
-            "buy_lots": 2836851.0,
-            "sell_lots": 761717.0,
-            "net_lots": 2075134.0
+            "buy_lots": 1880656.0,
+            "sell_lots": 664948.0,
+            "net_lots": 1215708.0
           }
         }
       ]
